@@ -103,9 +103,6 @@ class Registration
                     $this->errors[] = "Sorry, that username / email address is already taken.";
                 } else {
                     // write new user's data into database
-					########################################
-					## TODO insert stuff into db properly ##
-					########################################
                     $sql = "INSERT INTO user_login (username, password, email, firstname, lastname)
                             VALUES('" . $user_name . "', '" . $user_password_hash . "', '" . $user_email . "', '" . $first_name . "', '" . $last_name . "');";
                     $query_new_user_insert = $this->db_connection->query($sql);
