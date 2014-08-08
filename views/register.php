@@ -42,7 +42,7 @@ if (isset($registration)) {
 
         <div class="pure-control-group">	
 			<label for="last_name">Last name</label>
-			<input id=last_name" class="login_input" type="text" name="last_name" required placeholder="Last Name"/>
+			<input id="last_name" class="login_input" type="text" name="last_name" required placeholder="Last Name"/>
         </div>
 
         <div class="pure-control-group">	
