@@ -1,5 +1,5 @@
 <div id="img" style="text-align:center;">
-	<img src="/PBWeb/img/choc_logo.gif" width="329" height="154"> 
+	<img src="/img/choc_logo.gif" width="329" height="154"> 
 <h1>Welcome</h1>
 </div>
 
