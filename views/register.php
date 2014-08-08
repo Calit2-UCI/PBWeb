@@ -7,7 +7,7 @@
 
 <body>
 	<div id="img" style="text-align:center;">
-		<img src="/PBWeb/img/choc_logo.gif" width="329" height="154"> 
+			<a href="/PBWeb/index.php"><img src="/PBWeb/img/choc_logo.gif" width="329" height="154"></a>
 		<h2>Register</h2>
 		<br>
 		<?php
