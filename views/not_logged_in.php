@@ -2,7 +2,7 @@
 
 <html>
 <head>
-	<link href="../css/pure-min.css" rel="stylesheet" type="text/css">
+	<link href="/PBWeb/css/pure-min.css" rel="stylesheet" type="text/css">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style>
 		form {
@@ -14,7 +14,7 @@
 
 <body>
 	<div id="img" style="text-align:center;">
-		<img src="../img/choc_logo.gif" width="329" height="154"> 
+		<img src="/PBWeb/img/choc_logo.gif" width="329" height="154"> 
 		<h1>Account Login</h1>
 
 	<?php
