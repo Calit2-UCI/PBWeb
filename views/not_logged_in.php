@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style>
 		form {
-			width: 500px;
+			width: 600px;
 			margin: 0 auto;
 		}
 	</style>
@@ -39,12 +39,12 @@
 		<fieldset>
 			<div class="pure-control-group">
 				<label for="login_input_username">Username</label>
-				<input id="login_input_username" class="login_input" type="text" name="user_name" required placeholder="Username"/>
+				<input id="login_input_username" class="pure-input-1-2" type="text" name="user_name" required placeholder="Username"/>
 			</div>
 
 			<div class="pure-control-group">		
 				<label for="login_input_password">Password</label>
-				<input id="login_input_password" class="login_input" type="password" name="user_password" autocomplete="off" required placeholder="Password"/>
+				<input id="login_input_password" class="pure-input-1-2" type="password" name="user_password" autocomplete="off" required placeholder="Password"/>
 			</div>
 
 			<div class="pure-controls">	
@@ -55,6 +55,6 @@
 
 	</form>
 
-	<a href="register.php"  style="text-align:center;">Register new account</a>
+	<p style="text-align:center;"><a href="register.php">Register new account</a></p>
 </body>
 <html>

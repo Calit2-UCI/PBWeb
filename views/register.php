@@ -39,34 +39,34 @@
 		<fieldset>
 			<div class="pure-control-group">
 				<label for="first_name">First name</label>
-				<input id="first_name" class="login_input" type="text" name="first_name" required placeholder="First Name"/>
+				<input id="first_name" class="pure-input-1-2" type="text" name="first_name" required placeholder="First Name"/>
 			</div>
 
 			<div class="pure-control-group">	
 				<label for="last_name">Last name</label>
-				<input id="last_name" class="login_input" type="text" name="last_name" required placeholder="Last Name"/>
+				<input id="last_name" class="pure-input-1-2" type="text" name="last_name" required placeholder="Last Name"/>
 			</div>
 
 			<div class="pure-control-group">	
 				<!-- the user name input field uses a HTML5 pattern check -->
 				<label for="login_input_username">Username (letters and/or numbers, 2 to 64 characters)</label>
-				<input id="login_input_username" class="login_input" type="text" pattern="[a-zA-Z0-9]{2,64}" name="user_name" required placeholder="Username"/>
+				<input id="login_input_username" class="pure-input-1-2" type="text" pattern="[a-zA-Z0-9]{2,64}" name="user_name" required placeholder="Username"/>
 			</div>
 
 			<div class="pure-control-group">
 				<!-- the email input field uses a HTML5 email type check -->
 				<label for="login_input_email">Email</label>
-				<input id="login_input_email" class="login_input" type="email" name="user_email" required placeholder="Email"/>
+				<input id="login_input_email" class="pure-input-1-2" type="email" name="user_email" required placeholder="Email"/>
 			</div>
 
 			<div class="pure-control-group">
 				<label for="login_input_password_new">Password (min. 6 characters)</label>
-				<input id="login_input_password_new" class="login_input" type="password" name="user_password_new" pattern=".{6,}" required autocomplete="off" placeholder="Password"/>
+				<input id="login_input_password_new" class="pure-input-1-2" type="password" name="user_password_new" pattern=".{6,}" required autocomplete="off" placeholder="Password"/>
 			</div>
 
 			<div class="pure-control-group">
 				<label for="login_input_password_repeat">Repeat password</label>
-				<input id="login_input_password_repeat" class="login_input" type="password" name="user_password_repeat" pattern=".{6,}" required autocomplete="off" placeholder="Repeat Password"/>
+				<input id="login_input_password_repeat" class="pure-input-1-2" type="password" name="user_password_repeat" pattern=".{6,}" required autocomplete="off" placeholder="Repeat Password"/>
 			</div>
 
 			<div class="pure-controls">	
@@ -78,6 +78,6 @@
 
 	<br />
 	<!-- backlink -->
-	<a href="index.php">Back to Login Page</a>
+	<p style="text-align:center;"><a href="index.php">Back to Login Page</a></p>
 </body>
 </html>
