@@ -44,7 +44,6 @@
 					<br>
 					<div class="row">
 						<div class="large-12 large-centered columns">
-							<div class="row">
 								<div class="large-6 columns">
 									<button type="submit"  name="login" class="button">Log in</button>
 								</div>
