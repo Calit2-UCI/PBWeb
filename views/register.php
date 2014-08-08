@@ -14,7 +14,7 @@
 
 <body>
 	<div id="img" style="text-align:center;">
-		<img src="../img/choc_logo.gif" width="329" height="154"> 
+		<img src="/PBWeb/img/choc_logo.gif" width="329" height="154"> 
 		<h1>Register</h1>
 
 	<?php
