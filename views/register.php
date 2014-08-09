@@ -25,7 +25,6 @@
 			}
 		}
 		?>
-
 	</div>
 	<div class="row">
 		<div class="small-4 small-centered columns">
@@ -59,19 +58,16 @@
 				</div>
 				<br>
 				<div class="row">
-					<div class="small-6 columns small-centered">
+					<div class="columns small-4">
 						<button type="submit"  name="login" class="button [secondary success alert">Register</button>
+					</div>
+					<div class="columns small-4">
+						<a href="index.php" class="button tiny">Back to Login</a>
 					</div>
 				</div>
 			</div>
 		</form>
-
 		<br>
-		<!-- backlink -->
-
-		<div class="small-6">
-			<a href="index.php" class="button tiny"> Back to Login Page</a>
-		</div>
 	</div>
 </body>
 </html>
