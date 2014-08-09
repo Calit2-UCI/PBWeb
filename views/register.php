@@ -1,11 +1,24 @@
 <!DOCTYPE html>
 
-<html>
+<!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
+<html class="no-js" lang="en" >
+
 <head>
-	<link href="/PBWeb/css/Foundation.css" rel="stylesheet" type="text/css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foundation 5</title>
+
+  <!-- If you are using the CSS version, only link these 2 files, you may add app.css to use for your overrides if you like -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/foundation.css">
+
+  <!-- If you are using the gem version, you need this only -->
+  <link rel="stylesheet" href="css/app.css">
+
+  <script src="js/vendor/modernizr.js"></script>
+
 </head>
 
-<body>
 	<div id="img" style="text-align:center;">
 		<a href="/PBWeb/index.php"><img src="/PBWeb/img/choc_logo.gif" width="329" height="154"></a>
 		<h2>Register</h2>
@@ -58,11 +71,11 @@
 				</div>
 				<br>
 				<div class="row">
-					<div class="columns small-4">
+					<div class="columns small-2">
 						<button type="submit"  name="login" class="button [secondary success alert">Register</button>
 					</div>
-					<div class="columns small-4">
-						<a href="index.php" class="button tiny">Back to Login</a>
+					<div class="columns small-7">
+						<a href="index.php" class="button">Back to Login</a>
 					</div>
 				</div>
 			</div>
