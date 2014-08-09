@@ -28,7 +28,7 @@
 
 	</div>
 	<div class="row">
-		<div class="large-4 large-centered columns">
+		<div class="small-4 small-centered columns">
 			<form method="post" action="register.php" name="registerform">
 				<div class="row">
 					<label for="first_name">First name</label>
@@ -59,7 +59,7 @@
 				</div>
 				<br>
 				<div class="row">
-					<div class="large-6 columns large-centered">
+					<div class="small-6 columns small-centered">
 						<button type="submit"  name="login" class="button [secondary success alert">Register</button>
 					</div>
 				</div>
@@ -69,7 +69,7 @@
 		<br>
 		<!-- backlink -->
 
-		<div class="large-6 large-centered">
+		<div class="small-6">
 			<a href="index.php" class="button tiny"> Back to Login Page</a>
 		</div>
 	</div>

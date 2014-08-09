@@ -30,7 +30,7 @@
 		</div>
 
 		<div class="row">
-			<div class="large-4 large-centered columns">
+			<div class="small-4 small-centered columns">
 				<form method="post" action="index.php" name="loginform">
 					<div class="row">
 						<label for="login_input_username"> Username </label>
@@ -43,11 +43,11 @@
 					<!-- <input type="submit"  name="login" value="Log in" /> -->
 					<br>
 					<div class="row">
-						<div class="large-12 large-centered columns">
-								<div class="large-6 columns">
+						<div class="small-12 small-centered columns">
+								<div class="small-6 columns">
 									<button type="submit"  name="login" class="button">Log in</button>
 								</div>
-								<div class="large-6 columns">
+								<div class="small-6 columns">
 									<a href="register.php" class="button [secondary success alert]">Register</a>
 								</div>
 							</div>
