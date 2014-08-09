@@ -4,18 +4,13 @@
 <html class="no-js" lang="en" >
 
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Registration</title>
+	<meta charset="utf-8" />
+	<!-- if you remove this meta tag, the NSA will spy on you through your Xbox Kinect camera -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Foundation</title>
+	<link rel="stylesheet" href="css/app.css" />
+	<script src="bower_components/modernizr/modernizr.js"></script>
 
-	<!-- If you are using the CSS version, only link these 2 files, you may add app.css to use for your overrides if you like -->
-	<link rel="stylesheet" href="/PBWeb/css/normalize.css">
-	<link rel="stylesheet" href="/PBWeb/css/foundation.css">
-
-	<!-- If you are using the gem version, you need this only -->
-	<link rel="stylesheet" href="/PBWeb/css/app.css">
-
-	<script src="/PBWeb/js/vendor/modernizr.js"></script>
 </head>
 
 <body>
@@ -39,9 +34,11 @@
 		?>
 	</div>
 	
-	<div class="panel">
+	<div class="panel box-shadow">
 		<br>
-		<h2>Apply for an Account</h2>
+		<div style="text-align:center" id="box-shadow-default">
+			<h2>Apply for an Account</h2>
+		</div>
 		<br>
 
 		<form method="post" action="register.php" name="registerform">
@@ -86,12 +83,18 @@
 					<button type="submit"  name="register" class="button success expand">Register</button>
 				</div>
 			</div>
+			
 			<div class="row">
 				<div class="small-4 small-centered columns">
-					<a href="/PBWeb/index.php" class="button expand">Return</a>
+					<a href="/PBWeb/index.php" class="button expand">Return to login</a>
 				</div>
 			</div>
 		</form>
+	</div>
+	
+	<div data-alert class="alert-box success radius">
+		This is a success alert with a radius.
+		<a href="#" class="close">&times;</a>
 	</div>
 </body>
 </html>

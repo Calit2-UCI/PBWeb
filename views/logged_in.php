@@ -1,20 +1,16 @@
 <!DOCTYPE html>
+
 <!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
 <html class="no-js" lang="en" >
 
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Portal</title>
-
-	<!-- If you are using the CSS version, only link these 2 files, you may add app.css to use for your overrides if you like -->
-	<link rel="stylesheet" href="/PBWeb/css/normalize.css">
-	<link rel="stylesheet" href="/PBWeb/css/foundation.css">
-
-	<!-- If you are using the gem version, you need this only -->
-	<link rel="stylesheet" href="/PBWeb/css/app.css">
-
-	<script src="/PBWeb/js/vendor/modernizr.js"></script>
+    <meta charset="utf-8" />
+    <!-- if you remove this meta tag, the NSA will spy on you through your Xbox Kinect camera -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foundation</title>
+    <link rel="stylesheet" href="css/app.css" />
+    <script src="bower_components/modernizr/modernizr.js"></script>
+	
 </head>
 
 <body>
