@@ -15,12 +15,9 @@
 	<link rel="stylesheet" href="/PBWeb/css/app.css">
 
 	<script src="/PBWeb/js/vendor/modernizr.js"></script>
-
 </head>
+
 <body>
-
-
-
 	<div id="img" style="text-align:center;">
 		<a href="/PBWeb/index.php"><img src="/PBWeb/img/choc_logo.gif" width="494" height="231"></a>
 		<h1>Welcome</h1>

@@ -16,13 +16,13 @@
 	<link rel="stylesheet" href="/PBWeb/css/app.css">
 
 	<script src="/PBWeb/js/vendor/modernizr.js"></script>
-
 </head>
+
 <body>
 	<div id="img" style="text-align:center;">
 		<a href="/PBWeb/index.php"><img src="/PBWeb/img/choc_logo.gif" width="494" height="231"></a>
 		<?php
-	// show potential errors / feedback (from registration object)
+		// show potential errors / feedback (from registration object)
 		if (isset($registration)) {
 			if ($registration->errors) {
 				foreach ($registration->errors as $error) {
@@ -37,6 +37,7 @@
 		}
 		?>
 	</div>
+	
 	<div class="panel">
 		<br>
 		<h2>Apply for an Account</h2>
@@ -45,7 +46,6 @@
 		<form method="post" action="register.php" name="registerform">
 
 			<div class="row">
-
 				<div class="small-4 push-2 columns">
 					<label for="first_name">First name</label>
 					<input id="first_name"  type="text" tabindex=1 name="first_name" required placeholder="First Name"/>
@@ -57,7 +57,6 @@
 			</div>
 
 			<div class="row">
-
 				<div class="small-4 push-2 columns">
 					<label for="last_name">Last name</label>
 					<input id="last_name" type="text" tabindex=2 name="last_name" required placeholder="Last Name"/>
@@ -69,7 +68,6 @@
 			</div>
 
 			<div class="row">
-
 				<div class="small-4 push-2 columns">
 					<label for="login_input_email">Email</label>
 					<input id="login_input_email"  tabindex=3 type="email" name="user_email" required placeholder="Email"/>
@@ -81,6 +79,7 @@
 			</div>
 
 			<br>
+			
 			<div class="row">
 				<div class="small-4 small-centered columns">
 					<button type="submit"  name="login" class="button success expand">Register</button>
@@ -92,7 +91,6 @@
 				</div>
 			</div>
 		</form>
-		<br>
 	</div>
 </body>
 </html>
