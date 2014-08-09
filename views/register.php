@@ -21,6 +21,7 @@
 <body>
 	<div id="img" style="text-align:center;">
 		<a href="/PBWeb/index.php"><img src="/PBWeb/img/choc_logo.gif" width="494" height="231"></a>
+
 		<?php
 		// show potential errors / feedback (from registration object)
 		if (isset($registration)) {
@@ -31,7 +32,7 @@
 			}
 			if ($registration->messages) {
 				foreach ($registration->messages as $message) {
-					echo $message;
+					echo '<p>' . $message . '<p>';
 				}
 			}
 		}

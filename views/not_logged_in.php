@@ -29,7 +29,7 @@
 			}
 			if ($login->messages) {
 				foreach ($login->messages as $message) {
-					echo $message;
+					echo '<p>' . $message . '<p>';
 				}
 			}
 		}
