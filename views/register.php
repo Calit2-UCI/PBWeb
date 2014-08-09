@@ -6,7 +6,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Foundation 5</title>
+	<title>Registration</title>
 
 	<!-- If you are using the CSS version, only link these 2 files, you may add app.css to use for your overrides if you like -->
 	<link rel="stylesheet" href="/PBWeb/css/normalize.css">
@@ -82,15 +82,18 @@
 
 		<br>
 		<div class="row">
-		<div class="small-1 columns small-push-3">
+			<div class="small-1 columns small-push-3">
 				<button type="submit"  name="login" class="button [secondary success alert">Register</button>
 			</div>
+		
+		
 			<div class="small-1 columns small-pull-4">
 				<a href="/PBWeb/index.php" class="button">Return</a>
 			</div>
-
 		</div>
-	</form>
-	<br>
+
+	</div>
+</form>
+<br>
 </body>
 </html>
