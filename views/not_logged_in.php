@@ -22,12 +22,19 @@
 		if (isset($login)) {
 			if ($login->errors) {
 				foreach ($login->errors as $error) {
-					echo ' <p style="color:red">' . $error . '</p>';
+					echo '<div data-alert class="alert-box alert radius">';
+					echo $error;
+					echo '<a href="#" class="close">&times;</a>
+						</div>';
 				}
 			}
+			
 			if ($login->messages) {
 				foreach ($login->messages as $message) {
-					echo '<p>' . $message . '<p>';
+					echo '<div data-alert class="alert-box info radius">';
+					echo $message;
+					echo '<a href="#" class="close">&times;</a>
+						</div>';
 				}
 			}
 		}

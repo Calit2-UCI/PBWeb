@@ -22,12 +22,19 @@
 		if (isset($registration)) {
 			if ($registration->errors) {
 				foreach ($registration->errors as $error) {
-					echo '<p style="color:red">' . $error . '</p>';
+					echo '<div data-alert class="alert-box alert radius">';
+					echo $error;
+					echo '<a href="#" class="close">&times;</a>
+						</div>';
 				}
 			}
+			
 			if ($registration->messages) {
 				foreach ($registration->messages as $message) {
-					echo '<p>' . $message . '<p>';
+					echo '<div data-alert class="alert-box info radius">';
+					echo $message;
+					echo '<a href="#" class="close">&times;</a>
+						</div>';
 				}
 			}
 		}
@@ -91,10 +98,6 @@
 			</div>
 		</form>
 	</div>
-	
-	<div data-alert class="alert-box success radius">
-		This is a success alert with a radius.
-		<a href="#" class="close">&times;</a>
-	</div>
+
 </body>
 </html>
