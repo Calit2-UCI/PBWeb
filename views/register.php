@@ -82,13 +82,13 @@
 
 			<br>
 			<div class="row">
-				<div class="small-4 column small-centered">
+				<div class="small-4 small-centered columns">
 					<button type="submit"  name="login" class="button success expand">Register</button>
 				</div>
 			</div>
 			<div class="row">
-				<div class="small-4 column small-centered">
-					<a href="/PBWeb/index.php" class="button expand">Return to login</a>
+				<div class="small-4 small-centered columns">
+					<a href="/PBWeb/index.php" class="button expand">Return</a>
 				</div>
 			</div>
 		</form>
