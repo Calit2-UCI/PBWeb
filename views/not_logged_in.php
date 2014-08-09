@@ -60,7 +60,7 @@
 							<button type="submit"  name="login" class="button">Login</button>
 						</div>
 						<div class="small-6 columns">
-							<a href="register.php" class="button [secondary success alert]">Register</a>
+							<a href="/PBWeb/register.php" class="button [secondary success alert]">Register</a>
 						</div>
 					</div>
 				</div> 
