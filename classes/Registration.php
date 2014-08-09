@@ -110,12 +110,12 @@ class Registration
                     // if user has been added successfully
                     if ($query_new_user_insert) {
                         $this->messages[] = "Your account has been created successfully. You can now log in.";
-						
-						// Send email to admin
-						$to			= ""; // TODO: Admin email account.
-						$subject	= "Painbuddy Patient Registered";
-						$message	= "{$first_name} {$last_name} ({$user_email}) has registered with the username of {$username}";
-						mail($to, $subject, $message);
+                        
+                        // Send email to admin
+                        $to			= "tianruig@gmail.com"; 
+                        $subject	= "User Registered";
+                        $message	= "{$first_name} {$last_name} ({$user_email}) has registered with the username of {$user_name}";
+                        mail($to, $subject, $message);
                     } else {
                         $this->errors[] = "Sorry, your registration failed. Please go back and try again.";
                     }
