@@ -80,8 +80,8 @@
 		</div>
 
 		<div class="row">
-		<div class="small-2 columns small-push-4">
-				<button type="submit"  name="login" class="button [secondary success alert">Register</button>
+			<div class="small-2 columns small-push-4">
+				<button type="submit"  name="login" class="button [secondary success alert]">Register</button>
 			</div>
 			<div class="small-2 columns small-pull-4">
 				<a href="/PBWeb/index.php" class="button">Return</a>
