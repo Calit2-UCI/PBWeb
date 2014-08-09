@@ -61,7 +61,7 @@
 					</div>
 					
 					<div class="row">
-						<a href="register.php" class="button success expand">No Account? Register</a>
+						<a href="/PBWeb/register.php" class="button success expand">No Account? Register</a>
 					</div>
 				</form>
 			</div>

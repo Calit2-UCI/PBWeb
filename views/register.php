@@ -82,7 +82,7 @@
 			
 			<div class="row">
 				<div class="small-4 small-centered columns">
-					<button type="submit"  name="login" class="button success expand">Register</button>
+					<button type="submit"  name="register" class="button success expand">Register</button>
 				</div>
 			</div>
 			<div class="row">
