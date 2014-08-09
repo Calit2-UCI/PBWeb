@@ -5,7 +5,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Foundation 5</title>
+	<title>Portal</title>
 
 	<!-- If you are using the CSS version, only link these 2 files, you may add app.css to use for your overrides if you like -->
 	<link rel="stylesheet" href="/PBWeb/css/normalize.css">
@@ -22,7 +22,7 @@
 
 
 	<div id="img" style="text-align:center;">
-		<a href="/PBWeb/index.php"><img src="/PBWeb/img/choc_logo.gif" width="329" height="154"></a>
+		<a href="/PBWeb/index.php"><img src="/PBWeb/img/choc_logo.gif" width="494" height="231"></a>
 		<h1>Welcome</h1>
 	</div>
 

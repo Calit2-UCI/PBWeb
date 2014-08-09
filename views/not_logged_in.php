@@ -6,7 +6,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Foundation 5</title>
+	<title>Login</title>
 
 	<!-- If you are using the CSS version, only link these 2 files, you may add app.css to use for your overrides if you like -->
 	<link rel="stylesheet" href="/PBWeb/css/normalize.css">
@@ -18,7 +18,7 @@
 <body>
 
 	<div id="img" style="text-align:center;">
-		<a href="/PBWeb/index.php"><img src="/PBWeb/img/choc_logo.gif" width="329" height="154"></a>
+		<a href="/PBWeb/index.php"><img src="/PBWeb/img/choc_logo.gif" width="494" height="231"></a>
 
 
 		<?php
@@ -56,12 +56,10 @@
 					<!-- <input type="submit"  name="login" value="Log in" /> -->
 					<br>
 					<div class="row">
-						<div class="small-6 columns">
-							<button type="submit"  name="login" class="button">Login</button>
-						</div>
-						<div class="small-6 columns">
-							<a href="/PBWeb/register.php" class="button [secondary success alert]">Register</a>
-						</div>
+						<button type="submit"  name="login" class="button expand">Login</button>
+					</div>
+					<div class="row">
+						<a href="register.php" class="button success expand">No Account? Register</a>
 					</div>
 				</div> 
 			</div>
