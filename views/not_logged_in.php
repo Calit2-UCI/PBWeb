@@ -16,7 +16,7 @@
 
 </head>
 <body>
-	
+
 	<div id="img" style="text-align:center;">
 		<a href="/PBWeb/index.php"><img src="/PBWeb/img/choc_logo.gif" width="329" height="154"></a>
 
@@ -68,6 +68,5 @@
 			</div>
 		</form>
 	</div>
-</div>
 </body>
 <html>
