@@ -1,60 +1,71 @@
 <!DOCTYPE html>
 
-<html>
+<!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
+<html class="no-js" lang="en" >
+
 <head>
-	<link href="/PBWeb/css/pure-min.css" rel="stylesheet" type="text/css">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<style>
-		form {
-			width: 600px;
-			margin: 0 auto;
-		}
-	</style>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Foundation 5</title>
+
+	<!-- If you are using the CSS version, only link these 2 files, you may add app.css to use for your overrides if you like -->
+	<link rel="stylesheet" href="/PBWeb/css/normalize.css">
+	<link rel="stylesheet" href="/PBWeb/css/foundation.css">
+
+	<script src="/PBWeb/js/vendor/modernizr.js"></script>
+
 </head>
-
 <body>
+
 	<div id="img" style="text-align:center;">
-		<img src="/PBWeb/img/choc_logo.gif" width="329" height="154"> 
-		<h1>Account Login</h1>
+		<a href="/PBWeb/index.php"><img src="/PBWeb/img/choc_logo.gif" width="329" height="154"></a>
 
-	<?php
-	// show potential errors / feedback (from login object)
-	if (isset($login)) {
-		if ($login->errors) {
-			foreach ($login->errors as $error) {
-				echo ' <p style="color:red">' . $error . '</p>';
+
+		<?php
+		// show potential errors / feedback (from login object)
+		if (isset($login)) {
+			if ($login->errors) {
+				foreach ($login->errors as $error) {
+					echo ' <p style="color:red">' . $error . '</p>';
+				}
+			}
+			if ($login->messages) {
+				foreach ($login->messages as $message) {
+					echo $message;
+				}
 			}
 		}
-		if ($login->messages) {
-			foreach ($login->messages as $message) {
-				echo $message;
-			}
-		}
-	}
-	?>
+		?>
 	</div>
-			
-	<!-- login form box -->
-	<form method="post" action="index.php" name="loginform"  class="pure-form pure-form-aligned">
-		<fieldset>
-			<div class="pure-control-group">
-				<label for="login_input_username">Username</label>
-				<input id="login_input_username" class="pure-input-1-2" type="text" name="user_name" required placeholder="Username"/>
+	
+	<div class="panel">
+		<br>
+		<h2>Account Login</h2>
+		<br>
+		<div class="row">
+			<div class="small-4 small-centered columns">
+				<form method="post" action="index.php" name="loginform">
+					<div class="row">
+						<label for="login_input_username"> Username </label>
+						<input id="login_input_username" class="login_input" type="text" name="user_name" required placeholder="Username"/>
+					</div>
+					<div class="row">
+						<label for="login_input_password">Password</label>
+						<input id="login_input_password" class="login_input" type="password" name="user_password" autocomplete="off" required placeholder="Password"/>
+					</div>
+					<!-- <input type="submit"  name="login" value="Log in" /> -->
+					<br>
+					<div class="row">
+						<div class="small-6 columns">
+							<button type="submit"  name="login" class="button">Login</button>
+						</div>
+						<div class="small-6 columns">
+							<a href="register.php" class="button [secondary success alert]">Register</a>
+						</div>
+					</div>
+				</div> 
 			</div>
-
-			<div class="pure-control-group">		
-				<label for="login_input_password">Password</label>
-				<input id="login_input_password" class="pure-input-1-2" type="password" name="user_password" autocomplete="off" required placeholder="Password"/>
-			</div>
-
-			<div class="pure-controls">	
-				<!-- <input type="submit"  name="login" value="Log in" /> -->
-				<button type="submit"  name="login" class="pure-button pure-button-primary">Log in</button>
-			</div>
-		</fieldset>
-
-	</form>
-
-	<p style="text-align:center;"><a href="register.php">Register new account</a></p>
+		</form>
+	</div>
 </body>
 <html>

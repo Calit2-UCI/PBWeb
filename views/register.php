@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 
-<html>
+<!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
+<html class="no-js" lang="en" >
+
 <head>
-	<link href="/PBWeb/css/pure-min.css" rel="stylesheet" type="text/css">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<style>
-		form {
-			width: 600px;
-			margin: 0 auto;
-		}
-	</style>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Foundation 5</title>
+
+	<!-- If you are using the CSS version, only link these 2 files, you may add app.css to use for your overrides if you like -->
+	<link rel="stylesheet" href="/PBWeb/css/normalize.css">
+	<link rel="stylesheet" href="/PBWeb/css/foundation.css">
+
+	<!-- If you are using the gem version, you need this only -->
+	<link rel="stylesheet" href="/PBWeb/css/app.css">
+
+	<script src="/PBWeb/js/vendor/modernizr.js"></script>
+
 </head>
 
-<body>
-	<div id="img" style="text-align:center;">
-		<img src="/PBWeb/img/choc_logo.gif" width="329" height="154"> 
-		<h1>Register</h1>
-
+<div id="img" style="text-align:center;">
+	<a href="/PBWeb/index.php"><img src="/PBWeb/img/choc_logo.gif" width="329" height="154"></a>
 	<?php
 	// show potential errors / feedback (from registration object)
 	if (isset($registration)) {
@@ -32,52 +36,58 @@
 		}
 	}
 	?>
-	</div>
+</div>
+<div class="panel">
+	<br>
+	<h2>Apply for an Account</h2>
+	<br>
 
-	<!-- register form -->
-	<form class="pure-form pure-form-aligned" method="post" action="register.php" name="registerform">
-		<fieldset>
-			<div class="pure-control-group">
+	<form method="post" action="register.php" name="registerform">
+
+		<div class="row">
+
+			<div class="small-4 push-2 columns">
 				<label for="first_name">First name</label>
-				<input id="first_name" class="pure-input-1-2" type="text" name="first_name" required placeholder="First Name"/>
+				<input id="first_name"  type="text" name="first_name" required placeholder="First Name"/>
 			</div>
+			<div class="small-4 pull-2 columns">
+				<label for="login_input_username">Username</label>
+				<input id="login_input_username"  type="text" pattern="[a-zA-Z0-9]{2,64}" name="user_name" required placeholder="Username"/>
+			</div>
+		</div>
 
-			<div class="pure-control-group">	
+		<div class="row">
+			<div class="small-4 push-2 columns">
 				<label for="last_name">Last name</label>
-				<input id="last_name" class="pure-input-1-2" type="text" name="last_name" required placeholder="Last Name"/>
+				<input id="last_name" type="text" name="last_name" required placeholder="Last Name"/>
 			</div>
-
-			<div class="pure-control-group">	
-				<!-- the user name input field uses a HTML5 pattern check -->
-				<label for="login_input_username">Username (letters and/or numbers, 2 to 64 characters)</label>
-				<input id="login_input_username" class="pure-input-1-2" type="text" pattern="[a-zA-Z0-9]{2,64}" name="user_name" required placeholder="Username"/>
-			</div>
-
-			<div class="pure-control-group">
-				<!-- the email input field uses a HTML5 email type check -->
-				<label for="login_input_email">Email</label>
-				<input id="login_input_email" class="pure-input-1-2" type="email" name="user_email" required placeholder="Email"/>
-			</div>
-
-			<div class="pure-control-group">
+			<div class="small-4 pull-2 columns">
 				<label for="login_input_password_new">Password (min. 6 characters)</label>
-				<input id="login_input_password_new" class="pure-input-1-2" type="password" name="user_password_new" pattern=".{6,}" required autocomplete="off" placeholder="Password"/>
+				<input id="login_input_password_new"  type="password" name="user_password_new" pattern=".{6,}" required autocomplete="off" placeholder="Password"/>
 			</div>
+		</div>
 
-			<div class="pure-control-group">
+		<div class="row">
+
+			<div class="small-4 push-2 columns">
+				<label for="login_input_email">Email</label>
+				<input id="login_input_email"  type="email" name="user_email" required placeholder="Email"/>
+			</div>
+			<div class="small-4 pull-2 columns">
 				<label for="login_input_password_repeat">Repeat password</label>
-				<input id="login_input_password_repeat" class="pure-input-1-2" type="password" name="user_password_repeat" pattern=".{6,}" required autocomplete="off" placeholder="Repeat Password"/>
+				<input id="login_input_password_repeat"  type="password" name="user_password_repeat" pattern=".{6,}" required autocomplete="off" placeholder="Repeat Password"/>
 			</div>
+		</div>
 
-			<div class="pure-controls">	
-				<!-- <input type="submit" value="Register" /> -->
-				<button type="submit"  name="register" class="pure-button pure-button-primary">Register</button>
+		<div class="row">
+		<div class="small-2 columns small-push-4">
+				<button type="submit"  name="login" class="button [secondary success alert">Register</button>
 			</div>
-		</fieldset>
+			<div class="small-2 columns small-pull-4">
+				<a href="/PBWeb/index.php" class="button">Return</a>
+			</div>
+		</div>
 	</form>
-
-	<br />
-	<!-- backlink -->
-	<p style="text-align:center;"><a href="index.php">Back to Login Page</a></p>
+	<br>
 </body>
 </html>
