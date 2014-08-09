@@ -20,7 +20,7 @@
 </head>
 
 <div id="img" style="text-align:center;">
-	<a href="/PBWeb/index.php"><img src="/PBWeb/img/choc_logo.gif" width="329" height="154"></a>
+	<a href="/PBWeb/index.php"><img src="/PBWeb/img/choc_logo.gif" width="494" height="231"></a>
 	<?php
 	// show potential errors / feedback (from registration object)
 	if (isset($registration)) {
@@ -83,7 +83,7 @@
 		<br>
 		<div class="row">
 			<div class="small-1 columns small-push-3">
-				<button type="submit"  name="login" class="button [secondary success alert">Register</button>
+				<button type="submit"  name="login" class="button [secondary success alert]">Register</button>
 			</div>
 		
 		

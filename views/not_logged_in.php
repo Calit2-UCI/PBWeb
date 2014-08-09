@@ -18,7 +18,7 @@
 <body>
 
 	<div id="img" style="text-align:center;">
-		<a href="/PBWeb/index.php"><img src="/PBWeb/img/choc_logo.gif" width="329" height="154"></a>
+		<a href="/PBWeb/index.php"><img src="/PBWeb/img/choc_logo.gif" width="494" height="231"></a>
 
 
 		<?php
