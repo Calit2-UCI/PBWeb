@@ -49,33 +49,33 @@
 		<form method="post" action="registration.php" name="registerform">
 
 			<div class="row">
-				<div class="small-6 large-4 push-2 columns">
+				<div class="small-6 medium-4 large-4 push-2 columns">
 					<label for="first_name">First name</label>
 					<input id="first_name"  type="text" tabindex=1 name="first_name" required placeholder="First Name"/>
 				</div>
-				<div class="small-6 large-4 pull-2 columns">
+				<div class="small-6 medium-4 large-4 pull-2 columns">
 					<label for="login_input_username">Username</label>
 					<input id="login_input_username"  tabindex=4 type="text" pattern="[a-zA-Z0-9]{2,64}" name="user_name" required placeholder="Username"/>
 				</div>
 			</div>
 
 			<div class="row">
-				<div class="small-6 large-4 push-2 columns">
+				<div class="small-6 medium-4 large-4 push-2 columns">
 					<label for="last_name">Last name</label>
 					<input id="last_name" type="text" tabindex=2 name="last_name" required placeholder="Last Name"/>
 				</div>
-				<div class="small-6 large-4 pull-2 columns">
+				<div class="small-6 medium-4 large-4 pull-2 columns">
 					<label for="login_input_password_new">Password (min. 6 characters)</label>
 					<input id="login_input_password_new" tabindex=5 type="password" name="user_password_new" pattern=".{6,}" required autocomplete="off" placeholder="Password"/>
 				</div>
 			</div>
 
 			<div class="row">
-				<div class="small-6 large-4 push-2 columns">
+				<div class="small-6 medium-4 large-4 push-2 columns">
 					<label for="login_input_email">Email</label>
 					<input id="login_input_email"  tabindex=3 type="email" name="user_email" required placeholder="Email"/>
 				</div>
-				<div class="small-6 large-4 pull-2 columns">
+				<div class="small-6 medium-4 large-4 pull-2 columns">
 					<label for="login_input_password_repeat">Repeat password</label>
 					<input id="login_input_password_repeat" tabindex=6 type="password" name="user_password_repeat" pattern=".{6,}" required autocomplete="off" placeholder="Repeat Password"/>
 				</div>
