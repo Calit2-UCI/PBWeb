@@ -4,12 +4,12 @@
 <html class="no-js" lang="en" >
 
 <head>
-    <meta charset="utf-8" />
-    <!-- if you remove this meta tag, the NSA will spy on you through your Xbox Kinect camera -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Foundation</title>
-    <link rel="stylesheet" href="css/app.css" />
-    <script src="bower_components/modernizr/modernizr.js"></script>
+	<meta charset="utf-8" />
+	<!-- if you remove this meta tag, the NSA will spy on you through your Xbox Kinect camera -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Foundation</title>
+	<link rel="stylesheet" href="css/app.css" />
+	<script src="bower_components/modernizr/modernizr.js"></script>
 	
 </head>
 
@@ -25,26 +25,27 @@
 					echo '<div data-alert class="alert-box alert radius">';
 					echo $error;
 					echo '<a href="#" class="close">&times;</a>
-						</div>';
-				}
-			}
-			
-			if ($login->messages) {
-				foreach ($login->messages as $message) {
-					echo '<div data-alert class="alert-box info radius">';
-					echo $message;
-					echo '<a href="#" class="close">&times;</a>
-						</div>';
-				}
+				</div>';
 			}
 		}
-		?>
-	</div>
-	<div class="small-6 small-centered columns">
+	}
+
+	if ($login->messages) {
+		foreach ($login->messages as $message) {
+			echo '<div data-alert class="alert-box info radius">';
+			echo $message;
+			echo '<a href="#" class="close">&times;</a>
+		</div>';
+	}
+}
+
+?>
+</div>
+<div class="small-12 large-6 small-centered columns">
 	<div class="panel">
 		<br>
 		<div style="text-align:center">
-		<h2>Account Login</h2>
+			<h2>Account Login</h2>
 		</div>
 		<br>
 		
@@ -74,6 +75,6 @@
 			</div>
 		</div>
 	</div>
-	</div>
+</div>
 </body>
 </html>

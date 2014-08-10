@@ -28,7 +28,7 @@
 			</div>';
 		}
 	}
-	
+
 	if ($registration->messages) {
 		foreach ($registration->messages as $message) {
 			echo '<div data-alert class="alert-box info radius">';
@@ -39,7 +39,7 @@
 }
 }
 ?>
-<div class="small-8 small-centered columns">
+<div class="small-12 large-6 small-centered columns">
 	<div class="panel">
 		<br>
 		<div style="text-align:center" id="box-shadow-default">
