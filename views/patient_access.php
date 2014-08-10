@@ -25,7 +25,7 @@
 	
 	<form method="post" action="..\classes\patients.php" name="patientacess">
 		<div class="row">
-			<div class="small-4 small-centered columns">
+			<div class="small-8 large-4 small-centered columns">
 				<div class="row">
 					<label for="patient_id"> Patient ID </label>
 					<input id="patient_id" type="text" name="patient_id" required placeholder="Enter Patient ID"/>

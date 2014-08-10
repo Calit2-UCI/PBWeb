@@ -49,7 +49,7 @@
 		<br>
 		
 		<div class="row">
-			<div class="small-4 small-centered columns">
+			<div class="small-8 large-4 small-centered columns">
 				<form method="post" action="index.php" name="loginform">
 					<div class="row">
 						<label for="login_input_username"> Username </label>
