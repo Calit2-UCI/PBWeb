@@ -16,9 +16,9 @@
 		<a href="/PBWeb/index.php"><img src="/PBWeb/img/choc_logo.gif" width="494" height="231"></a>
 	</div>
 
-	<div class="panel"
-	<br>
+	<div class="panel">
 	<div style="text-align:center" id="box-shadow-default">
+	<br>
 		<h2>Patient Lookup</h2>
 	</div>
 	<br>
