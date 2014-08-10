@@ -63,11 +63,11 @@
 				<br>
 
 				<div class="row">
-					<button type="submit"  name="login" class="button expand">Login</button>
+					<button type="submit"  name="login" class="button tiny expand">Login</button>
 				</div>
 
 				<div class="row">
-					<a href="registration.php" class="button success expand">Account Registration</a>
+					<a href="registration.php" class="button success tiny expand">Account Registration</a>
 					</div>
 				</div>
 			</form>
