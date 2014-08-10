@@ -30,7 +30,7 @@
 							<label for="patient_id"> Patient ID </label>
 							<input id="patient_id" type="text" name="patient_id" required placeholder="Enter Patient ID"/>
 						</div>
-
+<br>
 						<div class="row">
 							<button type="submit"  name="Submit" class="button tiny expand">Submit</button>
 						</div>
