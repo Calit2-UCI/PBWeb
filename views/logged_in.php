@@ -4,6 +4,7 @@
 <html class="no-js" lang="en" >
 
 <head>
+
 	<meta charset="utf-8" />
 	<!-- if you remove this meta tag, the NSA will spy on you through your Xbox Kinect camera -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
