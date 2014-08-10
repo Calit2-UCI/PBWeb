@@ -16,8 +16,8 @@
 <body>
 	<div id="img" style="text-align:center;">
 		<a href="/PBWeb/index.php"><img src="/PBWeb/img/choc_logo.gif" width="494" height="231"></a>
-
-		<?php
+	</div>
+	<?php
 		// show potential errors / feedback (from registration object)
 		if (isset($registration)) {
 			if ($registration->errors) {
@@ -39,16 +39,14 @@
 			}
 		}
 		?>
-	</div>
-	
-	<div class="panel box-shadow">
+	<div class="panel">
 		<br>
 		<div style="text-align:center" id="box-shadow-default">
 			<h2>Apply for an Account</h2>
 		</div>
 		<br>
 
-		<form method="post" action="register.php" name="registerform">
+		<form method="post" action="registration.php" name="registerform">
 
 			<div class="row">
 				<div class="small-4 push-2 columns">

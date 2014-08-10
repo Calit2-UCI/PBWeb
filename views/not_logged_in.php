@@ -68,7 +68,7 @@
 					</div>
 					
 					<div class="row">
-						<a href="register.php" class="button success expand">Account Registration</a>
+						<a href="registration.php" class="button success expand">Account Registration</a>
 					</div>
 				</form>
 			</div>
