@@ -48,31 +48,28 @@
 			<h2>Account Login</h2>
 		</div>
 		<br>
-		
-		<div class="row">
-			<div class="small-8 large-4 small-centered columns">
-				<form method="post" action="index.php" name="loginform">
-					<div class="row">
-						<label for="login_input_username"> Username </label>
-						<input id="login_input_username" class="login_input" type="text" name="user_name" required placeholder="Username"/>
-					</div>
-					
-					<div class="row">
-						<label for="login_input_password">Password</label>
-						<input id="login_input_password" class="login_input" type="password" name="user_password" autocomplete="off" required placeholder="Password"/>
-					</div>
-					
-					<br>
-					
-					<div class="row">
-						<button type="submit"  name="login" class="button expand">Login</button>
-					</div>
-					
-					<div class="row">
-						<a href="registration.php" class="button success expand">Account Registration</a>
-					</div>
-				</form>
-			</div>
+		<div class="small-8 large-4 small-centered columns">
+			<form method="post" action="index.php" name="loginform">
+				<div class="row">
+					<label for="login_input_username"> Username </label>
+					<input id="login_input_username" class="login_input" type="text" name="user_name" required placeholder="Username"/>
+				</div>
+
+				<div class="row">
+					<label for="login_input_password">Password</label>
+					<input id="login_input_password" class="login_input" type="password" name="user_password" autocomplete="off" required placeholder="Password"/>
+				</div>
+
+				<br>
+
+				<div class="row">
+					<button type="submit"  name="login" class="button expand">Login</button>
+				</div>
+
+				<div class="row">
+					<a href="registration.php" class="button success expand">Account Registration</a>
+				</div>
+			</form>
 		</div>
 	</div>
 </div>
