@@ -19,26 +19,27 @@
 	</div>
 	<?php
 		// show potential errors / feedback (from registration object)
-		if (isset($registration)) {
-			if ($registration->errors) {
-				foreach ($registration->errors as $error) {
-					echo '<div data-alert class="alert-box alert radius">';
-					echo $error;
-					echo '<a href="#" class="close">&times;</a>
-						</div>';
-				}
-			}
-			
-			if ($registration->messages) {
-				foreach ($registration->messages as $message) {
-					echo '<div data-alert class="alert-box info radius">';
-					echo $message;
-					echo '<a href="#" class="close">&times;</a>
-						</div>';
-				}
-			}
+	if (isset($registration)) {
+		if ($registration->errors) {
+			foreach ($registration->errors as $error) {
+				echo '<div data-alert class="alert-box alert radius">';
+				echo $error;
+				echo '<a href="#" class="close">&times;</a>
+			</div>';
 		}
-		?>
+	}
+	
+	if ($registration->messages) {
+		foreach ($registration->messages as $message) {
+			echo '<div data-alert class="alert-box info radius">';
+			echo $message;
+			echo '<a href="#" class="close">&times;</a>
+		</div>';
+	}
+}
+}
+?>
+<div class="small-8 small-centered columns">
 	<div class="panel">
 		<br>
 		<div style="text-align:center" id="box-shadow-default">
@@ -96,6 +97,7 @@
 			</div>
 		</form>
 	</div>
+</div>
 
 </body>
 </html>

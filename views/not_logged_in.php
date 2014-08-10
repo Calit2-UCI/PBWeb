@@ -40,7 +40,7 @@
 		}
 		?>
 	</div>
-	
+	<div class="small-6 small-centered columns">
 	<div class="panel">
 		<br>
 		<div style="text-align:center">
@@ -73,6 +73,7 @@
 				</form>
 			</div>
 		</div>
+	</div>
 	</div>
 </body>
 </html>
