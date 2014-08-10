@@ -8,8 +8,8 @@
     <!-- if you remove this meta tag, the NSA will spy on you through your Xbox Kinect camera -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Foundation</title>
-    <link rel="stylesheet" href="css/app.css" />
-    <script src="bower_components/modernizr/modernizr.js"></script>
+    <link rel="stylesheet" href="/PBWeb/css/app.css" />
+    <script src="/PBWeb/bower_components/modernizr/modernizr.js"></script>
 	
 </head>
 
