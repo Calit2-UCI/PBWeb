@@ -25,7 +25,8 @@
 				<h2>Welcome, <?php echo $_SESSION['user_name']; ?>!</h2>
 			</div>
 			<br>
-			<div class="row">
+			<div class="small-10 large-6 small-centered columns">
+				<div class="row">
 					<a href="/PBWeb/views/patient_access.php" class="button expand">Patient Access</a>
 				</div>
 				<div class="row">
@@ -34,6 +35,7 @@
 				<div class="row">
 					<a href="/PBWeb/index.php?logout" class="button alert expand">Logout</a>
 				</div>
+			</div>
 		</div>
 	</div>
 </body>

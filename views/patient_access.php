@@ -34,6 +34,9 @@
 						<div class="row">
 							<button type="submit"  name="Submit" class="button tiny expand">Submit</button>
 						</div>
+						<div class="row">
+							<a href="/PBWeb/index.php" class="button success tiny expand">Back</a>
+						</div>
 					</div>
 				</div>
 			</form>
