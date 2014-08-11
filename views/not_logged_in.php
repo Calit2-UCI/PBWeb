@@ -10,11 +10,11 @@
 		<form method="post" action="index.php" name="loginform">
 			<div class="row">
 				<label for="user_name"><?php echo WORDING_USERNAME; ?></label>
-				<input id="user_name" type="text" name="user_name" required />
+				<input id="user_name" type="text" name="user_name" required placeholder="Username"/>
 			</div>
 			<div class="row">
 				<label for="user_password"><?php echo WORDING_PASSWORD; ?></label>
-				<input id="user_password" type="password" name="user_password" autocomplete="off" required />
+				<input id="user_password" type="password" name="user_password" autocomplete="off" required placeholder="Password"/>
 			</div>
 			<div class="row">
 			<input type="checkbox" id="user_rememberme" name="user_rememberme" value="1" />

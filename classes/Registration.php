@@ -40,7 +40,7 @@ class Registration
 
         // if we have such a POST request, call the registerNewUser() method
         if (isset($_POST["register"])) {
-            $this->registerNewUser($_POST['user_name'], $_POST['user_email'], $_POST['user_password_new'], $_POST['user_password_repeat'], $_POST["captcha"]);
+            $this->registerNewUser($_POST['first_name'], $_POST['last_name'], $_POST['user_name'], $_POST['user_email'], $_POST['user_password_new'], $_POST['user_password_repeat'], $_POST["captcha"]);
         // if we have such a GET request, call the verifyNewUser() method
         } else if (isset($_GET["id"]) && isset($_GET["verification_code"])) {
             $this->verifyNewUser($_GET["id"], $_GET["verification_code"]);
@@ -78,7 +78,7 @@ class Registration
      * handles the entire registration process. checks all error possibilities, and creates a new user in the database if
      * everything is fine
      */
-    private function registerNewUser($user_name, $user_email, $user_password, $user_password_repeat, $captcha)
+    private function registerNewUser($first_name, $last_name, $user_name, $user_email, $user_password, $user_password_repeat, $captcha)
     {
         // we just remove extra space on username and email
         $user_name  = trim($user_name);
@@ -88,6 +88,10 @@ class Registration
         // TODO: check for "return true" case early, so put this first
         if (strtolower($captcha) != strtolower($_SESSION['captcha'])) {
             $this->errors[] = MESSAGE_CAPTCHA_WRONG;
+        } elseif (empty($first_name)) {
+            $this->errors[] = MESSAGE_FIRST_NAME_EMPTY;
+        } elseif (empty($last_name)) {
+            $this->errors[] = MESSAGE_LAST_NAME_EMPTY;
         } elseif (empty($user_name)) {
             $this->errors[] = MESSAGE_USERNAME_EMPTY;
         } elseif (empty($user_password) || empty($user_password_repeat)) {
@@ -136,12 +140,15 @@ class Registration
                 $user_activation_hash = sha1(uniqid(mt_rand(), true));
 
                 // write new users data into database
-                $query_new_user_insert = $this->db_connection->prepare('INSERT INTO users (user_name, user_password_hash, user_email, user_activation_hash, user_registration_ip, user_registration_datetime) VALUES(:user_name, :user_password_hash, :user_email, :user_activation_hash, :user_registration_ip, now())');
+                $query_new_user_insert = $this->db_connection->prepare('INSERT INTO users (first_name, last_name, user_name, user_password_hash, user_email, user_activation_hash, user_registration_ip, user_registration_datetime) VALUES(:first_name, :last_name, :user_name, :user_password_hash, :user_email, :user_activation_hash, :user_registration_ip, now())');
+                $query_new_user_insert->bindValue(':first_name', $first_name, PDO::PARAM_STR);
+                $query_new_user_insert->bindValue(':last_name', $last_name, PDO::PARAM_STR);
                 $query_new_user_insert->bindValue(':user_name', $user_name, PDO::PARAM_STR);
                 $query_new_user_insert->bindValue(':user_password_hash', $user_password_hash, PDO::PARAM_STR);
                 $query_new_user_insert->bindValue(':user_email', $user_email, PDO::PARAM_STR);
                 $query_new_user_insert->bindValue(':user_activation_hash', $user_activation_hash, PDO::PARAM_STR);
                 $query_new_user_insert->bindValue(':user_registration_ip', $_SERVER['REMOTE_ADDR'], PDO::PARAM_STR);
+				
                 $query_new_user_insert->execute();
 
                 // id of new user
