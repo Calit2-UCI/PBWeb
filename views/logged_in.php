@@ -27,7 +27,7 @@
 			<br>
 			<div class="small-10 large-6 small-centered columns">
 				<div class="row">
-					<a href="/PBWeb/views/patient_access.php" class="button expand">Patient Access</a>
+					<a href="access.php" class="button expand">Patient Access</a>
 				</div>
 				<div class="row">
 					<a href="settings.php" class="button success expand">User Settings</a>
