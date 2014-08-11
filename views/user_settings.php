@@ -18,19 +18,36 @@
 	<div class="small-12 large-6 small-centered columns">
 		<div class="panel">
 			<div style="text-align:center" id="box-shadow-default">
+				<h2>User Settings</h2>
 				<br>
-				<h2>Patient Lookup</h2>
+				
+				<h4>To make changes, please enter current password.</h4>
 				<div class="row">
-					<label for="login_input_username"> Username </label>
-					<input id="login_input_username" class="login_input" type="text" name="user_name" required placeholder="Username"/>
+					<label for="settings_input_password">Current Password</label>
+					<input id="settings_input_password" class="login_input" type="password" name="user_password" autocomplete="off" required placeholder="Password"/>
 				</div>
-
+				
+				<br>
+				
+				<h4>Change Password</h4>
 				<div class="row">
-					<label for="login_input_password">Password</label>
-					<input id="login_input_password" class="login_input" type="password" name="user_password" autocomplete="off" required placeholder="Password"/>
+					<label for="settings_input_new_password">New Password</label>
+					<input id="settings_input_new_password" class="login_input" type="password" name="new_password" autocomplete="off" placeholder="New Password"/>
+
+					<label for="settings_input_password_repeat">Re-enter New Password</label>
+					<input id="settings_input_password_repeat" class="login_input" type="password" name="password_again" autocomplete="off" placeholder="Re-enter New Password"/>
+				</div>				
+				<br>
+				
+				<div class="row">
+					<button type="submit"  name="submit" class="button expand">Submit</button>
+				</div>
+				
+				<div class="row">
+					<a href="/PBWeb/index.php" class="button success expand">Go Back</a>
 				</div>
 			</div>
-			<br>
+
 		</div>
 	</div>
 </body>
