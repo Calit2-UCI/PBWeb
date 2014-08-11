@@ -14,46 +14,51 @@
 </head>
 <body>
 
-<?php
-// show potential errors / feedback (from login object)
-if (isset($login)) {
-    if ($login->errors) {
-        foreach ($login->errors as $error) {
-			echo '<div data-alert class="alert-box alert radius">';
-            echo $error;
-			echo '<a href="#" class="close">&times;</a>
-				</div>';
-        }
-    }
-    if ($login->messages) {
-        foreach ($login->messages as $message) {
-			echo '<div data-alert class="alert-box info radius">';
-            echo $message;
-			echo '<a href="#" class="close">&times;</a>
-				</div>';
-        }
-    }
-}
-?>
+<body>
+	<div id="img" style="text-align:center;">
+		<a href="/PBWeb/index.php"><img src="/PBWeb/img/choc_logo.gif" width="494" height="231"></a>
+		<?php
+		// show potential errors / feedback (from login object)
+		if (isset($login)) {
+			if ($login->errors) {
+				foreach ($login->errors as $error) {
+					echo '<div data-alert class="alert-box alert radius">';
+					echo $error;
+					echo '<a href="#" class="close">&times;</a>
+						</div>';
+				}
+			}
+			if ($login->messages) {
+				foreach ($login->messages as $message) {
+					echo '<div data-alert class="alert-box info radius">';
+					echo $message;
+					echo '<a href="#" class="close">&times;</a>
+						</div>';
+				}
+			}
+		}
+		?>
 
-<?php
-// show potential errors / feedback (from registration object)
-if (isset($registration)) {
-    if ($registration->errors) {
-        foreach ($registration->errors as $error) {
-			echo '<div data-alert class="alert-box alert radius">';
-            echo $error;
-			echo '<a href="#" class="close">&times;</a>
-				</div>';
-        }
-    }
-    if ($registration->messages) {
-        foreach ($registration->messages as $message) {
-			echo '<div data-alert class="alert-box info radius">';
-            echo $message;
-			echo '<a href="#" class="close">&times;</a>
-				</div>';
-        }
-    }
-}
-?>
+		<?php
+		// show potential errors / feedback (from registration object)
+		if (isset($registration)) {
+			if ($registration->errors) {
+				foreach ($registration->errors as $error) {
+					echo '<div data-alert class="alert-box alert radius">';
+					echo $error;
+					echo '<a href="#" class="close">&times;</a>
+						</div>';
+				}
+			}
+			if ($registration->messages) {
+				foreach ($registration->messages as $message) {
+					echo '<div data-alert class="alert-box info radius">';
+					echo $message;
+					echo '<a href="#" class="close">&times;</a>
+						</div>';
+				}
+			}
+		}
+		?>
+	</div>
+</div>
