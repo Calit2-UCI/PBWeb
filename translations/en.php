@@ -70,6 +70,8 @@ define("WORDING_REGISTER", "Register");
 define("WORDING_REGISTER_NEW_ACCOUNT", "Register new account");
 define("WORDING_REGISTRATION_CAPTCHA", "Please enter these characters");
 define("WORDING_REGISTRATION_EMAIL", "User's email (please provide a real email address, you'll get a verification mail with an activation link)");
+define("WORDING_REGISTRATION_FIRST_NAME", "First Name");
+define("WORDING_REGISTRATION_LAST_NAME", "Last Name");
 define("WORDING_REGISTRATION_PASSWORD", "Password (min. 6 characters!)");
 define("WORDING_REGISTRATION_PASSWORD_REPEAT", "Password repeat");
 define("WORDING_REGISTRATION_USERNAME", "Username (only letters and numbers, 2 to 64 characters)");
