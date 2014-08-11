@@ -2,6 +2,16 @@
 
 <!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
 <html class="no-js" lang="en" >
+<?PHP
+require_once("/PBWeb/classes/Login.php");
+
+if(!$checklogin->isUserLoggedIn())
+{
+	$checklogin->RedirectToURL("\PbWeb\classes\index.php");
+	$this->errors[] = "Please login first.";
+	exit;
+}
+?>
 
 <head>
 
