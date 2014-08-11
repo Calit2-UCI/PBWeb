@@ -67,6 +67,7 @@ define("WORDING_NEW_PASSWORD_REPEAT", "Repeat new password");
 define("WORDING_NEW_USERNAME", "New username (username cannot be empty and must be azAZ09 and 2-64 characters)");
 define("WORDING_OLD_PASSWORD", "Your OLD Password");
 define("WORDING_PASSWORD", "Password");
+define("WORDING_PATIENT_ACCESS", "Patient access");
 define("WORDING_PROFILE_PICTURE", "Your profile picture (from gravatar):");
 define("WORDING_REGISTER", "Register");
 define("WORDING_REGISTER_NEW_ACCOUNT", "Register new account");
