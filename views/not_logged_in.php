@@ -1,78 +1,16 @@
-<!DOCTYPE html>
+<?php include('_header.php'); ?>
 
-<!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
-<html class="no-js" lang="en" >
+<form method="post" action="index.php" name="loginform">
+    <label for="user_name"><?php echo WORDING_USERNAME; ?></label>
+    <input id="user_name" type="text" name="user_name" required />
+    <label for="user_password"><?php echo WORDING_PASSWORD; ?></label>
+    <input id="user_password" type="password" name="user_password" autocomplete="off" required />
+    <input type="checkbox" id="user_rememberme" name="user_rememberme" value="1" />
+    <label for="user_rememberme"><?php echo WORDING_REMEMBER_ME; ?></label>
+    <input type="submit" name="login" value="<?php echo WORDING_LOGIN; ?>" />
+</form>
 
-<head>
-	<meta charset="utf-8" />
-	<!-- if you remove this meta tag, the NSA will spy on you through your Xbox Kinect camera -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Foundation</title>
-	<link rel="stylesheet" href="/PBWeb/css/app.css" />
-	<script src="/PBWeb/bower_components/modernizr/modernizr.js"></script>
-	
-</head>
+<a href="register.php"><?php echo WORDING_REGISTER_NEW_ACCOUNT; ?></a>
+<a href="password_reset.php"><?php echo WORDING_FORGOT_MY_PASSWORD; ?></a>
 
-<body>
-	<div id="img" style="text-align:center;">
-		<a href="/PBWeb/index.php"><img src="/PBWeb/img/choc_logo.gif" width="494" height="231"></a>
-
-		<?php
-		// show potential errors / feedback (from login object)
-		if (isset($login)) {
-			if ($login->errors) {
-				foreach ($login->errors as $error) {
-					echo '<div data-alert class="alert-box alert radius">';
-					echo $error;
-					echo '<a href="#" class="close">&times;</a>
-				</div>';
-			}
-		}
-	}
-
-	if ($login->messages) {
-		foreach ($login->messages as $message) {
-			echo '<div data-alert class="alert-box info radius">';
-			echo $message;
-			echo '<a href="#" class="close">&times;</a>
-		</div>';
-	}
-}
-
-?>
-</div>
-<div class="small-12 large-6 small-centered columns">
-	<div class="panel">
-		<br>
-		<div style="text-align:center">
-			<h2>Account Login</h2>
-		</div>
-		<br>
-		<div class="small-10 large-6 small-centered columns">
-			<form method="post" action="index.php" name="loginform">
-				<div class="row">
-					<label for="login_input_username"> Username </label>
-					<input id="login_input_username" class="login_input" type="text" name="user_name" required placeholder="Username"/>
-				</div>
-
-				<div class="row">
-					<label for="login_input_password">Password</label>
-					<input id="login_input_password" class="login_input" type="password" name="user_password" autocomplete="off" required placeholder="Password"/>
-				</div>
-
-				<br>
-
-				<div class="row">
-					<button type="submit"  name="login" class="button tiny expand">Login</button>
-				</div>
-
-				<div class="row">
-					<a href="registration.php" class="button success tiny expand">Account Registration</a>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
-</body>
-</html>
+<?php include('_footer.php'); ?>
