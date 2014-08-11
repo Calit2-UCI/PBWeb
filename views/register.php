@@ -54,11 +54,8 @@
 				
 		</form>	
 		<?php } ?>
-
 		<div class="row">
-			<div class="small-8 large-4 small-centered columns">
-				<a href="index.php" class="button expand"><?php echo WORDING_BACK_TO_LOGIN; ?></a>
-			</div>
+			<a href="index.php"><?php echo WORDING_BACK_TO_LOGIN; ?></a>
 		</div>
 	</div>
 </div
