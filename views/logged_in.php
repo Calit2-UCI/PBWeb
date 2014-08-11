@@ -30,10 +30,10 @@
 					<a href="/PBWeb/views/patient_access.php" class="button expand">Patient Access</a>
 				</div>
 				<div class="row">
-					<a href="/PBWeb/views/user_settings.php" class="button success expand">User Settings</a>
+					<a href="settings.php" class="button success expand">User Settings</a>
 				</div>
 				<div class="row">
-					<a href="/PBWeb/index.php?logout" class="button alert expand">Logout</a>
+					<a href="index.php?logout" class="button alert expand">Logout</a>
 				</div>
 			</div>
 		</div>

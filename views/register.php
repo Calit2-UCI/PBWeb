@@ -25,7 +25,7 @@
 				echo '<div data-alert class="alert-box alert radius">';
 				echo $error;
 				echo '<a href="#" class="close">&times;</a>
-			</div>';
+					</div>';
 		}
 	}
 
@@ -34,7 +34,7 @@
 			echo '<div data-alert class="alert-box info radius">';
 			echo $message;
 			echo '<a href="#" class="close">&times;</a>
-		</div>';
+				</div>';
 	}
 }
 }
