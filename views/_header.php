@@ -8,15 +8,13 @@
 	<!-- if you remove this meta tag, the NSA will spy on you through your Xbox Kinect camera -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Painbuddy Web</title>
-	<link rel="stylesheet" href="/PBWeb/css/app.css" />
-	<script src="/PBWeb/bower_components/modernizr/modernizr.js"></script>
-	
+	<link rel="stylesheet" href="css/app.css" />	
 </head>
 <body>
 
 <body>
 	<div id="img" style="text-align:center;">
-		<a href="/PBWeb/index.php"><img src="/PBWeb/img/choc_logo.gif" width="494" height="231"></a>
+		<a href="index.php"><img src="img/choc_logo.gif" width="494" height="231"></a>
 		<?php
 		// show potential errors / feedback (from login object)
 		if (isset($login)) {
