@@ -27,9 +27,9 @@
 			</form>
 
 			<div class="row">
-				<a href="register.php" class="whitehref">Register for a new account</a>
+				<a href="register.php" class="whitehref"><?php echo WORDING_REGISTER_NEW_ACCOUNT ?></a>
 				<br>
-				<a href="password_reset.php" class="whitehref">Forgot your password?</a>
+				<a href="password_reset.php" class="whitehref"><?php echo WORDING_FORGOT_MY_PASSWORD ?></a>
 			</div>
 			<br>
 		</div>

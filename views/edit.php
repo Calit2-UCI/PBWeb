@@ -5,17 +5,16 @@
 		<br>
 		<div class="small-10 large-8 small-centered columns">	
 			<div style="text-align:center">
-				<h2>Account Settings</h2>
+				<h2><?php echo WORDING_EDIT_USER_DATA ?></h2>
 			</div>
 			<br>
 			<!-- edit form for user email / this form uses HTML5 attributes, like "required" and type="email" -->
 			<form method="post" action="edit.php" name="user_edit_form_email">	
 				<div class="row">
 					<div style="text-align:center">
-						<h5>Change email</h5>
+						<h5><?php echo WORDING_CHANGE_EMAIL ?></h5>
 					</div>
 					<hr/>
-
 
 					<label for="user_email"><?php echo WORDING_NEW_EMAIL; ?> (<?php echo WORDING_CURRENTLY; ?>: <?php echo $_SESSION['user_email']; ?>)</label>
 					<input id="user_email" type="email" name="user_email" required /> 
@@ -27,7 +26,7 @@
 		<!-- edit form for user's password / this form uses the HTML5 attribute "required" -->
 		<div class="small-10 large-8 small-centered columns">	
 			<div style="text-align:center">
-				<h5>Change password</h5>
+				<h5><?php echo WORDING_CHANGE_PASSWORD; ?></h5>
 			</div>
 			<hr/>
 
@@ -50,18 +49,14 @@
 				<div class="row">
 					<input type="submit" class="button success expand" name="user_edit_submit_password" value="<?php echo WORDING_CHANGE_PASSWORD; ?>" />
 				</div>
-				<br>
-				<div class="row">
-					<a href="index.php" class="button tiny expand">Back</a>
-				</div>
 			</form>
 		</div>
 		<br>
+		<!-- backlink -->
+		<div class="row">
+			<a href="index.php"><?php echo WORDING_BACK_TO_LOGIN; ?></a>
+		</div>
 	</div>
 </div>
 
-<!-- backlink -->
-<div class="row">
-	<a href="index.php"><?php echo WORDING_BACK_TO_LOGIN; ?></a>
-</row>
 <?php include('_footer.php'); ?>
