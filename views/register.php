@@ -42,23 +42,29 @@
 					<input id="user_password_repeat" tabindex=6 type="password" name="user_password_repeat" pattern=".{6,}" required autocomplete="off" placeholder="Repeat Password"/>
 				</div>
 			</div>
+			<!-- http://cristersmedia.com/eliminate-spam-in-modx-eform-without-captcha -->
+			<div class="special">
+				<label for="cfSpecial">
+					<p>Special<br /><input value="" name="special" id="cfSpecial" class="text" type="text" eform="Special:date:0"  /></p>
+				</label>
+			</div>
+			<br>
 
-			<img src="tools/showCaptcha.php" alt="captcha" />
-			<label><?php echo WORDING_REGISTRATION_CAPTCHA; ?></label>
-			<input type="text" name="captcha" required />
-			
 			<div class="row">
-				<div class="small-8 large-4 small-centered columns">
-					<button type="submit"  name="register" class="button success expand"><?php echo WORDING_REGISTER; ?></button>
+				<div class="small-8 columns small-centered">
+					<div class="row">
+						<button type="submit"  name="register" class="button success expand"><?php echo WORDING_REGISTER; ?></button>
+					</div>
+					<div class="row">
+						<a href="index.php" class="button tiny expand">Back to Login</a>
+					</div>
 				</div>
 			</div>
-			
+
 		</form>	
 		<?php } ?>
-		<div class="row">
-			<a href="index.php"><?php echo WORDING_BACK_TO_LOGIN; ?></a>
-		</div>
-		<br>
+
 	</div>
-	</div
-	<?php include('_footer.php'); ?>
+</div>
+
+<?php include('_footer.php'); ?>
