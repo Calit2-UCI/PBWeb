@@ -23,15 +23,6 @@ a:active {
 @import url(http://fonts.googleapis.com/css?family=Sanchez);
 @import url(http://fonts.googleapis.com/css?family=Lato);
 
-body {
-  background: #cd625c;
-  font-size: 100%;
-  font-family: 'Lato', sans-serif;
-  line-height: 1.5;
-}
-
-p + p { margin-top: 15px; }
-
 .container {
   max-width: 960px;
   margin: 75px auto;
