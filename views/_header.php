@@ -10,6 +10,7 @@
 	<title>Painbuddy Web</title>
 	<link rel="stylesheet" href="css/app.css" />	
 	<link rel="stylesheet"  href="css/custom.scss">
+	<script src="bower_components/modernizr/modernizr.js"></script>
 </head>
 
 <body>
