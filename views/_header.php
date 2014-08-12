@@ -10,8 +10,6 @@
 	<title>Painbuddy Web</title>
 	<link rel="stylesheet" href="css/app.css" />	
 	<link rel="stylesheet"  href="css/custom.scss">
-	<script language="javascript" type="text/javascript" src="js/jquery"></script>
-	<script type="text/javascript" src="js/tabs.js"></script>
 </head>
 
 <body>
