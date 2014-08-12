@@ -6120,13 +6120,16 @@ td {
 /* Default Link Styles */
 /* line 217, ../bower_components/foundation/scss/foundation/components/_type.scss */
 a {
-  color: #008cba;
+  font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+  font-size: .85rem;
+  color: #FFFFFF;
   text-decoration: none;
   line-height: inherit;
 }
+
 /* line 223, ../bower_components/foundation/scss/foundation/components/_type.scss */
 a:hover, a:focus {
-  color: #0078a0;
+  color: #AAAAAA;
 }
 /* line 230, ../bower_components/foundation/scss/foundation/components/_type.scss */
 a img {
