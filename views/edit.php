@@ -1,17 +1,13 @@
 <?php include('_header.php'); ?>
 
-<!-- clean separation of HTML and PHP -->
-
-
-<div class="small-12 large-6 small-centered columns">
+<div class="small-12 medium-10 large-6 small-centered columns">
 	<div class="panel">
 		<br>
 		<div class="small-10 large-8 small-centered columns">	
-<div style="text-align:center">
-<br>
-						<h2>Account Settings</h2>
-					</div>
-					<br>
+			<div style="text-align:center">
+				<h2>Account Settings</h2>
+			</div>
+			<br>
 			<!-- edit form for user email / this form uses HTML5 attributes, like "required" and type="email" -->
 			<form method="post" action="edit.php" name="user_edit_form_email">	
 				<div class="row">
