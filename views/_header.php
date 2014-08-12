@@ -9,12 +9,15 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Painbuddy Web</title>
 	<link rel="stylesheet" href="css/app.css" />	
+	<link rel="stylesheet"  href="css/custom.scss">
 </head>
 <body>
 
 <body>
 	<div id="img" style="text-align:center;">
 		<a href="index.php"><img src="img/choc_logo.gif" width="494" height="231"></a>
+		</div>
+		<div class="small-12 large-6 small-centered columns">
 		<?php
 		// show potential errors / feedback (from login object)
 		if (isset($login)) {

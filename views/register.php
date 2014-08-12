@@ -2,10 +2,11 @@
 
 <div class="small-12 large-6 small-centered columns">
 	<div class="panel">
-		<div style="text-align:center" id="box-shadow-default">
+		<br>
+		<div style="text-align:center">
 			<h2>Apply for an Account</h2>
 		</div>
-
+		<br>
 		<!-- show registration form, but only if we didn't submit already -->
 		<?php if (!$registration->registration_successful && !$registration->verification_successful) { ?>
 		<form method="post" action="register.php" name="registerform">
@@ -45,18 +46,19 @@
 			<img src="tools/showCaptcha.php" alt="captcha" />
 			<label><?php echo WORDING_REGISTRATION_CAPTCHA; ?></label>
 			<input type="text" name="captcha" required />
-				
+			
 			<div class="row">
 				<div class="small-8 large-4 small-centered columns">
 					<button type="submit"  name="register" class="button success expand"><?php echo WORDING_REGISTER; ?></button>
 				</div>
 			</div>
-				
+			
 		</form>	
 		<?php } ?>
 		<div class="row">
 			<a href="index.php"><?php echo WORDING_BACK_TO_LOGIN; ?></a>
 		</div>
+		<br>
 	</div>
-</div
-<?php include('_footer.php'); ?>
+	</div
+	<?php include('_footer.php'); ?>

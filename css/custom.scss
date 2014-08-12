@@ -1,3 +1,19 @@
-.button-enter{
-	@include button();
+/* unvisited link */
+a:link {
+    color: #f6f6f6;
+}
+
+/* visited link */
+a:visited {
+    color: #f6f6f6;
+}
+
+/* mouse over link */
+a:hover {
+    color: #ebebeb;
+}
+
+/* selected link */
+a:active {
+    color: #f6f6f6;
 }
