@@ -1,3 +1,5 @@
+<?php include('_header.php'); ?>
+
 <div class="container">
   <h1 class="intro">Object Oriented Tabs</h1>
   <div class="btnWrap">
@@ -51,3 +53,5 @@
     </li>
   </ul>
 </div>
+
+<?php include('_footer.php'); ?>

@@ -1,7 +1,5 @@
 <?php include('_header.php'); ?>
 
-
-
 <div class="small-12 large-6 small-centered columns">
 	<div class="panel">
 		<br>
