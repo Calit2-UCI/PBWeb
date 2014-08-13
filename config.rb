@@ -2,10 +2,10 @@
 add_import_path "bower_components/foundation/scss"
 
 # Set this to the root of your project when deployed:
-http_path = "/"
-css_dir = "css"
+http_path = "/PBWeb/"
+css_dir = "stylesheets"
 sass_dir = "scss"
-images_dir = "imag"
+images_dir = "img"
 javascripts_dir = "js"
 
 # You can select your preferred output style here (can be overridden via the command line):
