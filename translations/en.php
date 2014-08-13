@@ -68,6 +68,8 @@ define("WORDING_NEW_USERNAME", "New username (Letters and/or numbers, 2-64 chara
 define("WORDING_OLD_PASSWORD", "Your OLD Password");
 define("WORDING_PASSWORD", "Password");
 define("WORDING_PATIENT_ACCESS", "Patient access");
+define("WORDING_PATIENT_ID", "Patient ID");
+define("WORDING_PATIENT_LOOKUP", "Patient Lookup");
 define("WORDING_PROFILE_PICTURE", "Your profile picture (from gravatar):");
 define("WORDING_REGISTER", "Register");
 define("WORDING_REGISTER_NEW_ACCOUNT", "Register for a new account");

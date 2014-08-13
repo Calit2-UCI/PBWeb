@@ -4,7 +4,7 @@
 	<div class="panel">
 		<br>
 		<div style="text-align:center">
-			<h2>Apply for an Account</h2>
+			<h2><?php echo WORDING_REGISTER_NEW_ACCOUNT ?></h2>
 		</div>
 		<br>
 		<!-- show registration form, but only if we didn't submit already -->
@@ -12,7 +12,7 @@
 		<form method="post" action="register.php" name="registerform">
 			<div class="row">
 				<div class="small-6 medium-4 large-4 push-2 columns">
-					<label for="first_name">First name</label>
+					<label for="first_name"><?php echo WORDING_REGISTRATION_FIRST_NAME ?></label>
 					<input id="first_name"  type="text" tabindex=1 name="first_name" required placeholder="First Name"/>
 				</div>
 				<div class="small-6 medium-4 large-4 pull-2 columns">
@@ -23,7 +23,7 @@
 
 			<div class="row">
 				<div class="small-6 medium-4 large-4 push-2 columns">
-					<label for="last_name">Last name</label>
+					<label for="last_name"><?php echo WORDING_REGISTRATION_LAST_NAME ?></label>
 					<input id="last_name" type="text" tabindex=2 name="last_name" required placeholder="Last Name"/>
 				</div>
 				<div class="small-6 medium-4 large-4 pull-2 columns">
@@ -56,7 +56,7 @@
 						<button type="submit"  name="register" class="button success expand"><?php echo WORDING_REGISTER; ?></button>
 					</div>
 					<div class="row">
-						<a href="index.php">Back to Login</a>
+						<a href="index.php"><?php echo WORDING_BACK_TO_LOGIN; ?></a>
 					</div>
 				</div>
 			</div>
