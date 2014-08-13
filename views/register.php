@@ -56,7 +56,7 @@
 						<button type="submit"  name="register" class="button success expand"><?php echo WORDING_REGISTER; ?></button>
 					</div>
 					<div class="row">
-						<a href="index.php" class="button tiny expand">Back to Login</a>
+						<a href="index.php">Back to Login</a>
 					</div>
 				</div>
 			</div>
