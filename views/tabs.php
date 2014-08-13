@@ -1,5 +1,5 @@
 <?php include('_header.php'); ?>
-<link rel="stylesheet"  href="stylesheets/custom.css">
+<link rel="stylesheet"  href="stylesheets/tabs.css">
 
 <div class="container">
   <h1 class="intro">Object Oriented Tabs</h1>
