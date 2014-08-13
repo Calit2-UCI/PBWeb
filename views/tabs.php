@@ -54,4 +54,6 @@
   </ul>
 </div>
 
+<script src="js/jquery.js"></script>
+<script src="js/tabs.js"></script>
 <?php include('_footer.php'); ?>
