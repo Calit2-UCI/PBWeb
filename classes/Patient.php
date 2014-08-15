@@ -15,7 +15,7 @@ class Patients{
 		session_start();
 		
 		if (isset($_POST["get_patient"]) && isset($_POST['patient_id'])) {
-            $this->getPatient($_POST['patient_id'])));
+            $this->doPatientLookup($_POST['patient_id']);
         }
 	}
     
@@ -56,7 +56,7 @@ class Patients{
             $query_check_patient_id = $this->db_connection->prepare('SELECT * FROM patients WHERE id=:id');
             $query_check_patient_id->bindValue(':id', $id, PDO::PARAM_STR);
             $query_check_patient_id->execute();
-            $result = $query_check_patient_id->fetch(PDO::FETCH_ASSOC);
+            $patient_info = $query_check_patient_id->fetch(PDO::FETCH_ASSOC);
             
             if (empty($result)) {
                 $this->errors[] = "MESSAGE_PATIENT_ID_INVALID";
