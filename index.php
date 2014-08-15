@@ -37,10 +37,23 @@ $login = new Login();
 // ... ask if we are logged in here:
 if ($login->isUserLoggedIn() == true) {
     if ($login->isUserAdmin() == true) {
-        // TODO: Create and instantiate Admin class to handle user management
-        include("views/logged_in_admin.php");
+	    if (isset($_GET['user_approval'])) {
+            echo "This is the admin user approval page";
+		    // TODO: Create and instantiate Admin class to handle user management
+			// TODO: create page for user approval
+            // include("views/user_approval.php");
+        } else {
+            echo "This is the admin menu page";
+            include("views/logged_in_admin.php");
+        }
     } else {
-        include("views/logged_in.php");
+        if (isset($_GET['patient_access'])) {
+            echo "This is the user patient access page";
+            include("views/patient_access.php");
+        } else {
+            echo "This is the user menu page";
+            include("views/logged_in.php");
+        }
     }
 } else {
     // the user is not logged in. you can do whatever you want here.

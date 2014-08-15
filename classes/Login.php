@@ -189,6 +189,7 @@ class Login
         // !empty($_SESSION['user_name']) && ($_SESSION['user_logged_in'] == 1)
         // when we called this method (in the constructor)
         $this->user_is_logged_in = true;
+        $this->user_is_admin = $_SESSION['user_is_admin'];
     }
 
     /**
@@ -399,6 +400,7 @@ class Login
         session_destroy();
 
         $this->user_is_logged_in = false;
+        $this->user_is_admin = false;
         $this->messages[] = MESSAGE_LOGGED_OUT;
     }
 
