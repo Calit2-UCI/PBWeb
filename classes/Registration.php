@@ -155,19 +155,18 @@ class Registration
                 $user_id = $this->db_connection->lastInsertId();
 
                 if ($query_new_user_insert) {
-                    // send a verification email
-                    if ($this->sendVerificationEmail($user_id, $user_email, $user_activation_hash)) {
-                        // when mail has been send successfully
+                    // Instead of sending a verification email, we let admin approve the users
+                    // if ($this->sendVerificationEmail($user_id, $user_email, $user_activation_hash)) {
                         $this->messages[] = MESSAGE_VERIFICATION_MAIL_SENT;
                         $this->registration_successful = true;
-                    } else {
+                    /* } else {
                         // delete this users account immediately, as we could not send a verification email
                         $query_delete_user = $this->db_connection->prepare('DELETE FROM users WHERE user_id=:user_id');
                         $query_delete_user->bindValue(':user_id', $user_id, PDO::PARAM_INT);
                         $query_delete_user->execute();
 
                         $this->errors[] = MESSAGE_VERIFICATION_MAIL_ERROR;
-                    }
+                    }*/
                 } else {
                     $this->errors[] = MESSAGE_REGISTRATION_FAILED;
                 }
@@ -220,28 +219,6 @@ class Registration
             return false;
         } else {
             return true;
-        }
-    }
-
-    /**
-     * checks the id/verification code combination and set the user's activation status to true (=1) in the database
-     */
-    public function verifyNewUser($user_id, $user_activation_hash)
-    {
-        // if database connection opened
-        if ($this->databaseConnection()) {
-            // try to update user with specified information
-            $query_update_user = $this->db_connection->prepare('UPDATE users SET user_active = 1, user_activation_hash = NULL WHERE user_id = :user_id AND user_activation_hash = :user_activation_hash');
-            $query_update_user->bindValue(':user_id', intval(trim($user_id)), PDO::PARAM_INT);
-            $query_update_user->bindValue(':user_activation_hash', $user_activation_hash, PDO::PARAM_STR);
-            $query_update_user->execute();
-
-            if ($query_update_user->rowCount() > 0) {
-                $this->verification_successful = true;
-                $this->messages[] = MESSAGE_REGISTRATION_ACTIVATION_SUCCESSFUL;
-            } else {
-                $this->errors[] = MESSAGE_REGISTRATION_ACTIVATION_NOT_SUCCESSFUL;
-            }
         }
     }
 }

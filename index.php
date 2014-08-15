@@ -37,6 +37,7 @@ $login = new Login();
 // ... ask if we are logged in here:
 if ($login->isUserLoggedIn() == true) {
     if ($login->isUserAdmin() == true) {
+        $admin = new Admin();
 	    if (isset($_GET['user_approval'])) {
             echo "This is the admin user approval page";
 		    // TODO: Create and instantiate Admin class to handle user management
