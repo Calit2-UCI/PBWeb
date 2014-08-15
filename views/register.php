@@ -1,6 +1,6 @@
 <?php include('_header.php'); ?>
 
-<div class="small-12 large-6 small-centered columns">
+<div class="small-12 medium-10 large-8 small-centered columns">
     <div class="panel">
         <br>
         <div style="text-align:center">
@@ -51,7 +51,7 @@
             <br>
 
             <div class="row">
-                <div class="small-8 columns small-centered">
+                <div class="small-8 medium-6 large-6 columns small-centered">
                     <div class="row">
                         <button type="submit"  name="register" class="button success expand"><?php echo WORDING_REGISTER; ?></button>
                     </div>
@@ -60,10 +60,8 @@
                     </div>
                 </div>
             </div>
-
         </form>    
         <?php } ?>
-
     </div>
 </div>
 
