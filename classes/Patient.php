@@ -1,6 +1,6 @@
 <?php
 
-class Patients{
+class Patient{
 
 	private $db_connection = null;
 
@@ -57,6 +57,7 @@ class Patients{
 		if (empty($id)) {
 			$this->errors[] = "MESSAGE_PATIENT_ID_INVALID";
 		} elseif (!empty($id)) {
+            $this->databaseConnection();
             $query_check_patient_id = $this->db_connection->prepare('SELECT * FROM patients WHERE id=:id');
             $query_check_patient_id->bindValue(':id', $id, PDO::PARAM_STR);
             $query_check_patient_id->execute();
@@ -66,8 +67,9 @@ class Patients{
 		}
 	}
 
-    private function getPatientOverview()
+    private function showPatientOverview()
     {
+        $this->databaseConnection();
         $query_check_patient_id = $this->db_connection->prepare('SELECT * FROM patients WHERE doctor_id=:doctor_id');
         $query_check_patient_id->bindValue(':doctor_id', $_SESSION['user_id'], PDO::PARAM_STR);
         $query_check_patient_id->execute();
