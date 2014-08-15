@@ -13,7 +13,7 @@
                 <a href="" class="button expand"></a>
             </div> -->
             <div class="row">
-                <a href="edit.php" class="button success expand"><?php echo WORDING_EDIT_USER_DATA; ?></a>
+                <a href="admin_config.php" class="button success expand"><?php echo WORDING_ADMIN_CONFIG; ?></a>
             </div>
             <div class="row">
                 <a href="index.php?logout" class="button alert expand"><?php echo WORDING_LOGOUT; ?></a>

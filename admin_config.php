@@ -1,15 +1,5 @@
 <?php
 
-/**
- * A simple PHP Login Script / ADVANCED VERSION
- * For more versions (one-file, minimal, framework-like) visit http://www.php-login.net
- *
- * @author Panique
- * @link http://www.php-login.net
- * @link https://github.com/panique/php-login-advanced/
- * @license http://opensource.org/licenses/MIT MIT License
- */
-
 // check for minimum PHP version
 if (version_compare(PHP_VERSION, '5.3.7', '<')) {
     exit('Sorry, this script does not run on a PHP version smaller than 5.3.7 !');
@@ -33,26 +23,17 @@ require_once('classes/Login.php');
 // create a login object. when this object is created, it will do all login/logout stuff automatically
 // so this single line handles the entire login process.
 $login = new Login();
-
-// ... ask if we are logged in here:
 if ($login->isUserLoggedIn() == true) {
     if ($login->isUserAdmin() == true) {
-	    if (isset($_GET['user_approval'])) {
-		    // TODO: Create and instantiate Admin class to handle user management
-			// TODO: create page for user approval
-            // include("views/user_approval.php");
-        } else {
-            include("views/logged_in_admin.php");
-        }
-    } else {
-        if (isset($_GET['patient_access'])) {
-            include("views/patient_access.php");
-        } else {
-            include("views/logged_in.php");
-        }
+        include("views/admin_config.php");
     }
+    else {
+        include("views/logged_in.php");
+    }
+
 } else {
     // the user is not logged in. you can do whatever you want here.
     // for demonstration purposes, we simply show the "you are not logged in" view.
     include("views/not_logged_in.php");
 }
+

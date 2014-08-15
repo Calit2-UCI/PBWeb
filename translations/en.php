@@ -54,6 +54,7 @@ define("MESSAGE_USERNAME_SAME_LIKE_OLD_ONE", "Sorry, that username is the same a
 define("MESSAGE_PATIENT_ID_INVALID", "Patient ID not valid");
 
 // views
+define("WORDING_ADMIN_CONFIG", "Open Admin Config");
 define("WORDING_BACK_TO_LOGIN", "Back to Login Page");
 define("WORDING_CHANGE_EMAIL", "Change email");
 define("WORDING_CHANGE_PASSWORD", "Change password");
