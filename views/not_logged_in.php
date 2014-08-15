@@ -1,9 +1,9 @@
 <?php include('_header.php'); ?>
 
-<div class="small-12 medium-10 large-6 small-centered columns">
+<div class="small-12 medium-10 large-8 small-centered columns">
     <div class="panel">
         <br>
-        <div class="small-10 large-8 small-centered columns">        
+        <div class="small-12 medium-8 large-6 small-centered columns">
             <div style="text-align:center">
                 <h2>Account Login</h2>
             </div>
