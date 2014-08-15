@@ -14,7 +14,9 @@ class Patients{
 	{
 		session_start();
 		
-		if (isset($_POST["get_patient"]) && isset($_POST['patient_id'])) {
+        if (isset($_GET["overview"])) {
+            $this->showPatientOverview();
+        } elseif (isset($_POST["get_patient"]) && isset($_POST['patient_id'])) {
             $this->doPatientLookup($_POST['patient_id']);
         }
 	}
@@ -65,5 +67,15 @@ class Patients{
             }
 		}
 	}
+
+    private function showPatientOverview()
+    {
+        $id = 1;
+        do {
+            doPatientLookup($id);
+            ++$id;
+        } while (!empty($patient_info));
+
+    }
 }
 ?>
