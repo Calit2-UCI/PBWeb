@@ -16,10 +16,10 @@ class Patients{
 	{
 		session_start();
 		
-        if (isset($_GET["overview"])) {
-            $this->showPatientOverview();
-        } elseif (isset($_POST["get_patient"]) && isset($_POST['patient_id'])) {
+        if (isset($_POST["get_patient"]) && isset($_POST['patient_id'])) {
             $this->doPatientLookup($_POST['patient_id']);
+        } elseif (isset($_GET["overview"])) {
+            $this->showPatientOverview();
         }
 	}
     
