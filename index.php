@@ -36,10 +36,12 @@ $login = new Login();
 
 // ... ask if we are logged in here:
 if ($login->isUserLoggedIn() == true) {
-    // the user is logged in. you can do whatever you want here.
-    // for demonstration purposes, we simply show the "you are logged in" view.
-    include("views/logged_in.php");
-
+    if ($login->userIsAdmin() == true) {
+        // TODO: Create and instantiate Admin class to handle user management
+        include("views/logged_in_admin.php");
+    } else {
+        include("views/logged_in.php");
+    }
 } else {
     // the user is not logged in. you can do whatever you want here.
     // for demonstration purposes, we simply show the "you are not logged in" view.
