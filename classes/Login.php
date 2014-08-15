@@ -417,9 +417,9 @@ class Login
      */
     public function isUserAdmin()
     {
-    }
         return $this->user_is_admin;
-
+    }
+	
     /**
      * Edit the user's name, provided in the editing form
      */

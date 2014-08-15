@@ -36,7 +36,7 @@ $login = new Login();
 
 // ... ask if we are logged in here:
 if ($login->isUserLoggedIn() == true) {
-    if ($login->userIsAdmin() == true) {
+    if ($login->isUserAdmin() == true) {
         // TODO: Create and instantiate Admin class to handle user management
         include("views/logged_in_admin.php");
     } else {
