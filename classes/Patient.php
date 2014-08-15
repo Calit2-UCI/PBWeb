@@ -5,6 +5,8 @@ class Patients{
 	private $db_connection = null;
 
 	private $patient_info = array();
+
+    private $patient_overview = array();
 	
 	public $errors = array();
 
@@ -58,24 +60,20 @@ class Patients{
             $query_check_patient_id = $this->db_connection->prepare('SELECT * FROM patients WHERE id=:id');
             $query_check_patient_id->bindValue(':id', $id, PDO::PARAM_STR);
             $query_check_patient_id->execute();
-            $patient_info = $query_check_patient_id->fetch(PDO::FETCH_ASSOC);
-            
-            if (empty($result)) {
-                $this->errors[] = "MESSAGE_PATIENT_ID_INVALID";
-            } else {
-                // print out stuff here
-            }
+            $patient_overview = $query_check_patient_id->fetch();
+
+            // TODO: print stuff
 		}
 	}
 
-    private function showPatientOverview()
+    private function getPatientOverview()
     {
-        $id = 1;
-        do {
-            doPatientLookup($id);
-            ++$id;
-        } while (!empty($patient_info));
+        $query_check_patient_id = $this->db_connection->prepare('SELECT * FROM patients WHERE doctor_id=:doctor_id');
+        $query_check_patient_id->bindValue(':doctor_id', $_SESSION['user_id'], PDO::PARAM_STR);
+        $query_check_patient_id->execute();
+        $patient_overview = $query_check_patient_id->fetchall();
 
+        // TODO: print stuff
     }
 }
 ?>
