@@ -29,11 +29,12 @@ require_once('libraries/PHPMailer.php');
 
 // load the login class
 require_once('classes/Login.php');
+require_once('classes/Patient.php');
 
 // create a login object. when this object is created, it will do all login/logout stuff automatically
 // so this single line handles the entire login process.
 $login = new Login();
-$patients = new Patients();
+$patient = new Patient();
 
 // ... ask if we are logged in here:
 if ($login->isUserLoggedIn() == true) {

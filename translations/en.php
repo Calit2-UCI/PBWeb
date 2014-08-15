@@ -50,6 +50,9 @@ define("MESSAGE_USERNAME_EXISTS", "Sorry, that username is already taken. Please
 define("MESSAGE_USERNAME_INVALID", "Username does not fit the name scheme: only a-Z and numbers are allowed, 2 to 64 characters");
 define("MESSAGE_USERNAME_SAME_LIKE_OLD_ONE", "Sorry, that username is the same as your current one. Please choose another one.");
 
+// Patient access
+define("MESSAGE_PATIENT_ID_INVALID", "Patient ID not valid");
+
 // views
 define("WORDING_BACK_TO_LOGIN", "Back to Login Page");
 define("WORDING_CHANGE_EMAIL", "Change email");

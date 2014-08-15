@@ -62,4 +62,26 @@
             }
         }
         ?>
+        
+        <?php
+        // show potential errors / feedback (from patient object)
+        if (isset($patient)) {
+            if ($patient->errors) {
+                foreach ($patients->errors as $error) {
+                    echo '<div data-alert class="alert-box alert radius">';
+                    echo $error;
+                    echo '<a href="#" class="close">&times;</a>
+                        </div>';
+                }
+            }
+            if ($patient->messages) {
+                foreach ($patient->messages as $message) {
+                    echo '<div data-alert class="alert-box info radius">';
+                    echo $message;
+                    echo '<a href="#" class="close">&times;</a>
+                        </div>';
+                }
+            }
+        }
+        ?>
     </div>
