@@ -40,7 +40,7 @@ class Registration
 
         // if we have such a POST request, call the registerNewUser() method
         if (isset($_POST["register"])) {
-            $this->registerNewUser($_POST['first_name'], $_POST['last_name'], $_POST['user_name'], $_POST['user_email'], $_POST['user_password_new'], $_POST['user_password_repeat'], $_POST["captcha"]);
+            $this->registerNewUser($_POST['first_name'], $_POST['last_name'], $_POST['user_name'], $_POST['user_email'], $_POST['user_password_new'], $_POST['user_password_repeat']);
         // if we have such a GET request, call the verifyNewUser() method
         } else if (isset($_GET["id"]) && isset($_GET["verification_code"])) {
             $this->verifyNewUser($_GET["id"], $_GET["verification_code"]);
@@ -78,7 +78,7 @@ class Registration
      * handles the entire registration process. checks all error possibilities, and creates a new user in the database if
      * everything is fine
      */
-    private function registerNewUser($first_name, $last_name, $user_name, $user_email, $user_password, $user_password_repeat, $captcha)
+    private function registerNewUser($first_name, $last_name, $user_name, $user_email, $user_password, $user_password_repeat)
     {
         // we just remove extra space on username and email
         $user_name  = trim($user_name);
@@ -86,9 +86,8 @@ class Registration
 
         // check provided data validity
         // TODO: check for "return true" case early, so put this first
-        if (strtolower($captcha) != strtolower($_SESSION['captcha'])) {
-            $this->errors[] = MESSAGE_CAPTCHA_WRONG;
-        } elseif (empty($first_name)) {
+        
+        if (empty($first_name)) {
             $this->errors[] = MESSAGE_FIRST_NAME_EMPTY;
         } elseif (empty($last_name)) {
             $this->errors[] = MESSAGE_LAST_NAME_EMPTY;
