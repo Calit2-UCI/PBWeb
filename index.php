@@ -39,9 +39,9 @@ if ($login->isUserLoggedIn() == true) {
     if ($login->isUserAdmin() == true) {
         require_once('classes/Admin.php');
         $admin = new Admin();
-        
-	    if (isset($_GET['admin_config'])) {
-		    include("views/admin_config.php");
+
+        if (isset($_GET['admin_config'])) {
+            include("views/admin_config.php");
         } else {
             include("views/logged_in_admin.php");
         }
