@@ -8,12 +8,11 @@
         </div>
         <br>
         <div class="small-10 large-6 small-centered columns">
-            <!-- TODO: add links for user account approval
             <div class="row">
-                <a href="" class="button expand"></a>
-            </div> -->
+                <a href="index.php?admin_config" class="button expand"></a>
+            </div>
             <div class="row">
-                <a href="admin_config.php" class="button success expand"><?php echo WORDING_ADMIN_CONFIG; ?></a>
+                <a href="edit.php" class="button success expand"><?php echo WORDING_ADMIN_CONFIG; ?></a>
             </div>
             <div class="row">
                 <a href="index.php?logout" class="button alert expand"><?php echo WORDING_LOGOUT; ?></a>

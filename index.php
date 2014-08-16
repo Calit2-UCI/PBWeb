@@ -37,11 +37,11 @@ $login = new Login();
 // ... ask if we are logged in here:
 if ($login->isUserLoggedIn() == true) {
     if ($login->isUserAdmin() == true) {
+        require_once('classes/Admin.php');
         $admin = new Admin();
-	    if (isset($_GET['user_approval'])) {
-		    // TODO: Create and instantiate Admin class to handle user management
-			// TODO: create page for user approval
-            // include("views/user_approval.php");
+        
+	    if (isset($_GET['admin_config'])) {
+		    include("views/admin_config.php");
         } else {
             include("views/logged_in_admin.php");
         }
