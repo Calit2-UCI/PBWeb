@@ -31,8 +31,9 @@ class Admin
     public function __construct()
     {
         // create/read session
-        session_start();
-
+        if(!isset($_SESSION)) {
+            session_start();
+        }
         if (isset($_POST["approve_user"])) {
             $this->approveUser($_POST['user_id'], $_POST['activation_hash']);
         }        
