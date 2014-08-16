@@ -108,5 +108,46 @@ class Admin
             }
         }
     }
+    
+    public function printPendingUsers()
+    {
+        if ($this->databaseConnection()) {
+            // try to update user with specified information
+            $query_get_pending_users = $this->db_connection->prepare('SELECT * FROM users WHERE user_active = 0');
+            $query_get_pending_users->execute();
+
+            if ($query_get_pending_users->rowCount() > 0) {
+                $result = $query_get_pending_users->fetchAll();
+                echo "<table>";
+                echo "<tr>
+                        <td>Id</td>
+                        <td>First name</td>
+                        <td>Last name</td>
+                        <td>Username</td>
+                        <td>Email</td>
+                    </tr>";
+                
+                while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                    $id = $row['id'];
+                    $first_name = $row['first_name'];
+                    $last_name = $row['last_name'];
+                    $user_name = $row['user_name'];
+                    $email = $row['email'];
+                    
+                    echo "<tr>
+                            <td>{$id}</td>
+                            <td>{$first_name}</td>
+                            <td>{$last_name}</td>
+                            <td>{$user_name}</td>
+                            <td>{$email}</td>
+                        </tr>";
+                }
+                
+                echo "</table>";
+            } else {
+                echo "No users";
+            }
+        }
+    }
 
 }

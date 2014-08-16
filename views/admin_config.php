@@ -13,36 +13,7 @@
       <h2> Use the tabs on the side to navigate.</h2>
   </div>
   <div class="content" id="panel2a">
-  <!-- CURRENTLY BROKEN AS SHIT
-    $maxcols = 5;
-$i = 0;
-
-//Open the table and its first row
-echo "<table>";
-echo "<tr>";
-while ($image = mysql_fetch_assoc($images_rs)) {
-
-    if ($i == $maxcols) {
-        $i = 0;
-        echo "</tr><tr>";
-    }
-
-    echo "<td><img src=\"" . $image['src'] . "\" /></td>";
-
-    $i++;
-
-}
-
-//Add empty <td>'s to even up the amount of cells in a row:
-while ($i <= $maxcols) {
-    echo "<td>&nbsp;</td>";
-    $i++;
-}
-
-//Close the table row and the table
-echo "</tr>";
-echo "</table>";
--->
+  <?php $admin->printPendingUsers(); ?>
 </div>
 <div class="content" id="panel3a">
     <p>Panel 3 content goes here.</p>
