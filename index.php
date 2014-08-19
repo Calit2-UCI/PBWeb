@@ -36,10 +36,22 @@ $login = new Login();
 
 // ... ask if we are logged in here:
 if ($login->isUserLoggedIn() == true) {
-    // the user is logged in. you can do whatever you want here.
-    // for demonstration purposes, we simply show the "you are logged in" view.
-    include("views/logged_in.php");
+    if ($login->isUserAdmin() == true) {
+        require_once('classes/Admin.php');
+        $admin = new Admin();
 
+        if (isset($_GET['admin_config'])) {
+            include("views/admin_config.php");
+        } else {
+            include("views/logged_in_admin.php");
+        }
+    } else {
+        if (isset($_GET['patient_access'])) {
+            include("views/patient_access.php");
+        } else {
+            include("views/logged_in.php");
+        }
+    }
 } else {
     // the user is not logged in. you can do whatever you want here.
     // for demonstration purposes, we simply show the "you are not logged in" view.

@@ -34,9 +34,11 @@ define("MESSAGE_PASSWORD_RESET_MAIL_SUCCESSFULLY_SENT", "Password reset mail suc
 define("MESSAGE_PASSWORD_TOO_SHORT", "Password has a minimum length of 6 characters");
 define("MESSAGE_PASSWORD_WRONG", "Wrong password. Try again.");
 define("MESSAGE_PASSWORD_WRONG_3_TIMES", "You have entered an incorrect password 3 or more times already. Please wait 30 seconds to try again.");
-define("MESSAGE_REGISTRATION_ACTIVATION_NOT_SUCCESSFUL", "Sorry, no such id/verification code combination here...");
-define("MESSAGE_REGISTRATION_ACTIVATION_SUCCESSFUL", "Activation was successful! You can now log in!");
+define("MESSAGE_REGISTRATION_ACTIVATION_NOT_SUCCESSFUL", "Something went wrong. User not activated");
+define("MESSAGE_REGISTRATION_ACTIVATION_SUCCESSFUL", "User activated");
 define("MESSAGE_REGISTRATION_FAILED", "Sorry, your registration failed. Please go back and try again.");
+define("MESSAGE_REGISTRATION_VERIFICATION_NOT_SUCCESSFUL", "Sorry, no such id/verification code combination here...");
+define("MESSAGE_REGISTRATION_VERIFICATION_SUCCESSFUL", "Verification was successful! The admin will approve your account shortly!");
 define("MESSAGE_RESET_LINK_HAS_EXPIRED", "Your reset link has expired. Please use the reset link within one hour.");
 define("MESSAGE_VERIFICATION_MAIL_ERROR", "Sorry, we could not send you an verification mail. Your account has NOT been created.");
 define("MESSAGE_VERIFICATION_MAIL_NOT_SENT", "Verification Mail NOT successfully sent! Error: ");
@@ -54,6 +56,7 @@ define("MESSAGE_USERNAME_SAME_LIKE_OLD_ONE", "Sorry, that username is the same a
 define("MESSAGE_PATIENT_ID_INVALID", "Patient ID not valid");
 
 // views
+define("WORDING_ADMIN_CONFIG", "Open Admin Config");
 define("WORDING_BACK_TO_LOGIN", "Back to Login Page");
 define("WORDING_CHANGE_EMAIL", "Change email");
 define("WORDING_CHANGE_PASSWORD", "Change password");
@@ -77,6 +80,7 @@ define("WORDING_PROFILE_PICTURE", "Your profile picture (from gravatar):");
 define("WORDING_REGISTER", "Register");
 define("WORDING_REGISTER_NEW_ACCOUNT", "Register for a new account");
 define("WORDING_REGISTRATION_CAPTCHA", "Enter");
+define("WORDING_REGISTRATION_COMPLETE", "Registration Successful");
 define("WORDING_REGISTRATION_EMAIL", "Email");
 define("WORDING_REGISTRATION_FIRST_NAME", "First Name");
 define("WORDING_REGISTRATION_LAST_NAME", "Last Name");

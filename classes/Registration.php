@@ -40,7 +40,7 @@ class Registration
 
         // if we have such a POST request, call the registerNewUser() method
         if (isset($_POST["register"])) {
-            $this->registerNewUser($_POST['first_name'], $_POST['last_name'], $_POST['user_name'], $_POST['user_email'], $_POST['user_password_new'], $_POST['user_password_repeat'], $_POST["captcha"]);
+            $this->registerNewUser($_POST['first_name'], $_POST['last_name'], $_POST['user_name'], $_POST['user_email'], $_POST['user_password_new'], $_POST['user_password_repeat']);
         // if we have such a GET request, call the verifyNewUser() method
         } else if (isset($_GET["id"]) && isset($_GET["verification_code"])) {
             $this->verifyNewUser($_GET["id"], $_GET["verification_code"]);
@@ -78,7 +78,7 @@ class Registration
      * handles the entire registration process. checks all error possibilities, and creates a new user in the database if
      * everything is fine
      */
-    private function registerNewUser($first_name, $last_name, $user_name, $user_email, $user_password, $user_password_repeat, $captcha)
+    private function registerNewUser($first_name, $last_name, $user_name, $user_email, $user_password, $user_password_repeat)
     {
         // we just remove extra space on username and email
         $user_name  = trim($user_name);
@@ -86,9 +86,8 @@ class Registration
 
         // check provided data validity
         // TODO: check for "return true" case early, so put this first
-        if (strtolower($captcha) != strtolower($_SESSION['captcha'])) {
-            $this->errors[] = MESSAGE_CAPTCHA_WRONG;
-        } elseif (empty($first_name)) {
+        
+        if (empty($first_name)) {
             $this->errors[] = MESSAGE_FIRST_NAME_EMPTY;
         } elseif (empty($last_name)) {
             $this->errors[] = MESSAGE_LAST_NAME_EMPTY;
@@ -155,9 +154,9 @@ class Registration
                 $user_id = $this->db_connection->lastInsertId();
 
                 if ($query_new_user_insert) {
-                    // send a verification email
+                    // We send a verification email for the user to verify their email address
+                    // The admin will activate the account once this is done
                     if ($this->sendVerificationEmail($user_id, $user_email, $user_activation_hash)) {
-                        // when mail has been send successfully
                         $this->messages[] = MESSAGE_VERIFICATION_MAIL_SENT;
                         $this->registration_successful = true;
                     } else {
@@ -222,25 +221,25 @@ class Registration
             return true;
         }
     }
-
+    
     /**
-     * checks the id/verification code combination and set the user's activation status to true (=1) in the database
-     */
+    * checks the id/verification code combination and removes the activation hash
+    */
     public function verifyNewUser($user_id, $user_activation_hash)
     {
         // if database connection opened
         if ($this->databaseConnection()) {
             // try to update user with specified information
-            $query_update_user = $this->db_connection->prepare('UPDATE users SET user_active = 1, user_activation_hash = NULL WHERE user_id = :user_id AND user_activation_hash = :user_activation_hash');
+            $query_update_user = $this->db_connection->prepare('UPDATE users SET user_activation_hash = NULL WHERE user_id = :user_id AND user_activation_hash = :user_activation_hash');
             $query_update_user->bindValue(':user_id', intval(trim($user_id)), PDO::PARAM_INT);
             $query_update_user->bindValue(':user_activation_hash', $user_activation_hash, PDO::PARAM_STR);
             $query_update_user->execute();
 
             if ($query_update_user->rowCount() > 0) {
                 $this->verification_successful = true;
-                $this->messages[] = MESSAGE_REGISTRATION_ACTIVATION_SUCCESSFUL;
+                $this->messages[] = MESSAGE_REGISTRATION_VERIFICATION_SUCCESSFUL;
             } else {
-                $this->errors[] = MESSAGE_REGISTRATION_ACTIVATION_NOT_SUCCESSFUL;
+                $this->errors[] = MESSAGE_REGISTRATION_VERIFICATION_NOT_SUCCESSFUL;
             }
         }
     }

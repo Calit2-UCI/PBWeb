@@ -3,12 +3,13 @@
 <div class="small-12 medium-10 large-8 small-centered columns">
     <div class="panel">
         <br>
+
+        <!-- show registration form, but only if we didn't submit already -->
+        <?php if (!$registration->registration_successful && !$registration->verification_successful) { ?>
         <div style="text-align:center">
             <h2><?php echo WORDING_REGISTER_NEW_ACCOUNT ?></h2>
         </div>
         <br>
-        <!-- show registration form, but only if we didn't submit already -->
-        <?php if (!$registration->registration_successful && !$registration->verification_successful) { ?>
         <form data-abide method="post" action="register.php" name="registerform">
             <div class="row">
                 <div class="small-6 medium-4 large-4 push-2 columns">
@@ -67,6 +68,12 @@
                 </div>
             </div>
         </form>    
+        <?php } else { ?>
+        <div style="text-align:center">
+            <h2> <?php echo WORDING_REGISTRATION_COMPLETE; ?></h2>
+        </div>
+        <br>
+        <div style="text-align:center"><a href="index.php"> <?php echo WORDING_BACK_TO_LOGIN; ?></a></div><br>";
         <?php } ?>
     </div>
 </div>

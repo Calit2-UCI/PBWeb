@@ -30,6 +30,10 @@ class Login
      */
     private $user_is_logged_in = false;
     /**
+     * @var boolean $user_is_admin The user's account type
+     */
+    private $user_is_admin = false;
+    /**
      * @var string $user_gravatar_image_url The user's gravatar profile pic url (or a default one)
      */
     public $user_gravatar_image_url = "";
@@ -185,6 +189,7 @@ class Login
         // !empty($_SESSION['user_name']) && ($_SESSION['user_logged_in'] == 1)
         // when we called this method (in the constructor)
         $this->user_is_logged_in = true;
+        $this->user_is_admin = $_SESSION['user_is_admin'];
     }
 
     /**
@@ -215,12 +220,14 @@ class Login
                         $_SESSION['user_name'] = $result_row->user_name;
                         $_SESSION['user_email'] = $result_row->user_email;
                         $_SESSION['user_logged_in'] = 1;
+                        $_SESSION['user_is_admin'] = ($result_row->user_id == 1);
 
                         // declare user id, set the login status to true
                         $this->user_id = $result_row->user_id;
                         $this->user_name = $result_row->user_name;
                         $this->user_email = $result_row->user_email;
                         $this->user_is_logged_in = true;
+                        $this->user_is_admin = ($result_row->user_id == 1);
 
                         // Cookie token usable only once
                         $this->newRememberMeCookie();
@@ -291,12 +298,14 @@ class Login
                 $_SESSION['user_name'] = $result_row->user_name;
                 $_SESSION['user_email'] = $result_row->user_email;
                 $_SESSION['user_logged_in'] = 1;
+                $_SESSION['user_is_admin'] = ($result_row->user_id == 1);
 
                 // declare user id, set the login status to true
                 $this->user_id = $result_row->user_id;
                 $this->user_name = $result_row->user_name;
                 $this->user_email = $result_row->user_email;
                 $this->user_is_logged_in = true;
+                $this->user_is_admin = ($result_row->user_id == 1);
 
                 // reset the failed login counter for that user
                 $sth = $this->db_connection->prepare('UPDATE users '
@@ -391,6 +400,7 @@ class Login
         session_destroy();
 
         $this->user_is_logged_in = false;
+        $this->user_is_admin = false;
         $this->messages[] = MESSAGE_LOGGED_OUT;
     }
 
@@ -402,7 +412,16 @@ class Login
     {
         return $this->user_is_logged_in;
     }
-
+    
+    /**
+     * Check if the account is a regular use account or an admin account
+     * @return bool Is user an admin
+     */
+    public function isUserAdmin()
+    {
+        return $this->user_is_admin;
+    }
+	
     /**
      * Edit the user's name, provided in the editing form
      */
