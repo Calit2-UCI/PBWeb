@@ -80,6 +80,7 @@ define("WORDING_PROFILE_PICTURE", "Your profile picture (from gravatar):");
 define("WORDING_REGISTER", "Register");
 define("WORDING_REGISTER_NEW_ACCOUNT", "Register for a new account");
 define("WORDING_REGISTRATION_CAPTCHA", "Enter");
+define("WORDING_REGISTRATION_COMPLETE", "Registration Successful");
 define("WORDING_REGISTRATION_EMAIL", "Email");
 define("WORDING_REGISTRATION_FIRST_NAME", "First Name");
 define("WORDING_REGISTRATION_LAST_NAME", "Last Name");

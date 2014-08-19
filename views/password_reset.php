@@ -6,7 +6,7 @@
         <div style="text-align:center">
             <h2>Password Reset</h2>
         </div>
-        
+        <br>
         <div class="small-10 large-6 small-centered columns">
             <?php if ($login->passwordResetLinkIsValid() == true) { ?>
                 <form method="post" action="password_reset.php" name="new_password_form">

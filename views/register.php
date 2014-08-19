@@ -3,12 +3,13 @@
 <div class="small-12 large-6 small-centered columns">
     <div class="panel">
         <br>
+
+        <!-- show registration form, but only if we didn't submit already -->
+        <?php if (!$registration->registration_successful && !$registration->verification_successful) { ?>
         <div style="text-align:center">
             <h2><?php echo WORDING_REGISTER_NEW_ACCOUNT ?></h2>
         </div>
         <br>
-        <!-- show registration form, but only if we didn't submit already -->
-        <?php if (!$registration->registration_successful && !$registration->verification_successful) { ?>
         <form method="post" action="register.php" name="registerform">
             <div class="row">
                 <div class="small-6 medium-4 large-4 push-2 columns">
@@ -62,9 +63,16 @@
             </div>
 
         </form>    
-        <?php } ?>
+        <?php }
+        else{
+            echo "<div style=\"text-align:center\">
+           <h2>". WORDING_REGISTRATION_COMPLETE."</h2>
+       </div>
+       <br>";
+       echo "<div style=\"text-align:center\"><a href=\"index.php\">".WORDING_BACK_TO_LOGIN."</a></div><br>";
+   } ?>
 
-    </div>
+</div>
 </div>
 
 <?php include('_footer.php'); ?>
