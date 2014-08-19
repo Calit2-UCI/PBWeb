@@ -125,6 +125,8 @@ class Admin
                         <td>Last name</td>
                         <td>Username</td>
                         <td>Email</td>
+                        <td>Verified Email?</td>
+                        <td>Approve account</td>
                     </tr>";
                                 
                 foreach ($result as $row) {
@@ -133,6 +135,7 @@ class Admin
                     $last_name = $row['last_name'];
                     $user_name = $row['user_name'];
                     $email = $row['user_email'];
+                    $verified = $row['user_activation_hash'] == NULL ? "Yes" : "No";
                     
                     echo "<tr>
                             <td>{$id}</td>
@@ -140,14 +143,36 @@ class Admin
                             <td>{$last_name}</td>
                             <td>{$user_name}</td>
                             <td>{$email}</td>
+                            <td>{$verified}</td>
+                            <td>TODO: some button thingy</td>
                         </tr>";
                 }
                 
                 echo "</table>";
             } else {
-                echo "No users";
+                echo "No pending users";
             }
         }
     }
 
+    /**
+    * Activates the user account
+    */
+    public function activate($user_id)
+    {
+        // if database connection opened
+        if ($this->databaseConnection()) {
+            // try to update user with specified information
+            $query_update_user = $this->db_connection->prepare('UPDATE users SET user_active=0 WHERE user_id = :user_id');
+            $query_update_user->bindValue(':user_id', intval(trim($user_id)), PDO::PARAM_INT);
+            $query_update_user->execute();
+
+            if ($query_update_user->rowCount() > 0) {
+                $this->verification_successful = true;
+                $this->messages[] = MESSAGE_REGISTRATION_ACTIVATION_SUCCESSFUL;
+            } else {
+                $this->errors[] = MESSAGE_REGISTRATION_ACTIVATION_NOT_SUCCESSFUL;
+            }
+        }
+    }
 }
