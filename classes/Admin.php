@@ -126,13 +126,13 @@ class Admin
                         <td>Username</td>
                         <td>Email</td>
                     </tr>";
-                
-                while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                    $id = $row['id'];
+                                
+                foreach ($result as $row) {
+                    $id = $row['user_id'];
                     $first_name = $row['first_name'];
                     $last_name = $row['last_name'];
                     $user_name = $row['user_name'];
-                    $email = $row['email'];
+                    $email = $row['user_email'];
                     
                     echo "<tr>
                             <td>{$id}</td>
