@@ -100,13 +100,13 @@ class Admin
                 $result = $query_get_pending_users->fetchAll();
                 echo "<table>";
                 echo "<tr>
-                        <td>Id</td>
-                        <td>First name</td>
-                        <td>Last name</td>
-                        <td>Username</td>
-                        <td>Email</td>
-                        <td>Verified Email?</td>
-                        <td>Approve account</td>
+                        <th>Id</th>
+                        <th>First name</th>
+                        <th>Last name</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Verified Email?</th>
+                        <th>Approve account</th>
                     </tr>";
 
                 foreach ($result as $row) {
