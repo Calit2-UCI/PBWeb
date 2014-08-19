@@ -19,3 +19,14 @@ a:active {
 }
 .special { display: none; }
 
+input[type='checkbox'] {
+    -webkit-appearance:none;
+    width:60px;
+    height:60px;
+    background:white;
+    border-radius:5px;
+    border:2px solid #555;
+}
+input[type='checkbox']:checked {
+    background: #abd;
+}

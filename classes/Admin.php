@@ -1,3 +1,5 @@
+
+
 <?php
 
 /**
@@ -125,6 +127,7 @@ class Admin
                         <td>Last name</td>
                         <td>Username</td>
                         <td>Email</td>
+                        <td>Approve</td>
                     </tr>";
                                 
                 foreach ($result as $row) {
@@ -140,6 +143,7 @@ class Admin
                             <td>{$last_name}</td>
                             <td>{$user_name}</td>
                             <td>{$email}</td>
+                            <td><input type=\"checkbox\" id=\"check\" name=\"check\" value=\"Yes\" checked></td>
                         </tr>";
                 }
                 
