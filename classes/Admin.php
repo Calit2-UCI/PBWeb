@@ -117,15 +117,15 @@ class Admin
                     $email = $row['user_email'];
                     $verified = $row['user_activation_hash'] == NULL ? "Yes" : "No";
 
-                    echo '<tr>
+                    echo "<tr>
                             <td>{$id}</td>
                             <td>{$first_name}</td>
                             <td>{$last_name}</td>
                             <td>{$user_name}</td>
                             <td>{$email}</td>
                             <td>{$verified}</td>
-                            <td><a href="?admin_config&approve_user_id=' . $id . '" class="button secondary tiny">Approve</a></td>
-                        </tr>';
+                            <td><a href=\"?admin_config&approve_user_id={$id}\" class=\"button secondary tiny\">Approve</a></td>
+                        </tr>";
                 }
                 echo "</table>";
             } else {
