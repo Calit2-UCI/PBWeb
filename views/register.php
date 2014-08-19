@@ -9,15 +9,17 @@
         <br>
         <!-- show registration form, but only if we didn't submit already -->
         <?php if (!$registration->registration_successful && !$registration->verification_successful) { ?>
-        <form method="post" action="register.php" name="registerform">
+        <form data-abide method="post" action="register.php" name="registerform">
             <div class="row">
                 <div class="small-6 medium-4 large-4 push-2 columns">
                     <label for="first_name"><?php echo WORDING_REGISTRATION_FIRST_NAME ?></label>
                     <input id="first_name"  type="text" tabindex=1 name="first_name" required placeholder="First Name"/>
+                    <small class="error">Field is required</small>
                 </div>
                 <div class="small-6 medium-4 large-4 pull-2 columns">
                     <label for="user_name"><?php echo WORDING_REGISTRATION_USERNAME; ?></label>
                     <input id="user_name"  tabindex=4 type="text" pattern="[a-zA-Z0-9]{2,64}" name="user_name" required placeholder="Username"/>
+                    <small class="error">Username must be 2-26 characters long and consist only of letters and/or numbers</small>
                 </div>
             </div>
 
@@ -25,10 +27,12 @@
                 <div class="small-6 medium-4 large-4 push-2 columns">
                     <label for="last_name"><?php echo WORDING_REGISTRATION_LAST_NAME ?></label>
                     <input id="last_name" type="text" tabindex=2 name="last_name" required placeholder="Last Name"/>
+                    <small class="error">Field is required</small>
                 </div>
                 <div class="small-6 medium-4 large-4 pull-2 columns">
                     <label for="user_password_new"><?php echo WORDING_REGISTRATION_PASSWORD; ?></label>
                     <input id="user_password_new" tabindex=5 type="password" name="user_password_new" pattern=".{6,}" required autocomplete="off" placeholder="Password"/>
+                    <small class="error">Password must be at least 6 characters</small>
                 </div>
             </div>
 
@@ -36,11 +40,13 @@
                 <div class="small-6 medium-4 large-4 push-2 columns">
                     <label for="user_email"><?php echo WORDING_REGISTRATION_EMAIL; ?></label>
                     <input id="user_email"  tabindex=3 type="email" name="user_email" required placeholder="Email"/>
+                    <small class="error">Must be valid email address</small>
                 </div>
                 <div class="small-6 medium-4 large-4 pull-2 columns">
                     <label for="user_password_repeat"><?php echo WORDING_REGISTRATION_PASSWORD_REPEAT; ?></label>
-                    <input id="user_password_repeat" tabindex=6 type="password" name="user_password_repeat" pattern=".{6,}" required autocomplete="off" placeholder="Repeat Password"/>
-                </div>
+                    <input id="user_password_repeat" tabindex=6 type="password" name="user_password_repeat" pattern=".{6,}" required autocomplete="off" placeholder="Repeat Password" data-equalto="user_password_new"/>
+                     <small class="error">Passwords must match</small>
+               </div>
             </div>
             <!-- http://cristersmedia.com/eliminate-spam-in-modx-eform-without-captcha -->
             <div class="special">
