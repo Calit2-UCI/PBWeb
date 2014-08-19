@@ -63,16 +63,14 @@
             </div>
 
         </form>    
-        <?php }
-        else{
-            echo "<div style=\"text-align:center\">
-           <h2>". WORDING_REGISTRATION_COMPLETE."</h2>
-       </div>
-       <br>";
-       echo "<div style=\"text-align:center\"><a href=\"index.php\">".WORDING_BACK_TO_LOGIN."</a></div><br>";
-   } ?>
-
-</div>
+        <?php } else { ?>
+        <div style="text-align:center">
+            <h2> <?php echo WORDING_REGISTRATION_COMPLETE; ?></h2>
+        </div>
+        <br>
+        <div style="text-align:center"><a href="index.php"> <?php echo WORDING_BACK_TO_LOGIN; ?></a></div><br>";
+        <?php } ?>
+    </div>
 </div>
 
 <?php include('_footer.php'); ?>

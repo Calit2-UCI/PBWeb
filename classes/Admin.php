@@ -36,9 +36,7 @@ class Admin
         if(!isset($_SESSION)) {
             session_start();
         }
-        if (isset($_POST["approve_user"])) {
-            $this->approveUser($_POST['user_id'], $_POST['activation_hash']);
-        }        
+   
         if(isset($_GET['approve_user_id'])){
             $this->activate($_GET['approve_user_id']);
         }
@@ -102,40 +100,39 @@ class Admin
                 $result = $query_get_pending_users->fetchAll();
                 echo "<table>";
                 echo "<tr>
-                <td>Id</td>
-                <td>First name</td>
-                <td>Last name</td>
-                <td>Username</td>
-                <td>Email</td>
-                <td>Verified Email?</td>
-                <td>Approve account</td>
-            </tr>";
+                        <td>Id</td>
+                        <td>First name</td>
+                        <td>Last name</td>
+                        <td>Username</td>
+                        <td>Email</td>
+                        <td>Verified Email?</td>
+                        <td>Approve account</td>
+                    </tr>";
 
-            foreach ($result as $row) {
-                $id = $row['user_id'];
-                $first_name = $row['first_name'];
-                $last_name = $row['last_name'];
-                $user_name = $row['user_name'];
-                $email = $row['user_email'];
-                $verified = $row['user_activation_hash'] == NULL ? "Yes" : "No";
+                foreach ($result as $row) {
+                    $id = $row['user_id'];
+                    $first_name = $row['first_name'];
+                    $last_name = $row['last_name'];
+                    $user_name = $row['user_name'];
+                    $email = $row['user_email'];
+                    $verified = $row['user_activation_hash'] == NULL ? "Yes" : "No";
 
-                echo "<tr>
-                <td>{$id}</td>
-                <td>{$first_name}</td>
-                <td>{$last_name}</td>
-                <td>{$user_name}</td>
-                <td>{$email}</td>
-                <td>{$verified}</td>
-                <td><a href=\"?approve_user_id={$id}&admin_config\" class=\"button secondary tiny\">Approve</a></td>
-            </tr>";
+                    echo '<tr>
+                            <td>{$id}</td>
+                            <td>{$first_name}</td>
+                            <td>{$last_name}</td>
+                            <td>{$user_name}</td>
+                            <td>{$email}</td>
+                            <td>{$verified}</td>
+                            <td><a href="?admin_config&approve_user_id=' . $id . '" class="button secondary tiny">Approve</a></td>
+                        </tr>';
+                }
+                echo "</table>";
+            } else {
+                echo "No pending users";
+            }
         }
-
-        echo "</table>";
-    } else {
-        echo "No pending users";
     }
-}
-}
 
     /**
     * Activates the user account
