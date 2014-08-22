@@ -8,6 +8,9 @@
 
 // login & registration classes
 define("MESSAGE_ACCOUNT_NOT_ACTIVATED", "Your account is not activated yet. Please click on the confirm link in the mail.");
+define("MESSAGE_ADMIN_APPROVAL_NOT_SUCCESSFUL", "Something went wrong. User not approved");
+define("MESSAGE_ADMIN_APPROVAL_SUCCESSFUL", "User approved");
+define("MESSAGE_ADMIN_DELETED_USER", "User deleted");
 define("MESSAGE_CAPTCHA_WRONG", "Captcha was wrong!");
 define("MESSAGE_COOKIE_INVALID", "Invalid cookie");
 define("MESSAGE_DATABASE_ERROR", "Database connection problem.");
@@ -34,8 +37,6 @@ define("MESSAGE_PASSWORD_RESET_MAIL_SUCCESSFULLY_SENT", "Password reset mail suc
 define("MESSAGE_PASSWORD_TOO_SHORT", "Password has a minimum length of 6 characters");
 define("MESSAGE_PASSWORD_WRONG", "Wrong password. Try again.");
 define("MESSAGE_PASSWORD_WRONG_3_TIMES", "You have entered an incorrect password 3 or more times already. Please wait 30 seconds to try again.");
-define("MESSAGE_REGISTRATION_ACTIVATION_NOT_SUCCESSFUL", "Something went wrong. User not activated");
-define("MESSAGE_REGISTRATION_ACTIVATION_SUCCESSFUL", "User activated");
 define("MESSAGE_REGISTRATION_FAILED", "Sorry, your registration failed. Please go back and try again.");
 define("MESSAGE_REGISTRATION_VERIFICATION_NOT_SUCCESSFUL", "Sorry, no such id/verification code combination here...");
 define("MESSAGE_REGISTRATION_VERIFICATION_SUCCESSFUL", "Verification was successful! The admin will approve your account shortly!");

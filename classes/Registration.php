@@ -224,6 +224,7 @@ class Registration
     
     /**
     * checks the id/verification code combination and removes the activation hash
+    * the user still has to be approved by the admin
     */
     public function verifyNewUser($user_id, $user_activation_hash)
     {
