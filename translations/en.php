@@ -7,7 +7,8 @@
  */
 
 // login & registration classes
-define("MESSAGE_ACCOUNT_NOT_ACTIVATED", "Your account is not activated yet. Please click on the confirm link in the mail.");
+define("MESSAGE_ACCOUNT_NOT_APPROVED", "The admin has not approved your account yet.");
+define("MESSAGE_ACCOUNT_NOT_VERIFIED", "Your account is not verified yet. Please click on the confirm link in the mail.");
 define("MESSAGE_ADMIN_APPROVAL_NOT_SUCCESSFUL", "Something went wrong. User not approved");
 define("MESSAGE_ADMIN_APPROVAL_SUCCESSFUL", "User approved");
 define("MESSAGE_ADMIN_DELETED_USER", "User deleted");

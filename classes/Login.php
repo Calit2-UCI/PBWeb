@@ -290,9 +290,11 @@ class Login
 
                 $this->errors[] = MESSAGE_PASSWORD_WRONG;
             // has the user activated their account with the verification email
+            } else if ($result_row->user_activation_hash != null) {
+                $this->errors[] = MESSAGE_ACCOUNT_NOT_VERIFIED;
             } else if ($result_row->user_active != 1) {
-                $this->errors[] = MESSAGE_ACCOUNT_NOT_ACTIVATED;
-            } else {
+                $this->errors[] = MESSAGE_ACCOUNT_NOT_APPROVED;
+            } else{
                 // write user data into PHP SESSION [a file on your server]
                 $_SESSION['user_id'] = $result_row->user_id;
                 $_SESSION['user_name'] = $result_row->user_name;
