@@ -38,7 +38,7 @@ class Admin
         }
    
         if(isset($_GET['approve_user_id'])){
-            $this->activate($_GET['approve_user_id']);
+            $this->approve($_GET['approve_user_id']);
         } elseif(isset($_GET['delete_user_id'])){
             $this->deleteUser($_GET['delete_user_id']);
         }
@@ -139,9 +139,9 @@ class Admin
     }
 
     /**
-    * Activates the user account
+    * Approves the user account
     */
-    public function activate($user_id)
+    public function approve($user_id)
     {
         // if database connection opened
         if ($this->databaseConnection()) {
@@ -151,10 +151,9 @@ class Admin
             $query_update_user->execute();
 
             if ($query_update_user->rowCount() > 0) {
-                $this->verification_successful = true;
-                $this->messages[] = MESSAGE_REGISTRATION_ACTIVATION_SUCCESSFUL;
+                $this->messages[] = MESSAGE_ADMIN_APPROVAL_SUCCESSFUL;
             } else {
-                $this->errors[] = MESSAGE_REGISTRATION_ACTIVATION_NOT_SUCCESSFUL;
+                $this->errors[] = MESSAGE_ADMIN_APPROVAL_NOT_SUCCESSFUL;
             }
         }
     }
@@ -166,7 +165,7 @@ class Admin
             $query_delete_user->bindValue(':user_id', $user_id, PDO::PARAM_INT);
             $query_delete_user->execute();
             
-            $this->messages[] = "User deleted";
+            $this->messages[] = MESSAGE_ADMIN_DELETED_USER;
         }
     }
 }
