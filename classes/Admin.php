@@ -39,6 +39,8 @@ class Admin
    
         if(isset($_GET['approve_user_id'])){
             $this->activate($_GET['approve_user_id']);
+        } elseif(isset($_GET['delete_user_id'])){
+            $this->deleteUser($_GET['delete_user_id']);
         }
     }
 
@@ -107,6 +109,7 @@ class Admin
                         <th>Email</th>
                         <th>Verified Email?</th>
                         <th>Approve account</th>
+                        <th>Delete account</th>
                     </tr>";
 
                 foreach ($result as $row) {
@@ -125,6 +128,7 @@ class Admin
                             <td>{$email}</td>
                             <td>{$verified}</td>
                             <td><a href=\"?admin_config&approve_user_id={$id}\" class=\"button secondary tiny\">Approve</a></td>
+                            <td><a href=\"?admin_config&delete_user_id={$id}\" class=\"button secondary tiny\">Delete</a></td>
                         </tr>";
                 }
                 echo "</table>";
@@ -152,6 +156,17 @@ class Admin
             } else {
                 $this->errors[] = MESSAGE_REGISTRATION_ACTIVATION_NOT_SUCCESSFUL;
             }
+        }
+    }
+    
+    public function deleteUser($user_id)
+    {
+        if ($this->databaseConnection()) {
+            $query_delete_user = $this->db_connection->prepare('DELETE FROM users WHERE user_id=:user_id');
+            $query_delete_user->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+            $query_delete_user->execute();
+            
+            $this->messages[] = "User deleted";
         }
     }
 }
