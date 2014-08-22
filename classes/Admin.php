@@ -128,7 +128,8 @@ class Admin
                             <td>{$email}</td>
                             <td>{$verified}</td>
                             <td><a href=\"?admin_config&approve_user_id={$id}\" class=\"button secondary tiny\">Approve</a></td>
-                            <td><a href=\"?admin_config&delete_user_id={$id}\" class=\"button secondary tiny\">Delete</a></td>
+                            <td><a href=\"?admin_config&delete_user_id={$id}\" class=\"button secondary tiny\"
+                              onclick=\"return confirm('Are you sure you would like to delete this user?');\">Delete</a></td>
                         </tr>";
                 }
                 echo "</table>";
