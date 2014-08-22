@@ -16,7 +16,7 @@
         <p><?php $admin->printPendingUsers(); ?></p>
     </div>
     <div class="content" id="panel3a">
-        <p>Panel 3 content goes here.</p>
+        <p><?php $admin->printActiveUsers(); ?></p>
     </div>
     <div class="content" id="panel4a">
         <p>Panel 4 content goes here.</p>

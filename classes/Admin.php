@@ -138,6 +138,53 @@ class Admin
             }
         }
     }
+    
+    /*
+     * Prints a table of the current active users
+     * TODO: make admin account stand out
+     */
+    public function printActiveUsers()
+    {
+        if ($this->databaseConnection()) {
+            // try to update user with specified information
+            $query_get_pending_users = $this->db_connection->prepare('SELECT * FROM users WHERE user_active = 1');
+            $query_get_pending_users->execute();
+
+            if ($query_get_pending_users->rowCount() > 0) {
+                $result = $query_get_pending_users->fetchAll();
+                echo "<table>";
+                echo "<tr>
+                        <th>Id</th>
+                        <th>First name</th>
+                        <th>Last name</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Delete account</th>
+                    </tr>";
+
+                foreach ($result as $row) {
+                    $id = $row['user_id'];
+                    $first_name = $row['first_name'];
+                    $last_name = $row['last_name'];
+                    $user_name = $row['user_name'];
+                    $email = $row['user_email'];
+
+                    echo "<tr>
+                            <td>{$id}</td>
+                            <td>{$first_name}</td>
+                            <td>{$last_name}</td>
+                            <td>{$user_name}</td>
+                            <td>{$email}</td>
+                            <td><a href=\"?admin_config&delete_user_id={$id}\" class=\"button secondary tiny\"
+                              onclick=\"return confirm('Are you sure you would like to delete this user?');\">Delete</a></td>
+                        </tr>";
+                }
+                echo "</table>";
+            } else {
+                echo "No active users";
+            }
+        }
+    }
 
     /**
     * Approves the user account
