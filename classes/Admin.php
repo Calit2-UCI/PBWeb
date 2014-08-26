@@ -103,13 +103,13 @@ class Admin
                 echo "<table width=\"100%\">";
                 echo "<tr>
                         <th>Id</th>
-                        <th>First name</th>
-                        <th>Last name</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
                         <th>Username</th>
                         <th>Email</th>
                         <th>Verified Email?</th>
-                        <th>Approve account</th>
-                        <th>Delete account</th>
+                        <th>Approve Account</th>
+                        <th>Delete Account</th>
                     </tr>";
 
                 foreach ($result as $row) {
@@ -127,7 +127,8 @@ class Admin
                             <td>{$user_name}</td>
                             <td>{$email}</td>
                             <td>{$verified}</td>
-                            <td><a href=\"?admin_config&approve_user_id={$id}\" class=\"button secondary tiny\">Approve</a></td>
+                            <td><a href=\"?admin_config&approve_user_id={$id}\" class=\"button secondary tiny\"
+                              onclick=\"return confirm('Are you sure you would like to approve this user?');\">Approve</a></td>
                             <td><a href=\"?admin_config&delete_user_id={$id}\" class=\"button secondary tiny\"
                               onclick=\"return confirm('Are you sure you would like to delete this user?');\">Delete</a></td>
                         </tr>";
@@ -155,11 +156,11 @@ class Admin
                 echo "<table width=\"100%\">";
                 echo "<tr>
                         <th>Id</th>
-                        <th>First name</th>
-                        <th>Last name</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
                         <th>Username</th>
                         <th>Email</th>
-                        <th>Delete account</th>
+                        <th>Delete Account</th>
                     </tr>";
 
                 foreach ($result as $row) {
