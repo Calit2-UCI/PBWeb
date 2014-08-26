@@ -62,6 +62,28 @@
             }
         }
         ?>
+
+        <?php
+        // show potential errors / feedback (from admin object)
+        if (isset($admin)) {
+            if ($admin->errors) {
+                foreach ($admin->errors as $error) {
+                    echo '<div data-alert class="alert-box alert radius">';
+                    echo $error;
+                    echo '<a href="#" class="close">&times;</a>
+                        </div>';
+                }
+            }
+            if ($admin->messages) {
+                foreach ($admin->messages as $message) {
+                    echo '<div data-alert class="alert-box info radius">';
+                    echo $message;
+                    echo '<a href="#" class="close">&times;</a>
+                        </div>';
+                }
+            }
+        }
+        ?>
         
         <?php
         // show potential errors / feedback (from patient object)

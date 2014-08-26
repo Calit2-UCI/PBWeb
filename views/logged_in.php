@@ -9,7 +9,7 @@
         <br>
         <div class="small-10 large-6 small-centered columns">
             <div class="row">
-                <a href="index.php?patient_access" class="button expand"><?php echo WORDING_PATIENT_ACCESS; ?></a>
+                <a href="patient.php" class="button expand"><?php echo WORDING_PATIENT_ACCESS; ?></a>
             </div>
             <div class="row">
                 <a href="edit.php" class="button success expand"><?php echo WORDING_EDIT_USER_DATA; ?></a>
