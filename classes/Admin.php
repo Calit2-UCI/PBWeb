@@ -100,7 +100,7 @@ class Admin
 
             if ($query_get_pending_users->rowCount() > 0) {
                 $result = $query_get_pending_users->fetchAll();
-                echo "<table>";
+                echo "<table width=\"100%\">";
                 echo "<tr>
                         <th>Id</th>
                         <th>First name</th>
@@ -152,7 +152,7 @@ class Admin
 
             if ($query_get_pending_users->rowCount() > 0) {
                 $result = $query_get_pending_users->fetchAll();
-                echo "<table>";
+                echo "<table width=\"100%\">";
                 echo "<tr>
                         <th>Id</th>
                         <th>First name</th>
