@@ -14,7 +14,9 @@ class Patient{
 
 	public function __construct()
 	{
-		session_start();
+        if(!isset($_SESSION)) {
+            session_start();
+        }
 		
         if (isset($_POST["get_patient"]) && isset($_POST['patient_id'])) {
             $this->doPatientLookup($_POST['patient_id']);
@@ -59,7 +61,7 @@ class Patient{
 		} elseif (!empty($id)) {
             $this->databaseConnection();
             $query_check_patient_id = $this->db_connection->prepare('SELECT * FROM patients WHERE id=:id');
-            $query_check_patient_id->bindValue(':id', $id, PDO::PARAM_STR);
+            $query_check_patient_id->bindValue(':id', $id, PDO::PARAM_INT);
             $query_check_patient_id->execute();
             $patient_overview = $query_check_patient_id->fetch();
 
@@ -70,12 +72,36 @@ class Patient{
     private function showPatientOverview()
     {
         $this->databaseConnection();
-        $query_check_patient_id = $this->db_connection->prepare('SELECT * FROM patients WHERE doctor_id=:doctor_id');
-        $query_check_patient_id->bindValue(':doctor_id', $_SESSION['user_id'], PDO::PARAM_STR);
-        $query_check_patient_id->execute();
-        $patient_overview = $query_check_patient_id->fetchall();
+        $query_get_all_patients = $this->db_connection->prepare('SELECT * FROM patients WHERE doctor_id=:doctor_id');
+        $query_get_all_patients->bindValue(':doctor_id', $_SESSION['user_id'], PDO::PARAM_INT);
+        $query_get_all_patients->execute();
 
-        // TODO: print stuff
+        if ($query_get_all_patients->rowCount() > 0) {
+                $result = $query_get_all_patients->fetchAll();
+                echo "<table width=\"100%\">";
+                echo "<tr>
+                        <th>Patient Id</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Patient Info</th>
+                    </tr>";
+
+                foreach ($result as $row) {
+                    $patient_id = $row['id'];
+                    $first_name = $row['first_name'];
+                    $last_name = $row['last_name'];
+
+                    echo "<tr>
+                            <td>{$patient_id}</td>
+                            <td>{$first_name}</td>
+                            <td>{$last_name}</td>
+                            <td><a href=\"?patient?get_patient={$patient_id}\" class=\"button secondary tiny\>Info</a></td>
+                        </tr>";
+                }
+                echo "</table>";
+            } else {
+                echo "No patients";
+            }
     }
 }
 ?>
