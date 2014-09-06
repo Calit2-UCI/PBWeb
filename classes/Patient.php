@@ -18,11 +18,6 @@ class Patient{
             session_start();
         }
 		
-        if (isset($_POST["get_patient"]) && isset($_POST['patient_id'])) {
-            $this->doPatientLookup($_POST['patient_id']);
-        } elseif (isset($_GET["overview"])) {
-            $this->showPatientOverview();
-        }
 	}
     
     /**
@@ -83,19 +78,24 @@ class Patient{
                         <th>Patient Id</th>
                         <th>First Name</th>
                         <th>Last Name</th>
+                        <th>Alerts<th>
                         <th>Patient Info</th>
                     </tr>";
 
-                foreach ($result as $row) {
+                foreach ($result as $row) {                    
                     $patient_id = $row['id'];
                     $first_name = $row['first_name'];
                     $last_name = $row['last_name'];
+                    $num_alerts = $this->getAlerts($patient_id);
 
                     echo "<tr>
                             <td>{$patient_id}</td>
                             <td>{$first_name}</td>
-                            <td>{$last_name}</td>
-                            <td><a href=\"?patient?get_patient={$patient_id}\" class=\"button secondary tiny\>Info</a></td>
+                            <td>{$last_name}</td>" . 
+                            num_alerts > 0 ? 
+                                "<td bgcolor=\"red\"><span style=\"color:red;\">{$num_alerts}<span></td>" :
+                                "<td>0</td>" .
+                            "<td><a href=\"patient.php?get_patient={$patient_id}\" class=\"button secondary tiny\">Info</a></td>
                         </tr>";
                 }
                 echo "</table>";

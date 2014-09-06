@@ -1,34 +1,44 @@
 <?php include('_header.php'); ?>
-<div class="small-12 large-6 small-centered columns">
-    <div class="panel">
-        <div style="text-align:center" id="box-shadow-default">
-            <br>
-            <h2><?echo WORDING_PATIENT_LOOKUP ?></h2>
-        </div>
-        <br>
 
-        <a href="patient.php?overview" class="button expand row">Patient List</a>
-        
-        <form method="post" action="patient.php" name="patientacess">
-            <div class="small-8 large-4 small-centered columns">
-                <div class="row">
-                    <label for="patient_id"><?php echo WORDING_PATIENT_ID ?></label>
-                    <input id="patient_id" type="number" name="patient_id" required placeholder="Enter Patient ID"/>
-                </div>
-                <br>
-                <div class="row">
-                    <button type="submit"  name="get_patient" class="button expand">Submit</button>
-                </div>
-            </div>
-        </form>
-        
-        <div class="row">
-            <a href="index.php">Back</a>
+<div class="row">
+    <div class="large-14 columns">
+        <h1>Welcome to the Patient Overview Page</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="large-14 columns">
+        <div class="callout panel">
+            <h3>Patient List</h3>
+            <p><?php //$admin->showPatientOverview(); ?></p>
+            <table width="100%">
+                <tr>
+                    <th>Patient Id</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Alerts</th>
+                    <th>Patient Info</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Some</td>
+                    <td>Patient</td>
+                    <td>0</td>
+                    <td><a href="patient.php?get_patient=1" class="button secondary tiny">Info</a></td>
+                </tr>
+               <tr>
+                    <td>2</td>
+                    <td>Another</td>
+                    <td>Patient</td>
+                    <td bgcolor="red"><span style="color:white;">1</span></td>
+                    <td><a href="patient.php?get_patient=2" class="button secondary tiny">Info</a></td>
+                </tr>
+            </table>
         </div>
-        
         <div class="row">
-            <a href="index.php?logout"><?php echo WORDING_LOGOUT; ?></a>
+            <a href="index.php?logout" class="button alert expand"><?php echo WORDING_LOGOUT; ?></a>
         </div>
     </div>
 </div>
+    
 <?php include('_footer.php'); ?>
