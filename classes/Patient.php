@@ -47,11 +47,11 @@ class Patient{
         }
     }
     
-	private function doPatientLookup($id)
+	public function doPatientLookup($id)
 	{
         $id = trim($id);
         
-		if (empty($id)) {
+		if (empty($id) || !isValidId($id)) {
 			$this->errors[] = "MESSAGE_PATIENT_ID_INVALID";
 		} elseif (!empty($id)) {
             $this->databaseConnection();
@@ -64,7 +64,10 @@ class Patient{
 		}
 	}
 
-    private function showPatientOverview()
+    /*
+     * Prints a table of all the patients that the doctor has access to
+     */
+    public function showPatientOverview()
     {
         $this->databaseConnection();
         $query_get_all_patients = $this->db_connection->prepare('SELECT * FROM patients WHERE doctor_id=:doctor_id');
@@ -95,13 +98,18 @@ class Patient{
                             num_alerts > 0 ? 
                                 "<td bgcolor=\"red\"><span style=\"color:red;\">{$num_alerts}<span></td>" :
                                 "<td>0</td>" .
-                            "<td><a href=\"patient.php?get_patient={$patient_id}\" class=\"button secondary tiny\">Info</a></td>
+                            "<td><a href=\"patient_details.php?patient_id={$patient_id}\" class=\"button secondary tiny\">Info</a></td>
                         </tr>";
                 }
                 echo "</table>";
             } else {
                 echo "No patients";
             }
+    }
+    
+    // checks if the id given is valid (patient exists and doctor is authorised to access info)
+    public function isValidId($id) {
+        // TODO: stuff
     }
 }
 ?>

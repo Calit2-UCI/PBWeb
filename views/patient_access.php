@@ -10,7 +10,8 @@
     <div class="large-14 columns">
         <div class="callout panel">
             <h3>Patient List</h3>
-            <p><?php //$admin->showPatientOverview(); ?></p>
+            <br>
+            <p><?php //$patient->showPatientOverview(); ?></p>
             <table width="100%">
                 <tr>
                     <th>Patient Id</th>
@@ -24,14 +25,14 @@
                     <td>Some</td>
                     <td>Patient</td>
                     <td>0</td>
-                    <td><a href="patient.php?get_patient=1" class="button secondary tiny">Info</a></td>
+                    <td><a href="patient_details.php?patient_id=1" class="button secondary tiny">Info</a></td>
                 </tr>
                <tr>
                     <td>2</td>
                     <td>Another</td>
                     <td>Patient</td>
                     <td bgcolor="red"><span style="color:white;">1</span></td>
-                    <td><a href="patient.php?get_patient=2" class="button secondary tiny">Info</a></td>
+                    <td><a href="patient_details.php?patient_id=2" class="button secondary tiny">Info</a></td>
                 </tr>
             </table>
         </div>
