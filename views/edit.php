@@ -52,11 +52,13 @@
             </form>
         </div>
         <br>
-        <!-- backlink -->
-        <div class="row">
-            <a href="index.php"><?php echo WORDING_BACK_TO_LOGIN; ?></a>
-        </div>
     </div>
 </div>
 
+<div class="row">
+    <a href="index.php" class="button expand">Menu</a>
+</div>
+<div class="row">
+    <a href="index.php?logout" class="button alert expand"><?php echo WORDING_LOGOUT; ?></a>
+</div>
 <?php include('_footer.php'); ?>
