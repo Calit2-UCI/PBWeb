@@ -37,10 +37,10 @@ class Admin
             session_start();
         }
    
-        if(isset($_GET['approve_user_id'])){
-            $this->approve($_GET['approve_user_id']);
-        } elseif(isset($_GET['delete_user_id'])){
-            $this->deleteUser($_GET['delete_user_id']);
+        if(isset($_POST['approve_user_id'])){
+            $this->approve($_POST['approve_user_id']);
+        } elseif(isset($_POST['delete_user_id'])){
+            $this->deleteUser($_POST['delete_user_id']);
         }
     }
 
@@ -127,10 +127,18 @@ class Admin
                             <td>{$user_name}</td>
                             <td>{$email}</td>
                             <td>{$verified}</td>
-                            <td><a href=\"?admin_config&approve_user_id={$id}\" class=\"button secondary tiny\"
-                              onclick=\"return confirm('Are you sure you would like to approve this user?');\">Approve</a></td>
-                            <td><a href=\"?admin_config&delete_user_id={$id}\" class=\"button secondary tiny\"
-                              onclick=\"return confirm('Are you sure you would like to delete this user?');\">Delete</a></td>
+                            <td>
+                                <form method=\"post\">
+                                    <button type=\"submit\"  name=\"approve_user_id\" value=\"{$id}\" class=\"button secondary tiny\"
+                                    onclick=\"return confirm('Are you sure you would like to approve this user?');\">Approve</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form method=\"post\">
+                                    <button type=\"submit\"  name=\"delete_user_id\" value=\"{$id}\" class=\"button secondary tiny\"
+                                    onclick=\"return confirm('Are you sure you would like to delete this user?');\">Approve</button>
+                                </form>
+                            </td>
                         </tr>";
                 }
                 echo "</table>";
