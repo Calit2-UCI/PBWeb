@@ -184,13 +184,15 @@ class Admin
                             <td>{$last_name}</td>
                             <td>{$user_name}</td>
                             <td>{$email}</td>
-                            <td>
-                                <form method=\"post\">
-                                    <button type=\"submit\"  name=\"delete_user_id\" value=\"{$id}\" class=\"button secondary tiny\"
-                                    onclick=\"return confirm('Are you sure you would like to delete this user?');\">Delete</button>
-                                </form>
-                            </td>
-                        </tr>";
+                            <td>";
+                    if ($id != 1) {
+                      echo "<form method=\"post\">
+                              <button type=\"submit\"  name=\"delete_user_id\" value=\"{$id}\" class=\"button secondary tiny\"
+                              onclick=\"return confirm('Are you sure you would like to delete this user?');\">Delete</button>
+                          </form>";
+                    }
+                    echo "</td>
+                    </tr>";
                 }
                 echo "</table>";
             } else {
