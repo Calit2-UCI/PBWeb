@@ -136,7 +136,7 @@ class Admin
                             <td>
                                 <form method=\"post\">
                                     <button type=\"submit\"  name=\"delete_user_id\" value=\"{$id}\" class=\"button secondary tiny\"
-                                    onclick=\"return confirm('Are you sure you would like to delete this user?');\">Approve</button>
+                                    onclick=\"return confirm('Are you sure you would like to delete this user?');\">Delete</button>
                                 </form>
                             </td>
                         </tr>";
@@ -184,8 +184,12 @@ class Admin
                             <td>{$last_name}</td>
                             <td>{$user_name}</td>
                             <td>{$email}</td>
-                            <td><a href=\"?admin_config&delete_user_id={$id}\" class=\"button secondary tiny\"
-                              onclick=\"return confirm('Are you sure you would like to delete this user?');\">Delete</a></td>
+                            <td>
+                                <form method=\"post\">
+                                    <button type=\"submit\"  name=\"delete_user_id\" value=\"{$id}\" class=\"button secondary tiny\"
+                                    onclick=\"return confirm('Are you sure you would like to delete this user?');\">Delete</button>
+                                </form>
+                            </td>
                         </tr>";
                 }
                 echo "</table>";
