@@ -10,7 +10,7 @@
       </div>
       <br>
       <!-- edit form for user email / this form uses HTML5 attributes, like "required" and type="email" -->
-      <form data-abide method="post" action="admin.php" name="user_edit_form_email">    
+      <form data-abide method="post" action="admin.php" name="admin_edit_form_email">    
         <div class="row">
           <div style="text-align:center">
             <h5><?php echo WORDING_CHANGE_EMAIL ?></h5>
@@ -21,7 +21,7 @@
           <input id="user_email" type="email" name="user_email" required placeholder="<?php echo WORDING_CURRENTLY; ?>: <?php echo $admin->getUserEmail($_GET['edit_user']) ?>" />
           <small class="error">Invalid Email</small>
 
-          <input type="submit" class="button success expand" name="user_edit_submit_email" value="<?php echo WORDING_CHANGE_EMAIL; ?>" />
+          <button type="submit" class="button success expand" name="admin_edit_submit_email" value="<?php echo $_GET['edit_user']; ?>">Change Email</button>
         </div>
       </form>
     </div>

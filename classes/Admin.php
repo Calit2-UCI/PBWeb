@@ -41,6 +41,9 @@ class Admin
 
     if (isset($_GET['edit_user'])){
       $this->getUserInfo($_GET['edit_user']);
+    } elseif (isset($_POST["admin_edit_submit_email"])) {
+      // User id is sent in admin_edit_submit_email
+      $this->editUserEmail($_POST['user_email'], $_POST["admin_edit_submit_email"]);
     } elseif (isset($_POST['approve_user_id'])){
       $this->approve($_POST['approve_user_id']);
     } elseif (isset($_POST['delete_user_id'])){
@@ -238,7 +241,49 @@ class Admin
       $this->messages[] = MESSAGE_ADMIN_DELETED_USER;
     }
   }
-  
+
+  /**
+     * Edit the user's email, provided in the editing form
+     * Copied from Login class, with a few changes
+     */
+  public function editUserEmail($user_email, $user_id)
+  {
+    // prevent database flooding
+    $user_email = substr(trim($user_email), 0, 64);
+    $this->getUserInfo($user_id);
+    
+    if (!empty($user_email) && $user_email == $this->user_row['user_email']) {
+      $this->errors[] = MESSAGE_EMAIL_SAME_LIKE_OLD_ONE;
+      // user mail cannot be empty and must be in email format
+    } elseif (empty($user_email) || !filter_var($user_email, FILTER_VALIDATE_EMAIL)) {
+      $this->errors[] = MESSAGE_EMAIL_INVALID;
+    } else if ($this->databaseConnection()) {
+      // check if new email already exists
+      $query_user = $this->db_connection->prepare('SELECT * FROM users WHERE user_email = :user_email');
+      $query_user->bindValue(':user_email', $user_email, PDO::PARAM_STR);
+      $query_user->execute();
+      // get result row (as an object)
+      $result_row = $query_user->fetchObject();
+
+      // if this email exists
+      if (isset($result_row->user_id)) {
+        $this->errors[] = MESSAGE_EMAIL_ALREADY_EXISTS;
+      } else {
+        // write users new data into database
+        $query_edit_user_email = $this->db_connection->prepare('UPDATE users SET user_email = :user_email WHERE user_id = :user_id');
+        $query_edit_user_email->bindValue(':user_email', $user_email, PDO::PARAM_STR);
+        $query_edit_user_email->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+        $query_edit_user_email->execute();
+
+        if ($query_edit_user_email->rowCount()) {
+          $this->messages[] = $this->getUserFullName($user_id) . "'s email has been changed to " . $user_email;
+        } else {
+          $this->errors[] = MESSAGE_EMAIL_CHANGE_FAILED;
+        }
+      }
+    }
+  }
+
   public function isValidUserId($user_id)
   {
     if (is_numeric($user_id)) {
@@ -256,7 +301,7 @@ class Admin
     }
     return false;
   }
-  
+
   /**
    * Populates the user_row array with info for selected user
    */
@@ -269,31 +314,31 @@ class Admin
       $sth->execute();
       if ($sth->rowCount() > 0) {
         $this->user_row = $sth->fetch();
-//        echo "<pre>";
-//        print_r($this->user_row);
-//        echo "</pre>";
+        //        echo "<pre>";
+        //        print_r($this->user_row);
+        //        echo "</pre>";
       }
     }
   }
-  
+
   public function getUserEmail($user_id)
   {
     $this->getUserInfo($user_id);
     return $this->user_row['user_email'];
   }
-  
+
   public function getUserFirstName($user_id)
   {
     $this->getUserInfo($user_id);
     return $this->user_row['first_name'];
   }
-  
+
   public function getUserLastName($user_id)
   {
     $this->getUserInfo($user_id);
     return $this->user_row['last_name'];
   }
-  
+
   public function getUserFullName($user_id)
   {
     $this->getUserInfo($user_id);
