@@ -12,6 +12,10 @@
 class Admin
 {
   /**
+     * @var array $user_row array of user into
+     */
+  private $user_row = array();
+  /**
      * @var object $db_connection The database connection
      */
   private $db_connection = null;
@@ -35,9 +39,11 @@ class Admin
       session_start();
     }
 
-    if(isset($_POST['approve_user_id'])){
+    if (isset($_GET['edit_user'])){
+      $this->getUserInfo($_GET['edit_user']);
+    } elseif (isset($_POST['approve_user_id'])){
       $this->approve($_POST['approve_user_id']);
-    } elseif(isset($_POST['delete_user_id'])){
+    } elseif (isset($_POST['delete_user_id'])){
       $this->deleteUser($_POST['delete_user_id']);
     }
   }
@@ -167,6 +173,7 @@ class Admin
                 <th>Last Name</th>
                 <th>Username</th>
                 <th>Email</th>
+                <th>Edit</th>
                 <th>Delete Account</th>
             </tr>";
 
@@ -183,6 +190,7 @@ class Admin
                   <td>{$last_name}</td>
                   <td>{$user_name}</td>
                   <td>{$email}</td>
+                  <td><a href=\"?edit_user={$id}\" class=\"button secondary tiny\">Edit</a></td>
                   <td>";
           if ($id != 1) {
             echo "<form method=\"post\">
@@ -229,5 +237,66 @@ class Admin
 
       $this->messages[] = MESSAGE_ADMIN_DELETED_USER;
     }
+  }
+  
+  public function isValidUserId($user_id)
+  {
+    if (is_numeric($user_id)) {
+      // if database connection opened
+      if ($this->databaseConnection()) {
+        // try to update user with specified information
+        $sth = $this->db_connection->prepare('SELECT * FROM users WHERE user_id = :user_id');
+        $sth->bindValue(':user_id', intval(trim($user_id)), PDO::PARAM_INT);
+        $sth->execute();
+
+        if ($sth->rowCount() > 0) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+  
+  /**
+   * Populates the user_row array with info for selected user
+   */
+  private function getUserInfo($user_id)
+  {
+    if ($this->databaseConnection()) {
+      // try to update user with specified information
+      $sth = $this->db_connection->prepare('SELECT * FROM users WHERE user_id = :user_id');
+      $sth->bindValue(':user_id', intval(trim($user_id)), PDO::PARAM_INT);
+      $sth->execute();
+      if ($sth->rowCount() > 0) {
+        $this->user_row = $sth->fetch();
+//        echo "<pre>";
+//        print_r($this->user_row);
+//        echo "</pre>";
+      }
+    }
+  }
+  
+  public function getUserEmail($user_id)
+  {
+    $this->getUserInfo($user_id);
+    return $this->user_row['user_email'];
+  }
+  
+  public function getUserFirstName($user_id)
+  {
+    $this->getUserInfo($user_id);
+    return $this->user_row['first_name'];
+  }
+  
+  public function getUserLastName($user_id)
+  {
+    $this->getUserInfo($user_id);
+    return $this->user_row['last_name'];
+  }
+  
+  public function getUserFullName($user_id)
+  {
+    $this->getUserInfo($user_id);
+    return $this->getUserFirstName($user_id) . " " . $this->getUserLastName($user_id);
   }
 }
