@@ -26,9 +26,9 @@ $login = new Login();
 
 // ... ask if we are logged in here:
 if ($login->isUserLoggedIn() == true && $login->isUserAdmin() == true) {
-    require_once('classes/Admin.php');
-    $admin = new Admin();
-    include("views/admin_config.php");
+  require_once('classes/Admin.php');
+  $admin = new Admin();
+  include("views/admin_config.php");
 } else {
     // the user is not logged in. you can do whatever you want here.
     // for demonstration purposes, we simply show the "you are not logged in" view.

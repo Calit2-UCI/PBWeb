@@ -36,11 +36,15 @@ class Admin
         if(!isset($_SESSION)) {
             session_start();
         }
-   
+
         if(isset($_POST['approve_user_id'])){
             $this->approve($_POST['approve_user_id']);
-        } elseif(isset($_POST['delete_user_id'])){
+        } elseif (isset($_POST['delete_user_id'])){
             $this->deleteUser($_POST['delete_user_id']);
+        } elseif (isset($_POST["user_edit_submit_name"])) {
+            $this->editUserName($_POST['user_name'], $_GET['edit_user']);
+        } elseif (isset($_POST["user_edit_submit_email"])) {
+            $this->editUserEmail($_POST['user_email'], , $_GET['edit_user']);
         }
     }
 
@@ -168,6 +172,7 @@ class Admin
                         <th>Last Name</th>
                         <th>Username</th>
                         <th>Email</th>
+                        <th>Settings</th>
                         <th>Delete Account</th>
                     </tr>";
 
@@ -184,6 +189,7 @@ class Admin
                             <td>{$last_name}</td>
                             <td>{$user_name}</td>
                             <td>{$email}</td>
+                            <td><a href=\"?edit_user={$id}\" class=\"button secondary tiny\">Edit</a></td>
                             <td>";
                     if ($id != 1) {
                       echo "<form method=\"post\">
@@ -231,4 +237,83 @@ class Admin
             $this->messages[] = MESSAGE_ADMIN_DELETED_USER;
         }
     }
+  
+    public function editUserName($user_name, $id)
+    {
+        // prevent database flooding
+        $user_name = substr(trim($user_name), 0, 64);
+
+        if (!empty($user_name) && $user_name == $_SESSION['user_name']) {
+            $this->errors[] = MESSAGE_USERNAME_SAME_LIKE_OLD_ONE;
+
+        // username cannot be empty and must be azAZ09 and 2-64 characters
+        // TODO: maybe this pattern should also be implemented in Registration.php (or other way round)
+        } elseif (empty($user_name) || !preg_match("/^(?=.{2,64}$)[a-zA-Z][a-zA-Z0-9]*(?: [a-zA-Z0-9]+)*$/", $user_name)) {
+            $this->errors[] = MESSAGE_USERNAME_INVALID;
+
+        } else {
+            // check if new username already exists
+            $result_row = $this->getUserData($user_name);
+
+            if (isset($result_row->user_id)) {
+                $this->errors[] = MESSAGE_USERNAME_EXISTS;
+            } else {
+                // write user's new data into database
+                $query_edit_user_name = $this->db_connection->prepare('UPDATE users SET user_name = :user_name WHERE user_id = :user_id');
+                $query_edit_user_name->bindValue(':user_name', $user_name, PDO::PARAM_STR);
+                $query_edit_user_name->bindValue(':user_id', $id, PDO::PARAM_INT);
+                $query_edit_user_name->execute();
+
+                if ($query_edit_user_name->rowCount()) {
+                    $_SESSION['user_name'] = $user_name;
+                    $this->messages[] = MESSAGE_USERNAME_CHANGED_SUCCESSFULLY . $user_name;
+                } else {
+                    $this->errors[] = MESSAGE_USERNAME_CHANGE_FAILED;
+                }
+            }
+        }
+    }
+
+    /**
+     * Edit the user's email, provided in the editing form
+     */
+    public function editUserEmail($user_email, $id)
+    {
+        // prevent database flooding
+        $user_email = substr(trim($user_email), 0, 64);
+
+        if (!empty($user_email) && $user_email == $_SESSION["user_email"]) {
+            $this->errors[] = MESSAGE_EMAIL_SAME_LIKE_OLD_ONE;
+        // user mail cannot be empty and must be in email format
+        } elseif (empty($user_email) || !filter_var($user_email, FILTER_VALIDATE_EMAIL)) {
+            $this->errors[] = MESSAGE_EMAIL_INVALID;
+
+        } else if ($this->databaseConnection()) {
+            // check if new email already exists
+            $query_user = $this->db_connection->prepare('SELECT * FROM users WHERE user_email = :user_email');
+            $query_user->bindValue(':user_email', $user_email, PDO::PARAM_STR);
+            $query_user->execute();
+            // get result row (as an object)
+            $result_row = $query_user->fetchObject();
+
+            // if this email exists
+            if (isset($result_row->user_id)) {
+                $this->errors[] = MESSAGE_EMAIL_ALREADY_EXISTS;
+            } else {
+                // write users new data into database
+                $query_edit_user_email = $this->db_connection->prepare('UPDATE users SET user_email = :user_email WHERE user_id = :user_id');
+                $query_edit_user_email->bindValue(':user_email', $user_email, PDO::PARAM_STR);
+                $query_edit_user_email->bindValue(':user_id',  $id, PDO::PARAM_INT);
+                $query_edit_user_email->execute();
+
+                if ($query_edit_user_email->rowCount()) {
+                    $_SESSION['user_email'] = $user_email;
+                    $this->messages[] = MESSAGE_EMAIL_CHANGED_SUCCESSFULLY . $user_email;
+                } else {
+                    $this->errors[] = MESSAGE_EMAIL_CHANGE_FAILED;
+                }
+            }
+        }
+    }
+
 }

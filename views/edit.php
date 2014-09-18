@@ -16,7 +16,7 @@
                         <h5><?php echo WORDING_CHANGE_EMAIL ?></h5>
                     </div>
                     <br/>
-                
+
                     <label for="user_email"><?php echo WORDING_NEW_EMAIL; ?></label>
                     <input id="user_email" type="email" name="user_email" required placeholder="<?php echo WORDING_CURRENTLY; ?>: <?php echo $_SESSION['user_email']; ?>" />
                     <small class="error">Invalid Email</small>
