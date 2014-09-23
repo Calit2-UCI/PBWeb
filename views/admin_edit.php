@@ -37,7 +37,7 @@
           </div>
 
           <label for="user_name"><?php echo WORDING_NEW_USERNAME; ?></label>
-          <input id="user_name" type="name" name="user_name" required placeholder="<?php echo WORDING_CURRENTLY; ?>: <?php echo // $admin->getUserUsername($_GET['edit_user']); ******TODO: MAKE THIS WORK****** ?>" />
+          <input id="user_name" type="name" name="user_name" required placeholder="<?php echo WORDING_CURRENTLY; ?>: <?php // echo $admin->getUserUsername($_GET['edit_user']); ******TODO: MAKE THIS WORK****** ?>" />
           <small class="error">Invalid Username</small>
 
           <input type="submit" class="button success expand" name="admin_edit_submit_username" value="<?php echo WORDING_CHANGE_USERNAME; ?>" />
@@ -46,7 +46,7 @@
 
       <hr/>
 
-      <form method="post" action="admin.php" name="admin_edit_form_password">
+      <form data-abide method="post" action="admin.php" name="admin_edit_form_password">
         <div style="text-align:center">
           <h5><?php echo WORDING_CHANGE_PASSWORD; ?></h5>
         </div>
