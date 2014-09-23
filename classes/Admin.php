@@ -41,9 +41,14 @@ class Admin
 
     if (isset($_GET['edit_user'])){
       $this->getUserInfo($_GET['edit_user']);
-    } elseif (isset($_POST["admin_edit_submit_email"])) {
+    }
+
+    if (isset($_POST["admin_edit_submit_email"])) {
       // User id is sent in admin_edit_submit_email
       $this->editUserEmail($_POST['user_email'], $_POST["admin_edit_submit_email"]);
+    } elseif (isset($_POST["admin_edit_submit_username"])) {
+      // User id is sent in admin_edit_submit_email
+      $this->editUserUsername($_POST['user_name'], $_POST["admin_edit_submit_username"]);
     } elseif (isset($_POST['approve_user_id'])){
       $this->approve($_POST['approve_user_id']);
     } elseif (isset($_POST['delete_user_id'])){
@@ -251,7 +256,7 @@ class Admin
     // prevent database flooding
     $user_email = substr(trim($user_email), 0, 64);
     $this->getUserInfo($user_id);
-    
+
     if (!empty($user_email) && $user_email == $this->user_row['user_email']) {
       $this->errors[] = MESSAGE_EMAIL_SAME_LIKE_OLD_ONE;
       // user mail cannot be empty and must be in email format
@@ -284,6 +289,46 @@ class Admin
     }
   }
 
+  /**
+     * Edit the user's username, provided in the editing form
+     */
+  public function editUserUsername($user_name, $user_id)
+  {
+    // prevent database flooding
+    $user_name = substr(trim($user_name), 0, 64);
+    
+    // Fetch current user info (populates $this->user_row)
+    $this->getUserInfo($user_id);
+
+    if (!empty($user_name) && $user_name == $this->user_row['user_name']) {
+      $this->errors[] = MESSAGE_USERNAME_SAME_LIKE_OLD_ONE;
+
+      // username cannot be empty and must be azAZ09 and 2-64 characters
+      // TODO: maybe this pattern should also be implemented in Registration.php (or other way round)
+    } elseif (empty($user_name) || !preg_match("/^(?=.{2,64}$)[a-zA-Z][a-zA-Z0-9]*(?: [a-zA-Z0-9]+)*$/", $user_name)) {
+      $this->errors[] = MESSAGE_USERNAME_INVALID;
+
+    } else {
+      // check if new username already exists
+      $result_row = $this->getUserData($user_name);
+
+      if (isset($result_row->user_id)) {
+        $this->errors[] = MESSAGE_USERNAME_EXISTS;
+      } else {
+        // write user's new data into database
+        $query_edit_user_name = $this->db_connection->prepare('UPDATE users SET user_name = :user_name WHERE user_id = :user_id');
+        $query_edit_user_name->bindValue(':user_name', $user_name, PDO::PARAM_STR);
+        $query_edit_user_name->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+        $query_edit_user_name->execute();
+
+        if ($query_edit_user_name->rowCount()) {
+          $this->messages[] = $this->getUserFullName($user_id) . "'s username has been changed to " . $user_name;
+        } else {
+          $this->errors[] = MESSAGE_USERNAME_CHANGE_FAILED;
+        }
+      }
+    }
+  }
   public function isValidUserId($user_id)
   {
     if (is_numeric($user_id)) {
@@ -343,5 +388,11 @@ class Admin
   {
     $this->getUserInfo($user_id);
     return $this->getUserFirstName($user_id) . " " . $this->getUserLastName($user_id);
+  }
+
+  public function getUserUsername($user_id)
+  {
+    $this->getUserInfo($user_id);
+    return $this->user_row['user_name'];
   }
 }
