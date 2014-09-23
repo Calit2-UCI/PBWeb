@@ -66,4 +66,5 @@
 <div class="row">
   <a href="index.php?logout" class="button alert expand"><?php echo WORDING_LOGOUT; ?></a>
 </div>
+
 <?php include('_footer.php'); ?>
