@@ -83,26 +83,6 @@ class Admin
     return false;
   }
 
-  /**
-     * Search into database for the user data of user_id specified as parameter
-     * @return user data as an object if existing user
-     * @return false if user_id is not found in the database
-     */
-  private function getUserData($user_id)
-  {
-    // if database connection opened
-    if ($this->databaseConnection()) {
-      // database query, getting all the info of the selected user
-      $query_user = $this->db_connection->prepare('SELECT * FROM users WHERE id = :id');
-      $query_user->bindValue(':id', $user_id, PDO::PARAM_STR);
-      $query_user->execute();
-      // get result row (as an object)
-      return $query_user->fetchObject();
-    } else {
-      return false;
-    }
-  }
-
   public function printPendingUsers()
   {
     if ($this->databaseConnection()) {
@@ -296,7 +276,7 @@ class Admin
   {
     // prevent database flooding
     $user_name = substr(trim($user_name), 0, 64);
-    
+
     // Fetch current user info (populates $this->user_row)
     $this->getUserInfo($user_id);
 
@@ -329,6 +309,7 @@ class Admin
       }
     }
   }
+
  public function editUserPassword($user_password_old, $user_password_new, $user_password_repeat, $user_id)
     {
         if (empty($user_password_new) || empty($user_password_repeat) || empty($user_password_old)) {
@@ -381,6 +362,8 @@ class Admin
             }
         }
     }
+
+
   public function isValidUserId($user_id)
   {
     if (is_numeric($user_id)) {
