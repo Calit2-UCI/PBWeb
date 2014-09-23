@@ -2,13 +2,14 @@
 
 <div class="small-12 medium-10 large-6 small-centered columns">
   <div class="panel">
-    <br>
-
+   
+    <div style="text-align:center">
+      <h2><?php echo WORDING_EDIT_USER_DATA ?></h2>
+    </div>
+    
+    <hr/>
+    
     <div class="small-10 large-8 small-centered columns">    
-      <div style="text-align:center">
-        <h2><?php echo WORDING_EDIT_USER_DATA ?></h2>
-      </div>
-      <br>
       <!-- edit form for user email / this form uses HTML5 attributes, like "required" and type="email" -->
       <form data-abide method="post" action="edit.php" name="user_edit_form_email">    
         <div class="row">
@@ -24,13 +25,14 @@
         </div>
       </form>
     </div>
-    <br>
+    
+    <hr/>
+    
     <!-- edit form for user's password / this form uses the HTML5 attribute "required" -->
     <div data-abide class="small-10 large-8 small-centered columns">    
       <div style="text-align:center">
         <h5><?php echo WORDING_CHANGE_PASSWORD; ?></h5>
       </div>
-      <hr/>
 
       <form method="post" action="edit.php" name="user_edit_form_password">
         <div class="row">
@@ -55,7 +57,6 @@
         </div>
       </form>
     </div>
-    <br>
   </div>
 </div>
 
