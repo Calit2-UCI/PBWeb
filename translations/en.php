@@ -58,13 +58,12 @@ define("MESSAGE_USERNAME_SAME_LIKE_OLD_ONE", "Sorry, that username is the same a
 define("MESSAGE_PATIENT_ID_INVALID", "Patient ID not valid");
 
 // views
-define("WORDING_ADMIN_CONFIG", "Open Admin Config");
+define("WORDING_ADMIN_MANAGE_USERS", "Manage Users");
 define("WORDING_BACK_TO_LOGIN", "Back to Login Page");
 define("WORDING_CHANGE_EMAIL", "Change email");
 define("WORDING_CHANGE_PASSWORD", "Change password");
 define("WORDING_CHANGE_USERNAME", "Change username");
 define("WORDING_CURRENTLY", "currently");
-define("WORDING_EDIT_USER_DATA", "Edit user data");
 define("WORDING_EDIT_YOUR_CREDENTIALS", "You are logged in and can edit your credentials here");
 define("WORDING_FORGOT_MY_PASSWORD", "Forgot password?");
 define("WORDING_LOGIN", "Log in");
@@ -92,6 +91,7 @@ define("WORDING_REGISTRATION_USERNAME", "Username ");
 define("WORDING_REMEMBER_ME", "Keep me logged in (for 2 weeks)");
 define("WORDING_REQUEST_PASSWORD_RESET", "Request a password reset. Enter your username and you'll get a mail with instructions:");
 define("WORDING_RESET_PASSWORD", "Reset password");
+define("WORDING_SETTINGS", "Settings");
 define("WORDING_SUBMIT_NEW_PASSWORD", "Submit new password");
 define("WORDING_USERNAME", "Username");
 define("WORDING_YOU_ARE_LOGGED_IN_AS", "You are logged in as ");
