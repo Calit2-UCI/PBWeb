@@ -329,6 +329,58 @@ class Admin
       }
     }
   }
+ public function editUserPassword($user_password_old, $user_password_new, $user_password_repeat, $user_id)
+    {
+        if (empty($user_password_new) || empty($user_password_repeat) || empty($user_password_old)) {
+            $this->errors[] = MESSAGE_PASSWORD_EMPTY;
+        // is the repeat password identical to password
+        } elseif ($user_password_new !== $user_password_repeat) {
+            $this->errors[] = MESSAGE_PASSWORD_BAD_CONFIRM;
+        // password need to have a minimum length of 6 characters
+        } elseif (strlen($user_password_new) < 6) {
+            $this->errors[] = MESSAGE_PASSWORD_TOO_SHORT;
+
+        // all the above tests are ok
+        } else {
+            // database query, getting hash of currently logged in user (to check with just provided password)
+            $result_row = $this->getUserInfo($user_id);
+
+            // if this user exists
+            if (isset($result_row->user_password_hash)) {
+
+                // using PHP 5.5's password_verify() function to check if the provided passwords fits to the hash of that user's password
+                if (password_verify($user_password_old, $result_row->user_password_hash)) {
+
+                    // now it gets a little bit crazy: check if we have a constant HASH_COST_FACTOR defined (in config/hashing.php),
+                    // if so: put the value into $hash_cost_factor, if not, make $hash_cost_factor = null
+                    $hash_cost_factor = (defined('HASH_COST_FACTOR') ? HASH_COST_FACTOR : null);
+
+                    // crypt the user's password with the PHP 5.5's password_hash() function, results in a 60 character hash string
+                    // the PASSWORD_DEFAULT constant is defined by the PHP 5.5, or if you are using PHP 5.3/5.4, by the password hashing
+                    // compatibility library. the third parameter looks a little bit shitty, but that's how those PHP 5.5 functions
+                    // want the parameter: as an array with, currently only used with 'cost' => XX.
+                    $user_password_hash = password_hash($user_password_new, PASSWORD_DEFAULT, array('cost' => $hash_cost_factor));
+
+                    // write users new hash into database
+                    $query_update = $this->db_connection->prepare('UPDATE users SET user_password_hash = :user_password_hash WHERE user_id = :user_id');
+                    $query_update->bindValue(':user_password_hash', $user_password_hash, PDO::PARAM_STR);
+                    $query_update->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+                    $query_update->execute();
+
+                    // check if exactly one row was successfully changed:
+                    if ($query_update->rowCount()) {
+                        $this->messages[] = MESSAGE_PASSWORD_CHANGED_SUCCESSFULLY;
+                    } else {
+                        $this->errors[] = MESSAGE_PASSWORD_CHANGE_FAILED;
+                    }
+                } else {
+                    $this->errors[] = MESSAGE_OLD_PASSWORD_WRONG;
+                }
+            } else {
+                $this->errors[] = MESSAGE_USER_DOES_NOT_EXIST;
+            }
+        }
+    }
   public function isValidUserId($user_id)
   {
     if (is_numeric($user_id)) {
