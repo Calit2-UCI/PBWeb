@@ -310,7 +310,6 @@ class Admin
     }
   }
 
-
   /**
  * Search into database for the user data of user_name specified as parameter
  * @return user data as an object if existing user

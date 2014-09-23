@@ -2,16 +2,17 @@
 
 <div class="row">
   <div class="large-14 columns">
-    <h1>Welcome to the Patient Overview Page</h1>
+    <h1>Patient Information</h1>
   </div>
 </div>
 
 <div class="row">
   <div class="large-14 columns">
     <div class="callout panel">
-      <h3>Patient Information</h3>
+      <h3>Information for FIRSTNAME LASTNAME</h3>
       <br>
       <p><?php //$patient->doPatientLookup($_GET['patient_id']); ?></p>
+      Basic patient information, alerts, and hicharts will be shown here
     </div>
     <div class="row">
       <a href="index.php?logout" class="button alert expand"><?php echo WORDING_LOGOUT; ?></a>
