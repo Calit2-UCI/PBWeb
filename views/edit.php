@@ -26,7 +26,7 @@
     </div>
     <br>
     <!-- edit form for user's password / this form uses the HTML5 attribute "required" -->
-    <div class="small-10 large-8 small-centered columns">    
+    <div data-abide class="small-10 large-8 small-centered columns">    
       <div style="text-align:center">
         <h5><?php echo WORDING_CHANGE_PASSWORD; ?></h5>
       </div>
