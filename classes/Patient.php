@@ -51,22 +51,24 @@ class Patient{
   {
     $id = trim($id);
 
-    if (empty($id) || !isValidId($id)) {
+    if (!isValidId($id)) {
       $this->errors[] = "MESSAGE_PATIENT_ID_INVALID";
-    } elseif (!empty($id)) {
+    } else {
       $this->databaseConnection();
       $query_check_patient_id = $this->db_connection->prepare('SELECT * FROM patients WHERE id=:id');
       $query_check_patient_id->bindValue(':id', $id, PDO::PARAM_INT);
       $query_check_patient_id->execute();
-      $patient_overview = $query_check_patient_id->fetch();
 
-      // TODO: print stuff
+      if ($query_get_all_patients->rowCount() == 1) {
+        $patient_overview = $query_check_patient_id->fetch();
+        echo "<h3>Information for {$patient_overview['first_name']} {$patient_overview['last_name']}</h3>";
+      }
     }
   }
 
-  /*
-     * Prints a table of all the patients that the doctor has access to
-     */
+  /**
+   * Prints a table of all the patients that the doctor has access to
+   */
   public function showPatientOverview()
   {
     $this->databaseConnection();
@@ -78,28 +80,28 @@ class Patient{
       $result = $query_get_all_patients->fetchAll();
       echo "<table width=\"100%\">";
       echo "<tr>
-                        <th>Patient Id</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Alerts<th>
-                        <th>Patient Info</th>
-                    </tr>";
+              <th>Patient Id</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Alerts<th>
+              <th>Patient Info</th>
+            </tr>";
 
       foreach ($result as $row) {                    
         $patient_id = $row['id'];
         $first_name = $row['first_name'];
         $last_name = $row['last_name'];
-        $num_alerts = $this->getAlerts($patient_id);
+        $num_alerts = $this->getNumberAlerts($patient_id);
 
         echo "<tr>
-                            <td>{$patient_id}</td>
-                            <td>{$first_name}</td>
-                            <td>{$last_name}</td>" . 
-          num_alerts > 0 ? 
-          "<td bgcolor=\"red\"><span style=\"color:red;\">{$num_alerts}<span></td>" :
-        "<td>0</td>" .
-          "<td><a href=\"patient_details.php?patient_id={$patient_id}\" class=\"button secondary tiny\">Info</a></td>
-                        </tr>";
+                <td>{$patient_id}</td>
+                <td>{$first_name}</td>
+                <td>{$last_name}</td>" . 
+                  num_alerts > 0 ? 
+                    "<td bgcolor=\"red\"><span style=\"color:red;\">{$num_alerts}<span></td>" :
+                    "<td>0</td>" .
+                "<td><a href=\"patient_details.php?patient_id={$patient_id}\" class=\"button secondary tiny\">Info</a></td>
+            </tr>";
       }
       echo "</table>";
     } else {
@@ -108,8 +110,21 @@ class Patient{
   }
 
   // checks if the id given is valid (patient exists and doctor is authorised to access info)
-  public function isValidId($id) {
-    // TODO: stuff
+  public function isValidPatientId($patient_id) {
+    if (is_numeric($patient_id)) {
+
+    }
+  }
+
+  /**
+   * Return the number of alerts for a patient
+   * @param patient_id ID of patient
+   */
+  public function getNumberAlerts($patient_id) {
+    $this->databaseConnection();
+    $query_get_all_patients = $this->db_connection->prepare('SELECT user_alerts FROM patients WHERE id=:patient_id');
+    $query_get_all_patients->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
+    $query_get_all_patients->execute();
   }
 }
 ?>
