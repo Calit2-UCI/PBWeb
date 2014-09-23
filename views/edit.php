@@ -4,7 +4,7 @@
   <div class="panel">
    
     <div style="text-align:center">
-      <h2><?php echo WORDING_EDIT_USER_DATA ?></h2>
+      <h2><?php echo WORDING_SETTINGS ?></h2>
     </div>
     
     <hr/>

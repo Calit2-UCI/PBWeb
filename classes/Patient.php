@@ -17,7 +17,6 @@ class Patient{
     if(!isset($_SESSION)) {
       session_start();
     }
-
   }
 
   /**
@@ -55,12 +54,12 @@ class Patient{
       $this->errors[] = "MESSAGE_PATIENT_ID_INVALID";
     } else {
       $this->databaseConnection();
-      $query_check_patient_id = $this->db_connection->prepare('SELECT * FROM patients WHERE id=:id');
-      $query_check_patient_id->bindValue(':id', $id, PDO::PARAM_INT);
-      $query_check_patient_id->execute();
+      $query = $this->db_connection->prepare('SELECT * FROM patients WHERE id=:id');
+      $query->bindValue(':id', $id, PDO::PARAM_INT);
+      $query->execute();
 
-      if ($query_get_all_patients->rowCount() == 1) {
-        $patient_overview = $query_check_patient_id->fetch();
+      if ($query->rowCount() == 1) {
+        $patient_overview = $query->fetch();
         echo "<h3>Information for {$patient_overview['first_name']} {$patient_overview['last_name']}</h3>";
       }
     }
@@ -97,7 +96,7 @@ class Patient{
                 <td>{$patient_id}</td>
                 <td>{$first_name}</td>
                 <td>{$last_name}</td>" . 
-                  num_alerts > 0 ? 
+                  $num_alerts > 0 ?
                     "<td bgcolor=\"red\"><span style=\"color:red;\">{$num_alerts}<span></td>" :
                     "<td>0</td>" .
                 "<td><a href=\"patient_details.php?patient_id={$patient_id}\" class=\"button secondary tiny\">Info</a></td>
@@ -118,13 +117,12 @@ class Patient{
 
   /**
    * Return the number of alerts for a patient
-   * @param patient_id ID of patient
    */
   public function getNumberAlerts($patient_id) {
     $this->databaseConnection();
-    $query_get_all_patients = $this->db_connection->prepare('SELECT user_alerts FROM patients WHERE id=:patient_id');
-    $query_get_all_patients->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
-    $query_get_all_patients->execute();
+    $query = $this->db_connection->prepare('SELECT user_alerts FROM patients WHERE id=:patient_id');
+    $query->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
+    $query->execute();
   }
 }
 ?>

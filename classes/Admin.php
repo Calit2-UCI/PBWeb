@@ -331,7 +331,7 @@ class Admin
       $this->getUserInfo($user_id);
 
       // if this user exists
-      if (isset($his->user_row->user_password_hash)) {
+      if (isset($this->user_row->user_password_hash)) {
 
         // using PHP 5.5's password_verify() function to check if the provided passwords fits to the hash of that user's password
 
