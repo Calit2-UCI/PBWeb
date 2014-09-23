@@ -312,6 +312,7 @@ class Admin
     }
   }
 
+
  public function editUserPassword( $user_password_new, $user_password_repeat, $user_id)
     {
         if (empty($user_password_new) || empty($user_password_repeat))) {
@@ -361,9 +362,26 @@ class Admin
             } else {
                 $this->errors[] = MESSAGE_USER_DOES_NOT_EXIST;
             }
-        }
-    }
 
+  /**
+ * Search into database for the user data of user_name specified as parameter
+ * @return user data as an object if existing user
+ * @return false if user_name is not found in the database
+ */
+  private function getUserData($user_name)
+  {
+    // if database connection opened
+    if ($this->databaseConnection()) {
+      // database query, getting all the info of the selected user
+      $query_user = $this->db_connection->prepare('SELECT * FROM users WHERE user_name = :user_name');
+      $query_user->bindValue(':user_name', $user_name, PDO::PARAM_STR);
+      $query_user->execute();
+      // get result row (as an object)
+      return $query_user->fetchObject();
+    } else {
+      return false;
+    }
+  }
 
   public function isValidUserId($user_id)
   {
