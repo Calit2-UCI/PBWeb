@@ -17,7 +17,7 @@
           <div style="text-align:center">
             <h5><?php echo WORDING_CHANGE_EMAIL ?></h5>
           </div>
-          
+
           <br/>
 
           <label for="user_email"><?php echo WORDING_NEW_EMAIL; ?></label>
@@ -36,9 +36,9 @@
           <div style="text-align:center">
             <h5><?php echo WORDING_CHANGE_USERNAME ?></h5>
           </div>
-          
+
           <br/>
-          
+
           <label for="user_name"><?php echo WORDING_NEW_USERNAME; ?></label>
           <input id="user_name" type="text" name="user_name" required placeholder="<?php echo WORDING_CURRENTLY; ?>: <?php echo $admin->getUserUsername($_GET['edit_user']); ?>" />
           <small class="error">Invalid Username</small>
@@ -49,7 +49,7 @@
 
       <hr/>
 
-     <!-- edit password -->
+      <!-- edit password -->
       <form data-abide method="post" action="admin.php" name="admin_edit_form_password">
         <div style="text-align:center">
           <h5><?php echo WORDING_CHANGE_PASSWORD; ?></h5>
@@ -75,6 +75,9 @@
   </div>
 </div>
 
+<div class="row">
+  <a href="admin.php" class="button expand">Back To User List</a>
+</div>
 <div class="row">
   <a href="index.php" class="button expand">Menu</a>
 </div>
