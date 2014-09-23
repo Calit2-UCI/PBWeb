@@ -49,7 +49,9 @@ class Admin
     } elseif (isset($_POST["admin_edit_submit_username"])) {
       // User id is sent in admin_edit_submit_email
       $this->editUserUsername($_POST['user_name'], $_POST["admin_edit_submit_username"]);
-    } elseif (isset($_POST['approve_user_id'])){
+    } elseif (isset($_POST["admin_edit_submit_username"])) {
+      $this->editUserPassword($_POST['user_password_new'], $_POST['user_password_repeat'], $_POST["admin_edit_submit_password"]);
+    }  elseif (isset($_POST['approve_user_id'])){
       $this->approve($_POST['approve_user_id']);
     } elseif (isset($_POST['delete_user_id'])){
       $this->deleteUser($_POST['delete_user_id']);
@@ -310,9 +312,9 @@ class Admin
     }
   }
 
- public function editUserPassword($user_password_old, $user_password_new, $user_password_repeat, $user_id)
+ public function editUserPassword( $user_password_new, $user_password_repeat, $user_id)
     {
-        if (empty($user_password_new) || empty($user_password_repeat) || empty($user_password_old)) {
+        if (empty($user_password_new) || empty($user_password_repeat))) {
             $this->errors[] = MESSAGE_PASSWORD_EMPTY;
         // is the repeat password identical to password
         } elseif ($user_password_new !== $user_password_repeat) {
@@ -330,7 +332,6 @@ class Admin
             if (isset($result_row->user_password_hash)) {
 
                 // using PHP 5.5's password_verify() function to check if the provided passwords fits to the hash of that user's password
-                if (password_verify($user_password_old, $result_row->user_password_hash)) {
 
                     // now it gets a little bit crazy: check if we have a constant HASH_COST_FACTOR defined (in config/hashing.php),
                     // if so: put the value into $hash_cost_factor, if not, make $hash_cost_factor = null
