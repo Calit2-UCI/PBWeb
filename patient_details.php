@@ -38,11 +38,12 @@ $patient = new Patient();
 
 // ... ask if we are logged in here:
 if ($login->isUserLoggedIn() == true) {
-    if ($patient->isValidId($_GET['patient_id'])) {
+  // Just for debugging purposes
+//    if ($patient->isValidId($_GET['patient_id'])) {
         include("views/patient_detail.php");
-    } else {
-        include("views/patient_access.php");
-    }
+//    } else {
+//        include("views/patient_access.php");
+//    }
 } else {
     // the user is not logged in. you can do whatever you want here.
     // for demonstration purposes, we simply show the "you are not logged in" view.
