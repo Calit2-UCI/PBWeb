@@ -16,6 +16,10 @@
       <h3>Active Users</h3>
       <p><?php $admin->printActiveUsers(); ?></p>
     </div>
+    <div class="callout panel">
+      <h3>Patients</h3>
+      <p><?php $admin->printPatients(); ?></p>
+    </div>
     <div class="row">
       <a href="index.php" class="button expand">Menu</a>
     </div>

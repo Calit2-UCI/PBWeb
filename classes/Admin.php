@@ -125,13 +125,13 @@ class Admin
                   <td>
                     <form method=\"post\">
                       <button type=\"submit\"  name=\"approve_user_id\" value=\"{$id}\" class=\"button secondary tiny\"
-                      onclick=\"return confirm('Are you sure you would like to approve this user?');\">Approve</button>
+                      onclick=\"return confirm('Are you sure you would like to approve {$first_name} {$last_name}?');\">Approve</button>
                     </form>
                   </td>
                   <td>
                     <form method=\"post\">
                       <button type=\"submit\"  name=\"delete_user_id\" value=\"{$id}\" class=\"button secondary tiny\"
-                      onclick=\"return confirm('Are you sure you would like to delete this user?');\">Delete</button>
+                      onclick=\"return confirm('Are you sure you would like to delete {$first_name} {$last_name}?');\">Delete</button>
                     </form>
                   </td>
                 </tr>";
@@ -152,11 +152,11 @@ class Admin
   {
     if ($this->databaseConnection()) {
       // try to update user with specified information
-      $query_get_pending_users = $this->db_connection->prepare('SELECT * FROM users WHERE user_active = 1');
-      $query_get_pending_users->execute();
+      $query = $this->db_connection->prepare('SELECT * FROM users WHERE user_active = 1');
+      $query->execute();
 
-      if ($query_get_pending_users->rowCount() > 0) {
-        $result = $query_get_pending_users->fetchAll();
+      if ($query->rowCount() > 0) {
+        $result = $query->fetchAll();
         echo "<table width=\"100%\">";
         echo "<tr>
                 <th>Id</th>
@@ -186,7 +186,7 @@ class Admin
           if ($id != 1) {
             echo "<form method=\"post\">
                     <button type=\"submit\"  name=\"delete_user_id\" value=\"{$id}\" class=\"button secondary tiny\"
-                    onclick=\"return confirm('Are you sure you would like to delete this user?');\">Delete</button>
+                    onclick=\"return confirm('Are you sure you would like to delete {$first_name} {$last_name}?');\">Delete</button>
                   </form>";
           }
           echo "</td>
@@ -314,7 +314,7 @@ class Admin
   }
 
 
-  public function editUserPassword( $user_password_new, $user_password_repeat, $user_id)
+  public function editUserPassword($user_password_new, $user_password_repeat, $user_id)
   {
     if (empty($user_password_new) || empty($user_password_repeat)) {
       $this->errors[] = MESSAGE_PASSWORD_EMPTY;
@@ -448,5 +448,98 @@ class Admin
   {
     $this->getUserInfo($user_id);
     return $this->user_row['user_name'];
+  }
+
+  /************************* Patient Stuff *****************************************/
+
+  public function isValidPatientId($id)
+  {
+    if (is_numeric($id)) {
+      // if database connection opened
+      if ($this->databaseConnection()) {
+        $query = $this->db_connection->prepare('SELECT * FROM patients WHERE id = :id');
+        $query->bindValue(':id', intval(trim($id)), PDO::PARAM_INT);
+        $query->execute();
+
+        if ($query->rowCount() > 0) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  /*
+   * Prints a table of the current active users
+   * TODO: make admin account stand out
+   */
+  public function printPatients()
+  {
+    if ($this->databaseConnection()) {
+      // try to update user with specified information
+      $query = $this->db_connection->prepare('SELECT * FROM patients');
+      $query->execute();
+
+      if ($query->rowCount() > 0) {
+        $result = $query->fetchAll();
+        echo "<table width=\"100%\">";
+        echo "<tr>
+                <th>Patient Id</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Doctor</th>
+                <th>Edit</th>
+                <th>Delete Patient</th>
+            </tr>";
+
+        // Populate the doctors array with their ID and name so we can display the doctors for each patient
+        $doctors = $this->getAllUsers();
+
+        foreach ($result as $row) {
+          $id = $row['id'];
+          $first_name = $row['first_name'];
+          $last_name = $row['last_name'];
+          $doctor_id = $row['doctor_id'];
+          $doctor = isset($doctors[$doctor_id]) ? $doctors[$doctor_id] : "Unassigned";
+
+          echo "<tr>
+                  <td>{$id}</td>
+                  <td>{$first_name}</td>
+                  <td>{$last_name}</td>
+                  <td>{$doctor}</td>
+                  <td><a href=\"?edit_patient={$id}\" class=\"button secondary tiny\">Edit</a></td>
+                  <td><form method=\"post\">
+                    <button type=\"submit\"  name=\"delete_patient_id\" value=\"{$id}\" class=\"button secondary tiny\"
+                    onclick=\"return confirm('Are you sure you would like to delete {$first_name} {$last_name} from patients?');\">Delete</button>
+                  </form>
+              </td>
+              </tr>";
+        }
+        echo "</table>";
+      } else {
+        echo "No Patients";
+      }
+    }
+  }
+
+  /**
+   * Returns array of the full names of all users with their id as index
+   */
+  public function getAllUsers()
+  {
+    if ($this->databaseConnection()) {
+      $query = $this->db_connection->prepare('SELECT user_id,first_name,last_name FROM users');
+      $query->execute();
+
+      if ($query->rowCount() > 0) {
+        $user_array = array();
+        while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+          $user_array[$row['user_id']] = $row['first_name'] . " " . $row['last_name'];
+        }
+        return $user_array;
+      }
+    }
+    // TODO: This really isn't proper.
+    return false;
   }
 }

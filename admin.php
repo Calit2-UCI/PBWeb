@@ -30,6 +30,9 @@ if ($login->isUserLoggedIn() == true && $login->isUserAdmin() == true) {
   $admin = new Admin();
   if (isset($_GET['edit_user']) && $admin->isValidUserId($_GET['edit_user'])) {
     include("views/admin_edit.php");
+  } elseif (isset($_GET['edit_patient']) && $admin->isValidPatientId($_GET['edit_patient'])) {
+    // TODO: create page
+    echo "Patient edit page goes here";
   } else {
     include("views/admin_config.php");
   }
