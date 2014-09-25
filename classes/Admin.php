@@ -542,4 +542,13 @@ class Admin
     // TODO: This really isn't proper.
     return false;
   }
+
+  public function printUserOptions()
+  {
+    $doctors = $this->getAllUsers();
+
+    foreach ($doctors as $id => $name) {
+      echo "<option value=\"{$id}\">{$name}</option>";
+    }
+  }
 }
