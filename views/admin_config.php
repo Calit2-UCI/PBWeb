@@ -39,7 +39,6 @@
           <!-- Doctor -->
           <label for="patient_doctor">Doctor</label>
             <select id="patient_doctor" type="date" name="patient_doctor" required>
-              <option value="0">Unassigned</option>
               <?php $admin->printUserOptions() ?>
               <small class="error">Select a doctor</small>
             </select>
