@@ -56,8 +56,10 @@ class Admin
       $this->approve($_POST['approve_user_id']);
     } elseif (isset($_POST['delete_user_id'])){
       $this->deleteUser($_POST['delete_user_id']);
-    }
+    } elseif (isset($_POST["admin_add_patient_submit"])) {
+      $this->addNewPatient($_POST['patient_first_name'], $_POST['patient_last_name'], $_POST['patient_doctor']);
   }
+}
 
   /**
      * Checks if database connection is opened. If not, then this method tries to open it.
@@ -550,5 +552,28 @@ class Admin
     foreach ($doctors as $id => $name) {
       echo "<option value=\"{$id}\">{$name}</option>";
     }
+  }
+
+  public function addNewPatient($patient_first, $patient_last, $doctor_name)
+  {
+    // Get Doctor ID
+    if ($this->databaseConnection()) {
+        $query = $this->db_connection->prepare('SELECT user_id FROM users WHERE first_name + \' \' + last_name = :doctor_name');
+        $query->bindValue(':doctor_name', $doctor_name, PDO::PARAM_STR);
+        $query->execute();
+        $result  = $query->fetchAll();
+        $doctor_id = $result[0];}
+
+
+    $date = date('Y-m-d H:i:s');
+    $user_id = $this->db_connection->lastInsertId('patients');
+    $query_new_user_insert = $this->db_connection->prepare('INSERT INTO patients (id, create_date, first_name, last_name, doctor_id) VALUES(:id, :create_date, :first_name, :last_name, :doctor_id');
+        $query_new_user_insert->bindValue(':id', $user_id, PDO::PARAM_STR);
+        $query_new_user_insert->bindValue(':create_date', $date, PDO::PARAM_STR);
+        $query_new_user_insert->bindValue(':first_name', $patient_first, PDO::PARAM_STR);
+        $query_new_user_insert->bindValue(':last_name', $patient_last, PDO::PARAM_STR);
+        $query_new_user_insert->bindValue(':doctor_id', $doctor_id, PDO::PARAM_INT);
+
+        $query_new_user_insert->execute();
   }
 }

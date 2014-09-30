@@ -18,7 +18,6 @@
             <h5><?php echo WORDING_CHANGE_EMAIL ?></h5>
           </div>
 
-          <br/>
 
           <label for="user_email"><?php echo WORDING_NEW_EMAIL; ?></label>
           <input id="user_email" type="email" name="user_email" required placeholder="<?php echo WORDING_CURRENTLY; ?>: <?php echo $admin->getUserEmail($_GET['edit_user']) ?>" />
@@ -37,7 +36,6 @@
             <h5><?php echo WORDING_CHANGE_USERNAME ?></h5>
           </div>
 
-          <br/>
 
           <label for="user_name"><?php echo WORDING_NEW_USERNAME; ?></label>
           <input id="user_name" type="text" name="user_name" required placeholder="<?php echo WORDING_CURRENTLY; ?>: <?php echo $admin->getUserUsername($_GET['edit_user']); ?>" />
