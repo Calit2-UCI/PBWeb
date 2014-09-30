@@ -50,7 +50,7 @@ class Patient{
   {
     $id = trim($id);
 
-    if (!isValidId($id)) {
+    if (!$this->isValidPatientId($id)) {
       $this->errors[] = "MESSAGE_PATIENT_ID_INVALID";
     } else {
       $this->databaseConnection();
@@ -86,21 +86,19 @@ class Patient{
               <th>Patient Info</th>
             </tr>";
 
-      foreach ($result as $row) {                    
+      foreach ($result as $row) {
         $patient_id = $row['id'];
         $first_name = $row['first_name'];
         $last_name = $row['last_name'];
-        $num_alerts = $this->getNumberAlerts($patient_id);
+        // $num_alerts = $this->getNumberAlerts($patient_id);
 
         echo "<tr>
                 <td>{$patient_id}</td>
                 <td>{$first_name}</td>
-                <td>{$last_name}</td>" . 
-                  $num_alerts > 0 ?
-                    "<td bgcolor=\"red\"><span style=\"color:red;\">{$num_alerts}<span></td>" :
-                    "<td>0</td>" .
-                "<td><a href=\"patient_details.php?patient_id={$patient_id}\" class=\"button secondary tiny\">Info</a></td>
-            </tr>";
+                <td>{$last_name}</td>
+                <td>0</td>
+                <td><a href=\"patient_details.php?patient_id={$patient_id}\" class=\"button secondary tiny\">Info</a></td>
+              </tr>";
       }
       echo "</table>";
     } else {
@@ -111,7 +109,7 @@ class Patient{
   // checks if the id given is valid (patient exists and doctor is authorised to access info)
   public function isValidPatientId($patient_id) {
     if (is_numeric($patient_id)) {
-
+      return true; // TODO: implement!!!
     }
   }
 
@@ -120,9 +118,11 @@ class Patient{
    */
   public function getNumberAlerts($patient_id) {
     $this->databaseConnection();
-    $query = $this->db_connection->prepare('SELECT user_alerts FROM patients WHERE id=:patient_id');
-    $query->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
-    $query->execute();
+    //$query = $this->db_connection->prepare('SELECT user_alerts FROM patients WHERE id=:patient_id');
+    //$query->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
+    //$query->execute();
+
+      return 0;
   }
 }
 ?>

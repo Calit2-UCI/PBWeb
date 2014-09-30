@@ -9,9 +9,7 @@
 <div class="row">
   <div class="large-14 columns">
     <div class="callout panel">
-      <h3>Information for FIRSTNAME LASTNAME</h3>
-      <br>
-      <p><?php //$patient->doPatientLookup($_GET['patient_id']); ?></p>
+      <p><?php $patient->doPatientLookup($_GET['patient_id']); ?></p>
       Basic patient information, alerts, and hicharts will be shown here
     </div>
     <div class="row">
