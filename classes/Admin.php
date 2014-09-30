@@ -547,6 +547,8 @@ class Admin
 
   public function printUserOptions()
   {
+    echo "<option value="0">Unassigned</option>";
+    
     $doctors = $this->getAllUsers();
 
     foreach ($doctors as $id => $name) {
@@ -554,6 +556,7 @@ class Admin
     }
   }
 
+  //SUPER SUPER INCOMPLETE. TODO: Make this work. Add Birthdate. Add form/database verification.
   public function addNewPatient($patient_first, $patient_last, $doctor_name)
   {
     // Get Doctor ID
