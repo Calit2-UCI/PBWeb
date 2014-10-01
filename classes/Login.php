@@ -10,62 +10,62 @@
 class Login
 {
   /**
-     * @var object $db_connection The database connection
-     */
+   * @var object $db_connection The database connection
+   */
   private $db_connection = null;
   /**
-     * @var int $user_id The user's id
-     */
+   * @var int $user_id The user's id
+   */
   private $user_id = null;
   /**
-     * @var string $user_name The user's name
-     */
+   * @var string $user_name The user's name
+   */
   private $user_name = "";
   /**
-     * @var string $user_email The user's mail
-     */
+   * @var string $user_email The user's mail
+   */
   private $user_email = "";
   /**
-     * @var boolean $user_is_logged_in The user's login status
-     */
+   * @var boolean $user_is_logged_in The user's login status
+   */
   private $user_is_logged_in = false;
   /**
-     * @var boolean $user_is_admin The user's account type
-     */
+   * @var boolean $user_is_admin The user's account type
+   */
   private $user_is_admin = false;
   /**
-     * @var string $user_gravatar_image_url The user's gravatar profile pic url (or a default one)
-     */
+   * @var string $user_gravatar_image_url The user's gravatar profile pic url (or a default one)
+   */
   public $user_gravatar_image_url = "";
   /**
-     * @var string $user_gravatar_image_tag The user's gravatar profile pic url with <img ... /> around
-     */
+   * @var string $user_gravatar_image_tag The user's gravatar profile pic url with <img ... /> around
+   */
   public $user_gravatar_image_tag = "";
   /**
-     * @var boolean $password_reset_link_is_valid Marker for view handling
-     */
-  private $password_reset_link_is_valid  = false;
+   * @var boolean $password_reset_link_is_valid Marker for view handling
+   */
+  private $password_reset_link_is_valid = false;
   /**
-     * @var boolean $password_reset_was_successful Marker for view handling
-     */
+   * @var boolean $password_reset_was_successful Marker for view handling
+   */
   private $password_reset_was_successful = false;
   /**
-     * @var array $errors Collection of error messages
-     */
+   * @var array $errors Collection of error messages
+   */
   public $errors = array();
   /**
-     * @var array $messages Collection of success / neutral messages
-     */
+   * @var array $messages Collection of success / neutral messages
+   */
   public $messages = array();
 
   /**
-     * the function "__construct()" automatically starts whenever an object of this class is created,
-     * you know, when you do "$login = new Login();"
-     */
+   * the function "__construct()" automatically starts whenever an object of this class is created,
+   * you know, when you do "$login = new Login();"
+   */
   public function __construct()
   {
     // create/read session
-    if(!isset($_SESSION)) {
+    if (!isset($_SESSION)) {
       session_start();
     }
 
@@ -130,9 +130,9 @@ class Login
   }
 
   /**
-     * Checks if database connection is opened. If not, then this method tries to open it.
-     * @return bool Success status of the database connecting process
-     */
+   * Checks if database connection is opened. If not, then this method tries to open it.
+   * @return bool Success status of the database connecting process
+   */
   private function databaseConnection()
   {
     // if connection already exists
@@ -146,7 +146,7 @@ class Login
         // @see http://wiki.hashphp.org/PDO_Tutorial_for_MySQL_Developers#Connecting_to_MySQL says:
         // "Adding the charset to the DSN is very important for security reasons,
         // most examples you'll see around leave it out. MAKE SURE TO INCLUDE THE CHARSET!"
-        $this->db_connection = new PDO('mysql:host='. DB_HOST .';dbname='. DB_NAME . ';charset=utf8', DB_USER, DB_PASS);
+        $this->db_connection = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASS);
         return true;
       } catch (PDOException $e) {
         $this->errors[] = MESSAGE_DATABASE_ERROR . $e->getMessage();
@@ -157,12 +157,12 @@ class Login
   }
 
   /**
-     * Search into database for the user data of user_name specified as parameter
-     * @return user data as an object if existing user
-     * @return false if user_name is not found in the database
-     * TODO: @devplanete This returns two different types. Maybe this is valid, but it feels bad. We should rework this.
-     * TODO: @devplanete After some resarch I'm VERY sure that this is not good coding style! Please fix this.
-     */
+   * Search into database for the user data of user_name specified as parameter
+   * @return user data as an object if existing user
+   * @return false if user_name is not found in the database
+   * TODO: @devplanete This returns two different types. Maybe this is valid, but it feels bad. We should rework this.
+   * TODO: @devplanete After some resarch I'm VERY sure that this is not good coding style! Please fix this.
+   */
   private function getUserData($user_name)
   {
     // if database connection opened
@@ -179,9 +179,9 @@ class Login
   }
 
   /**
-     * Logs in with S_SESSION data.
-     * Technically we are already logged in at that point of time, as the $_SESSION values already exist.
-     */
+   * Logs in with S_SESSION data.
+   * Technically we are already logged in at that point of time, as the $_SESSION values already exist.
+   */
   private function loginWithSessionData()
   {
     $this->user_name = $_SESSION['user_name'];
@@ -195,9 +195,9 @@ class Login
   }
 
   /**
-     * Logs in via the Cookie
-     * @return bool success state of cookie login
-     */
+   * Logs in via the Cookie
+   * @return bool success state of cookie login
+   */
   private function loginWithCookieData()
   {
     if (isset($_COOKIE['rememberme'])) {
@@ -245,11 +245,11 @@ class Login
   }
 
   /**
-     * Logs in with the data provided in $_POST, coming from the login form
-     * @param $user_name
-     * @param $user_password
-     * @param $user_rememberme
-     */
+   * Logs in with the data provided in $_POST, coming from the login form
+   * @param $user_name
+   * @param $user_password
+   * @param $user_rememberme
+   */
   private function loginWithPostData($user_name, $user_password, $user_rememberme)
   {
     if (empty($user_name)) {
@@ -276,18 +276,18 @@ class Login
       }
 
       // if this user not exists
-      if (! isset($result_row->user_id)) {
+      if (!isset($result_row->user_id)) {
         // was MESSAGE_USER_DOES_NOT_EXIST before, but has changed to MESSAGE_LOGIN_FAILED
         // to prevent potential attackers showing if the user exists
         $this->errors[] = MESSAGE_LOGIN_FAILED;
       } else if (($result_row->user_failed_logins >= 3) && ($result_row->user_last_failed_login > (time() - 30))) {
         $this->errors[] = MESSAGE_PASSWORD_WRONG_3_TIMES;
         // using PHP 5.5's password_verify() function to check if the provided passwords fits to the hash of that user's password
-      } else if (! password_verify($user_password, $result_row->user_password_hash)) {
+      } else if (!password_verify($user_password, $result_row->user_password_hash)) {
         // increment the failed login counter for that user
         $sth = $this->db_connection->prepare('UPDATE users '
-                                             . 'SET user_failed_logins = user_failed_logins+1, user_last_failed_login = :user_last_failed_login '
-                                             . 'WHERE user_name = :user_name OR user_email = :user_name');
+          . 'SET user_failed_logins = user_failed_logins+1, user_last_failed_login = :user_last_failed_login '
+          . 'WHERE user_name = :user_name OR user_email = :user_name');
         $sth->execute(array(':user_name' => $user_name, ':user_last_failed_login' => time()));
 
         $this->errors[] = MESSAGE_PASSWORD_WRONG;
@@ -296,7 +296,7 @@ class Login
         $this->errors[] = MESSAGE_ACCOUNT_NOT_VERIFIED;
       } else if ($result_row->user_active != 1) {
         $this->errors[] = MESSAGE_ACCOUNT_NOT_APPROVED;
-      } else{
+      } else {
         // write user data into PHP SESSION [a file on your server]
         $_SESSION['user_id'] = $result_row->user_id;
         $_SESSION['user_name'] = $result_row->user_name;
@@ -313,8 +313,8 @@ class Login
 
         // reset the failed login counter for that user
         $sth = $this->db_connection->prepare('UPDATE users '
-                                             . 'SET user_failed_logins = 0, user_last_failed_login = NULL '
-                                             . 'WHERE user_id = :user_id AND user_failed_logins != 0');
+          . 'SET user_failed_logins = 0, user_last_failed_login = NULL '
+          . 'WHERE user_id = :user_id AND user_failed_logins != 0');
         $sth->execute(array(':user_id' => $result_row->user_id));
 
         // if user has check the "remember me" checkbox, then generate token and write cookie
@@ -354,8 +354,8 @@ class Login
   }
 
   /**
-     * Create all data needed for remember me cookie connection on client and server side
-     */
+   * Create all data needed for remember me cookie connection on client and server side
+   */
   private function newRememberMeCookie()
   {
     // if database connection opened
@@ -376,8 +376,8 @@ class Login
   }
 
   /**
-     * Delete all data needed for remember me cookie connection on client and server side
-     */
+   * Delete all data needed for remember me cookie connection on client and server side
+   */
   private function deleteRememberMeCookie()
   {
     // if database connection opened
@@ -394,8 +394,8 @@ class Login
   }
 
   /**
-     * Perform the logout, resetting the session
-     */
+   * Perform the logout, resetting the session
+   */
   public function doLogout()
   {
     $this->deleteRememberMeCookie();
@@ -409,26 +409,26 @@ class Login
   }
 
   /**
-     * Simply return the current state of the user's login
-     * @return bool user's login status
-     */
+   * Simply return the current state of the user's login
+   * @return bool user's login status
+   */
   public function isUserLoggedIn()
   {
     return $this->user_is_logged_in;
   }
 
   /**
-     * Check if the account is a regular use account or an admin account
-     * @return bool Is user an admin
-     */
+   * Check if the account is a regular use account or an admin account
+   * @return bool Is user an admin
+   */
   public function isUserAdmin()
   {
     return $this->user_is_admin;
   }
 
   /**
-     * Edit the user's name, provided in the editing form
-     */
+   * Edit the user's name, provided in the editing form
+   */
   public function editUserName($user_name)
   {
     // prevent database flooding
@@ -466,8 +466,8 @@ class Login
   }
 
   /**
-     * Edit the user's email, provided in the editing form
-     */
+   * Edit the user's email, provided in the editing form
+   */
   public function editUserEmail($user_email)
   {
     // prevent database flooding
@@ -508,8 +508,8 @@ class Login
   }
 
   /**
-     * Edit the user's password, provided in the editing form
-     */
+   * Edit the user's password, provided in the editing form
+   */
   public function editUserPassword($user_password_old, $user_password_new, $user_password_repeat)
   {
     if (empty($user_password_new) || empty($user_password_repeat) || empty($user_password_old)) {
@@ -564,9 +564,9 @@ class Login
   }
 
   /**
-     * Sets a random token into the database (that will verify the user when he/she comes back via the link
-     * in the email) and sends the according email.
-     */
+   * Sets a random token into the database (that will verify the user when he/she comes back via the link
+   * in the email) and sends the according email.
+   */
   public function setPasswordResetDatabaseTokenAndSendMail($user_name)
   {
     $user_name = trim($user_name);
@@ -612,8 +612,8 @@ class Login
   }
 
   /**
-     * Sends the password-reset-email.
-     */
+   * Sends the password-reset-email.
+   */
   public function sendPasswordResetMail($user_name, $user_email, $user_password_reset_hash)
   {
     $mail = new PHPMailer;
@@ -645,10 +645,10 @@ class Login
     $mail->AddAddress($user_email);
     $mail->Subject = EMAIL_PASSWORDRESET_SUBJECT;
 
-    $link    = EMAIL_PASSWORDRESET_URL.'?user_name='.urlencode($user_name).'&verification_code='.urlencode($user_password_reset_hash);
+    $link = EMAIL_PASSWORDRESET_URL . '?user_name=' . urlencode($user_name) . '&verification_code=' . urlencode($user_password_reset_hash);
     $mail->Body = EMAIL_PASSWORDRESET_CONTENT . ' ' . $link;
 
-    if(!$mail->Send()) {
+    if (!$mail->Send()) {
       $this->errors[] = MESSAGE_PASSWORD_RESET_MAIL_FAILED . $mail->ErrorInfo;
       return false;
     } else {
@@ -658,8 +658,8 @@ class Login
   }
 
   /**
-     * Checks if the verification string in the account verification mail is valid and matches to the user.
-     */
+   * Checks if the verification string in the account verification mail is valid and matches to the user.
+   */
   public function checkIfEmailVerificationCodeIsValid($user_name, $verification_code)
   {
     $user_name = trim($user_name);
@@ -688,8 +688,8 @@ class Login
   }
 
   /**
-     * Checks and writes the new password.
-     */
+   * Checks and writes the new password.
+   */
   public function editNewPassword($user_name, $user_password_reset_hash, $user_password_new, $user_password_repeat)
   {
     // TODO: timestamp!
@@ -735,49 +735,49 @@ class Login
   }
 
   /**
-     * Gets the success state of the password-reset-link-validation.
-     * TODO: should be more like getPasswordResetLinkValidationStatus
-     * @return boolean
-     */
+   * Gets the success state of the password-reset-link-validation.
+   * TODO: should be more like getPasswordResetLinkValidationStatus
+   * @return boolean
+   */
   public function passwordResetLinkIsValid()
   {
     return $this->password_reset_link_is_valid;
   }
 
   /**
-     * Gets the success state of the password-reset action.
-     * TODO: should be more like getPasswordResetSuccessStatus
-     * @return boolean
-     */
+   * Gets the success state of the password-reset action.
+   * TODO: should be more like getPasswordResetSuccessStatus
+   * @return boolean
+   */
   public function passwordResetWasSuccessful()
   {
     return $this->password_reset_was_successful;
   }
 
   /**
-     * Gets the username
-     * @return string username
-     */
+   * Gets the username
+   * @return string username
+   */
   public function getUsername()
   {
     return $this->user_name;
   }
 
   /**
-     * Get either a Gravatar URL or complete image tag for a specified email address.
-     * Gravatar is the #1 (free) provider for email address based global avatar hosting.
-     * The URL (or image) returns always a .jpg file !
-     * For deeper info on the different parameter possibilities:
-     * @see http://de.gravatar.com/site/implement/images/
-     *
-     * @param string $email The email address
-     * @param string $s Size in pixels, defaults to 50px [ 1 - 2048 ]
-     * @param string $d Default imageset to use [ 404 | mm | identicon | monsterid | wavatar ]
-     * @param string $r Maximum rating (inclusive) [ g | pg | r | x ]
-     * @param array $atts Optional, additional key/value attributes to include in the IMG tag
-     * @source http://gravatar.com/site/implement/images/php/
-     */
-  public function getGravatarImageUrl($email, $s = 50, $d = 'mm', $r = 'g', $atts = array() )
+   * Get either a Gravatar URL or complete image tag for a specified email address.
+   * Gravatar is the #1 (free) provider for email address based global avatar hosting.
+   * The URL (or image) returns always a .jpg file !
+   * For deeper info on the different parameter possibilities:
+   * @see http://de.gravatar.com/site/implement/images/
+   *
+   * @param string $email The email address
+   * @param string $s Size in pixels, defaults to 50px [ 1 - 2048 ]
+   * @param string $d Default imageset to use [ 404 | mm | identicon | monsterid | wavatar ]
+   * @param string $r Maximum rating (inclusive) [ g | pg | r | x ]
+   * @param array $atts Optional, additional key/value attributes to include in the IMG tag
+   * @source http://gravatar.com/site/implement/images/php/
+   */
+  public function getGravatarImageUrl($email, $s = 50, $d = 'mm', $r = 'g', $atts = array())
   {
     $url = 'http://www.gravatar.com/avatar/';
     $url .= md5(strtolower(trim($email)));

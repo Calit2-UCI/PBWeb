@@ -10,33 +10,33 @@
 class Registration
 {
   /**
-     * @var object $db_connection The database connection
-     */
-  private $db_connection            = null;
+   * @var object $db_connection The database connection
+   */
+  private $db_connection = null;
   /**
-     * @var bool success state of registration
-     */
-  public  $registration_successful  = false;
+   * @var bool success state of registration
+   */
+  public $registration_successful = false;
   /**
-     * @var bool success state of verification
-     */
-  public  $verification_successful  = false;
+   * @var bool success state of verification
+   */
+  public $verification_successful = false;
   /**
-     * @var array collection of error messages
-     */
-  public  $errors                   = array();
+   * @var array collection of error messages
+   */
+  public $errors = array();
   /**
-     * @var array collection of success / neutral messages
-     */
-  public  $messages                 = array();
+   * @var array collection of success / neutral messages
+   */
+  public $messages = array();
 
   /**
-     * the function "__construct()" automatically starts whenever an object of this class is created,
-     * you know, when you do "$login = new Login();"
-     */
+   * the function "__construct()" automatically starts whenever an object of this class is created,
+   * you know, when you do "$login = new Login();"
+   */
   public function __construct()
   {
-    if(!isset($_SESSION)) {
+    if (!isset($_SESSION)) {
       session_start();
     }
 
@@ -50,8 +50,8 @@ class Registration
   }
 
   /**
-     * Checks if database connection is opened and open it if not
-     */
+   * Checks if database connection is opened and open it if not
+   */
   private function databaseConnection()
   {
     // connection already opened
@@ -66,7 +66,7 @@ class Registration
         // @see http://wiki.hashphp.org/PDO_Tutorial_for_MySQL_Developers#Connecting_to_MySQL says:
         // "Adding the charset to the DSN is very important for security reasons,
         // most examples you'll see around leave it out. MAKE SURE TO INCLUDE THE CHARSET!"
-        $this->db_connection = new PDO('mysql:host='. DB_HOST .';dbname='. DB_NAME . ';charset=utf8', DB_USER, DB_PASS);
+        $this->db_connection = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASS);
         return true;
         // If an error is catched, database connection failed
       } catch (PDOException $e) {
@@ -77,13 +77,13 @@ class Registration
   }
 
   /**
-     * handles the entire registration process. checks all error possibilities, and creates a new user in the database if
-     * everything is fine
-     */
+   * handles the entire registration process. checks all error possibilities, and creates a new user in the database if
+   * everything is fine
+   */
   private function registerNewUser($first_name, $last_name, $user_name, $user_email, $user_password, $user_password_repeat)
   {
     // we just remove extra space on username and email
-    $user_name  = trim($user_name);
+    $user_name = trim($user_name);
     $user_email = trim($user_email);
 
     // check provided data validity
@@ -211,12 +211,12 @@ class Registration
     $mail->AddAddress($user_email);
     $mail->Subject = EMAIL_VERIFICATION_SUBJECT;
 
-    $link = EMAIL_VERIFICATION_URL.'?id='.urlencode($user_id).'&verification_code='.urlencode($user_activation_hash);
+    $link = EMAIL_VERIFICATION_URL . '?id=' . urlencode($user_id) . '&verification_code=' . urlencode($user_activation_hash);
 
     // the link to your register.php, please set this value in config/email_verification.php
-    $mail->Body = EMAIL_VERIFICATION_CONTENT.' '.$link;
+    $mail->Body = EMAIL_VERIFICATION_CONTENT . ' ' . $link;
 
-    if(!$mail->Send()) {
+    if (!$mail->Send()) {
       $this->errors[] = MESSAGE_VERIFICATION_MAIL_NOT_SENT . $mail->ErrorInfo;
       return false;
     } else {
@@ -225,9 +225,9 @@ class Registration
   }
 
   /**
-    * checks the id/verification code combination and removes the activation hash
-    * the user still has to be approved by the admin
-    */
+   * checks the id/verification code combination and removes the activation hash
+   * the user still has to be approved by the admin
+   */
   public function verifyNewUser($user_id, $user_activation_hash)
   {
     // if database connection opened

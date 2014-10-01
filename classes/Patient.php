@@ -1,6 +1,7 @@
 <?php
 
-class Patient{
+class Patient
+{
 
   private $db_connection = null;
 
@@ -14,14 +15,14 @@ class Patient{
 
   public function __construct()
   {
-    if(!isset($_SESSION)) {
+    if (!isset($_SESSION)) {
       session_start();
     }
   }
 
   /**
-     * Checks if database connection is opened and open it if not
-     */
+   * Checks if database connection is opened and open it if not
+   */
   private function databaseConnection()
   {
     // connection already opened
@@ -36,7 +37,7 @@ class Patient{
         // @see http://wiki.hashphp.org/PDO_Tutorial_for_MySQL_Developers#Connecting_to_MySQL says:
         // "Adding the charset to the DSN is very important for security reasons,
         // most examples you'll see around leave it out. MAKE SURE TO INCLUDE THE CHARSET!"
-        $this->db_connection = new PDO('mysql:host='. DB_HOST .';dbname='. DB_NAME . ';charset=utf8', DB_USER, DB_PASS);
+        $this->db_connection = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASS);
         return true;
         // If an error is catched, database connection failed
       } catch (PDOException $e) {
@@ -107,7 +108,8 @@ class Patient{
   }
 
   // checks if the id given is valid (patient exists and doctor is authorised to access info)
-  public function isValidPatientId($patient_id) {
+  public function isValidPatientId($patient_id)
+  {
     if (is_numeric($patient_id)) {
       return true; // TODO: implement!!!
     }
@@ -116,13 +118,15 @@ class Patient{
   /**
    * Return the number of alerts for a patient
    */
-  public function getNumberAlerts($patient_id) {
+  public function getNumberAlerts($patient_id)
+  {
     $this->databaseConnection();
     //$query = $this->db_connection->prepare('SELECT user_alerts FROM patients WHERE id=:patient_id');
     //$query->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
     //$query->execute();
 
-      return 0;
+    return 0;
   }
 }
+
 ?>
