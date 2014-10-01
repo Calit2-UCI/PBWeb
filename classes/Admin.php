@@ -12,34 +12,34 @@
 class Admin
 {
   /**
-     * @var array $user_row array of user into
-     */
+   * @var array $user_row array of user into
+   */
   private $user_row = array();
   /**
-     * @var object $db_connection The database connection
-     */
+   * @var object $db_connection The database connection
+   */
   private $db_connection = null;
   /**
-     * @var array $errors Collection of error messages
-     */
+   * @var array $errors Collection of error messages
+   */
   public $errors = array();
   /**
-     * @var array $messages Collection of success / neutral messages
-     */
+   * @var array $messages Collection of success / neutral messages
+   */
   public $messages = array();
 
   /**
-     * the function "__construct()" automatically starts whenever an object of this class is created,
-     * you know, when you do "$login = new Login();"
-     */
+   * the function "__construct()" automatically starts whenever an object of this class is created,
+   * you know, when you do "$login = new Login();"
+   */
   public function __construct()
   {
     // create/read session
-    if(!isset($_SESSION)) {
+    if (!isset($_SESSION)) {
       session_start();
     }
 
-    if (isset($_GET['edit_user'])){
+    if (isset($_GET['edit_user'])) {
       $this->getUserInfo($_GET['edit_user']);
     }
 
@@ -52,17 +52,19 @@ class Admin
     } elseif (isset($_POST["admin_edit_submit_password"])) {
       // User id is sent in admin_edit_submit_password
       $this->editUserPassword($_POST['user_password_new'], $_POST['user_password_repeat'], $_POST["admin_edit_submit_password"]);
-    }  elseif (isset($_POST['approve_user_id'])){
+    } elseif (isset($_POST['approve_user_id'])) {
       $this->approve($_POST['approve_user_id']);
-    } elseif (isset($_POST['delete_user_id'])){
+    } elseif (isset($_POST['delete_user_id'])) {
       $this->deleteUser($_POST['delete_user_id']);
+    } elseif (isset($_POST['admin_add_patient_submit'])) {
+      $this->addNewPatient($_POST['patient_first_name'], $_POST['patient_last_name'], $_POST['patient_birth_date'], $_POST['patient_doctor']);
     }
   }
 
   /**
-     * Checks if database connection is opened. If not, then this method tries to open it.
-     * @return bool Success status of the database connecting process
-     */
+   * Checks if database connection is opened. If not, then this method tries to open it.
+   * @return bool Success status of the database connecting process
+   */
   private function databaseConnection()
   {
     // if connection already exists
@@ -76,7 +78,7 @@ class Admin
         // @see http://wiki.hashphp.org/PDO_Tutorial_for_MySQL_Developers#Connecting_to_MySQL says:
         // "Adding the charset to the DSN is very important for security reasons,
         // most examples you'll see around leave it out. MAKE SURE TO INCLUDE THE CHARSET!"
-        $this->db_connection = new PDO('mysql:host='. DB_HOST .';dbname='. DB_NAME . ';charset=utf8', DB_USER, DB_PASS);
+        $this->db_connection = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASS);
         return true;
       } catch (PDOException $e) {
         $this->errors[] = MESSAGE_DATABASE_ERROR . $e->getMessage();
@@ -200,8 +202,8 @@ class Admin
   }
 
   /**
-     * Approves the user account
-     */
+   * Approves the user account
+   */
   public function approve($user_id)
   {
     // if database connection opened
@@ -231,9 +233,9 @@ class Admin
   }
 
   /**
-     * Edit the user's email, provided in the editing form
-     * Copied from Login class, with a few changes
-     */
+   * Edit the user's email, provided in the editing form
+   * Copied from Login class, with a few changes
+   */
   public function editUserEmail($user_email, $user_id)
   {
     // prevent database flooding
@@ -273,8 +275,8 @@ class Admin
   }
 
   /**
-     * Edit the user's username, provided in the editing form
-     */
+   * Edit the user's username, provided in the editing form
+   */
   public function editUserUsername($user_name, $user_id)
   {
     // prevent database flooding
@@ -364,10 +366,10 @@ class Admin
   }
 
   /**
- * Search into database for the user data of user_name specified as parameter
- * @return user data as an object if existing user
- * @return false if user_name is not found in the database
- */
+   * Search into database for the user data of user_name specified as parameter
+   * @return user data as an object if existing user
+   * @return false if user_name is not found in the database
+   */
   private function getUserData($user_name)
   {
     // if database connection opened
@@ -547,8 +549,24 @@ class Admin
   {
     $doctors = $this->getAllUsers();
 
+    echo "<option value=\"0\">Unassigned</option>";
+
     foreach ($doctors as $id => $name) {
       echo "<option value=\"{$id}\">{$name}</option>";
+    }
+  }
+
+  private function addNewPatient($patient_first_name, $patient_last_name, $patient_birth_date, $patient_doctor)
+  {
+    if ($this->databaseConnection()) {
+      $query = $this->db_connection->prepare('INSERT INTO users (first_name, last_name, birth_date, doctor_id) VALUES(:first_name, :last_name, :birth_date, :doctor_id))');
+      $query->bindValue(':first_name', $patient_first_name, PDO::PARAM_STR);
+      $query->bindValue(':last_name', $patient_last_name, PDO::PARAM_STR);
+      $query->bindValue(':birth_date', $patient_birth_date, PDO::PARAM_STR);
+      $query->bindValue(':doctor_id', $patient_doctor, PDO::PARAM_INT);
+
+      $query->execute();
+
     }
   }
 }

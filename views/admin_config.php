@@ -42,13 +42,12 @@
 
           <!-- Doctor -->
           <label for="patient_doctor">Doctor</label>
-            <select id="patient_doctor" type="date" name="patient_doctor" required>
-              <option value="0">Unassigned</option>
+            <select id="patient_doctor" name="patient_doctor" required>
               <?php $admin->printUserOptions() ?>
               <small class="error">Select a doctor</small>
             </select>
 
-          <input type="submit" class="button success expand" name="admin_add_user_submit" value="Add Patient" />
+          <input type="submit" class="button success expand" name="admin_add_patient_submit" value="Add Patient" />
         </div>
       </form>
     </div>
