@@ -62,6 +62,9 @@ class Patient
       if ($query->rowCount() == 1) {
         $patient_overview = $query->fetch();
         echo "<h3>Information for {$patient_overview['first_name']} {$patient_overview['last_name']}</h3>";
+        echo "<b>Birth Date: </b> {$patient_overview['birth_date']}";
+      } else {
+        echo "Invalid Patient";
       }
     }
   }
