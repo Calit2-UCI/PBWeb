@@ -40,7 +40,7 @@
             <small class="error">Invalid Last Name</small>
 
             <label for="patient_birth_date">Birth Date</label>
-            <input id="patient_birth_date" type="date" name="patient_birth_date" required placeholder="MM/DD/YYYY"/>
+            <input id="patient_birth_date" type="date" name="patient_birth_date" required placeholder="YYYY-MM-DD"/>
             <small class="error">Invalid birth date</small>
 
             <!-- Doctor -->
@@ -48,6 +48,13 @@
             <select id="patient_doctor" name="patient_doctor" required>
               <?php $admin->printUserOptions() ?>
               <small class="error">Select a doctor</small>
+            </select>
+
+            <label for="patient_gender">Gender</label>
+            <select id="patient_gender" name="patient_gender" required>
+              <option value="M">Male</option>
+              <option value="F">Female</option>
+              <small class="error">Select a gender</small>
             </select>
 
             <input type="submit" class="button success expand" name="admin_add_patient_submit" value="Add Patient"/>

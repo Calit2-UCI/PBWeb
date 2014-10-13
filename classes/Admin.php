@@ -57,7 +57,7 @@ class Admin
     } elseif (isset($_POST['delete_user_id'])) {
       $this->deleteUser($_POST['delete_user_id']);
     } elseif (isset($_POST['admin_add_patient_submit'])) {
-      $this->addNewPatient($_POST['patient_first_name'], $_POST['patient_last_name'], $_POST['patient_birth_date'], $_POST['patient_doctor']);
+      $this->addNewPatient($_POST['patient_first_name'], $_POST['patient_last_name'], $_POST['patient_birth_date'], $_POST['patient_doctor'], $_POST['patient_gender']);
     }
   }
 
@@ -556,16 +556,21 @@ class Admin
     }
   }
 
-  private function addNewPatient($patient_first_name, $patient_last_name, $patient_birth_date, $patient_doctor)
+  private function addNewPatient($patient_first_name, $patient_last_name, $patient_birth_date, $patient_doctor, $patient_gender)
   {
     if ($this->databaseConnection()) {
-      $query = $this->db_connection->prepare('INSERT INTO users (first_name, last_name, birth_date, doctor_id) VALUES(:first_name, :last_name, :birth_date, :doctor_id))');
+      $query = $this->db_connection->prepare('INSERT INTO patients (first_name, last_name, birth_date, doctor_id, create_date, gender) VALUES (:first_name, :last_name, :birth_date, :doctor_id, now(), :gender)');
       $query->bindValue(':first_name', $patient_first_name, PDO::PARAM_STR);
       $query->bindValue(':last_name', $patient_last_name, PDO::PARAM_STR);
       $query->bindValue(':birth_date', $patient_birth_date, PDO::PARAM_STR);
       $query->bindValue(':doctor_id', $patient_doctor, PDO::PARAM_INT);
+      $query->bindValue(':gender', $patient_gender, PDO::PARAM_STR);
 
-      $query->execute();
+      if ($query->execute()) {
+        $this->messages[] = "{$patient_first_name} {$patient_last_name} was successfully added to patients list.";
+      } else {
+        $this->messages[] = $query->errorCode();
+      }
 
     }
   }
