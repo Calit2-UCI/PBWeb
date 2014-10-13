@@ -67,7 +67,7 @@
           </div>
         </div>
       </div>
-    </form>    
+    </form>
     <?php } else { ?>
     <div style="text-align:center">
       <h2> <?php echo WORDING_REGISTRATION_COMPLETE; ?></h2>

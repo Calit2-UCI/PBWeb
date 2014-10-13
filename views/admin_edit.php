@@ -4,7 +4,7 @@
   <div class="panel">
     <br>
 
-    <div class="small-10 large-8 small-centered columns">    
+    <div class="small-10 large-8 small-centered columns">
       <div style="text-align:center">
         <h2>Editing Data for <?php echo $admin->getUserFullName($_GET['edit_user']); ?></h2>
       </div>
@@ -12,7 +12,7 @@
       <hr/>
 
       <!-- edit form for user email / this form uses HTML5 attributes, like "required" and type="email" -->
-      <form data-abide method="post" action="admin.php" name="admin_edit_form_email">    
+      <form data-abide method="post" action="admin.php" name="admin_edit_form_email">
         <div class="row">
           <div style="text-align:center">
             <h5><?php echo WORDING_CHANGE_EMAIL ?></h5>
@@ -31,7 +31,7 @@
       <hr/>
 
       <!-- edit username -->
-      <form data-abide method="post" action="admin.php" name="admin_edit_form_username">    
+      <form data-abide method="post" action="admin.php" name="admin_edit_form_username">
         <div class="row">
           <div style="text-align:center">
             <h5><?php echo WORDING_CHANGE_USERNAME ?></h5>

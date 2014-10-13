@@ -8,7 +8,7 @@
     <!-- if you remove this meta tag, the NSA will spy on you through your Xbox Kinect camera -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Painbuddy Web</title>
-    <link rel="stylesheet" href="stylesheets/app.css" />    
+    <link rel="stylesheet" href="stylesheets/app.css" />
     <link rel="stylesheet"  href="stylesheets/custom.css">
     <script src="bower_components/modernizr/modernizr.js"></script>
 </head>
@@ -17,7 +17,7 @@
     <div id="img" style="text-align:center;">
         <a href="index.php"><img src="img/choc_logo.gif" width="494" height="231"></a>
     </div>
-    
+
     <div class="small-12 large-6 small-centered columns">
         <?php
         // show potential errors / feedback (from login object)
@@ -84,7 +84,7 @@
             }
         }
         ?>
-        
+
         <?php
         // show potential errors / feedback (from patient object)
         if (isset($patient)) {
