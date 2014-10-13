@@ -39,6 +39,15 @@
             <input id="patient_last_name" type="text" name="patient_last_name" required placeholder="Last Name"/>
             <small class="error">Invalid Last Name</small>
 
+            <!-- some js stuff for date -->
+            <script src="js/jquery.js" type="text/javascript"></script>
+            <script src="js/jquery.maskedinput.min.js" type="text/javascript"></script>
+            <script type-="text/javascript">
+              jQuery(function($){
+                $("#patient_birth_date").mask("9999-99-99");
+              });
+            </script>
+
             <label for="patient_birth_date">Birth Date</label>
             <input id="patient_birth_date" type="date" name="patient_birth_date" required placeholder="YYYY-MM-DD"/>
             <small class="error">Invalid birth date</small>
