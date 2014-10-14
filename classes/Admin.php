@@ -571,7 +571,39 @@ class Admin
       } else {
         $this->messages[] = $query->errorCode();
       }
-
     }
+  }
+
+  public function getPatientFirstName($patient_id)
+  {
+    if ($this->databaseConnection()) {
+      $query = $this->db_connection->prepare('SELECT (first_name) FROM patients WHERE id=:patient_id');
+      $query->bindValue(':patient_id', $patient_id, PDO::PARAM_STR);
+      $query->execute();
+      if ($query->rowCount() > 0) {
+        $patient = $query->fetch();
+        return $patient['first_name'];
+      }
+    }
+  }
+
+  public function getPatientLastName($patient_id)
+  {
+    if ($this->databaseConnection()) {
+      $query = $this->db_connection->prepare('SELECT (last_name) FROM patients WHERE id=:patient_id');
+      $query->bindValue(':patient_id', $patient_id, PDO::PARAM_STR);
+      $query->execute();
+      if ($query->rowCount() > 0) {
+        $patient = $query->fetch();
+        return $patient['last_name'];
+      } else {
+        return "wrong";
+      }
+    }
+  }
+
+  public function getPatientFullName($patient_id)
+  {
+    return $this->getPatientFirstName($patient_id) . " " . $this->getPatientLastName($patient_id);
   }
 }
