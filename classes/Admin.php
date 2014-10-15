@@ -606,4 +606,39 @@ class Admin
   {
     return $this->getPatientFirstName($patient_id) . " " . $this->getPatientLastName($patient_id);
   }
+
+  public function exportAllPatientData()
+  {
+    if ($this->databaseConnection()) {
+      $output = "";
+      $query = $this->db_connection->prepare('SELECT *FROM patients');
+
+      $query->execute();
+      $columns_total = $query->columnCount();
+
+      $column_query = $this->db_connection->prepare("DESCRIBE patients");
+      $column_query->execute();
+
+      $table_fields = $column_query->fetchAll(PDO::FETCH_COLUMN);
+
+      foreach ($table_fields as $heading) {
+        $output .= '"' . $heading . '",';
+      }
+      $output .= "\n";
+
+      while ($row = $query->fetch()) {
+        for ($i = 0; $i < $columns_total; $i++) {
+          $output .= '"' . $row["$i"] . '",';
+        }
+        $output .= "\n";
+      }
+
+      $filename = "AllPatientData.csv";
+      header('Content-type: application/csv');
+      header('Content-Disposition: attachment; filename=' . $filename);
+
+      echo $output;
+      exit;
+    }
+  }
 }

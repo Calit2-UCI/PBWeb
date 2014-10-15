@@ -34,6 +34,8 @@ if ($login->isUserLoggedIn() == true && $login->isUserAdmin() == true) {
     include("views/admin_edit_patient.php");
   } elseif (isset($_GET['add_patient'])) {
     include("views/admin_config_add_patient.php");
+  } elseif (isset($_GET['export_all'])) {
+    $admin->exportAllPatientData();
   } else {
     include("views/admin_config.php");
   }

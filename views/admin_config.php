@@ -23,6 +23,8 @@
 
       <p><?php $admin->printPatients(); ?></p>
       <a href="?add_patient">Add New Patient</a>
+      <br>
+      <a href="?export_all">Export all data</a>
     </div>
 
 
