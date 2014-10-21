@@ -29,6 +29,12 @@
           </div>
 
           <div class="row">
+            <label for="patient_id">Patient ID</label>
+            <input id="patient_id" type="text" name="patient_id" required placeholder="Patient ID"/>
+            <small class="error">Invalid ID</small>
+          </div>
+
+          <div class="row">
             <!-- some js stuff for date -->
             <script src="js/jquery.js" type="text/javascript"></script>
             <script src="js/jquery.maskedinput.min.js" type="text/javascript"></script>
