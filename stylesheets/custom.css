@@ -1,25 +1,25 @@
 /* unvisited link */
 /* line 2, ../scss/custom.scss */
 a:link {
-  color: #f6f6f6;
+  color: #3D362B;
 }
 
 /* visited link */
 /* line 7, ../scss/custom.scss */
 a:visited {
-  color: #f6f6f6;
+  color: #3D362B;
 }
 
 /* mouse over link */
 /* line 12, ../scss/custom.scss */
 a:hover {
-  color: #dbdbdb;
+  color: #242019;
 }
 
 /* selected link */
 /* line 17, ../scss/custom.scss */
 a:active {
-  color: #f6f6f6;
+  color: #242019;
 }
 
 /* line 20, ../scss/custom.scss */

@@ -67,7 +67,7 @@
             </select>
           </div>
 
-          <input type="submit" class="button success expand" name="admin_add_patient_submit" value="Add Patient"/>
+          <input type="submit" class="button  expand" name="admin_add_patient_submit" value="Add Patient"/>
         </div>
       </form>
 
@@ -82,6 +82,6 @@
   <a href="index.php" class="button expand">Menu</a>
 </div>
 <div class="row">
-  <a href="index.php?logout" class="button alert expand"><?php echo WORDING_LOGOUT; ?></a>
+  <a href="index.php?logout" class="button expand"><?php echo WORDING_LOGOUT; ?></a>
 </div>
 <?php include('_footer.php'); ?>
