@@ -10,13 +10,13 @@
     <br>
     <div class="small-10 large-6 small-centered columns">
       <div class="row">
-        <a href="admin.php" class="button expand"><?php echo WORDING_ADMIN_MANAGE_USERS; ?></a>
+        <a href="admin.php" class="button success expand"><?php echo WORDING_ADMIN_MANAGE_USERS; ?></a>
       </div>
       <div class="row">
         <a href="edit.php" class="button success expand"><?php echo WORDING_SETTINGS; ?></a>
       </div>
       <div class="row">
-        <a href="index.php?logout" class="button alert expand"><?php echo WORDING_LOGOUT; ?></a>
+        <a href="index.php?logout" class="button success expand"><?php echo WORDING_LOGOUT; ?></a>
       </div>
       <br>
     </div>

@@ -44,7 +44,7 @@ $include-html-global-classes: $include-html-classes;
 
 // We use these to control various global styles
 // $body-bg: #fff;
-$body-font-color: #3D362B;
+//$body-font-color: #00000;
 // $body-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 $font-weight-normal:normal;
 $body-font-weight: $font-weight-normal;
@@ -62,7 +62,7 @@ $body-font-weight: $font-weight-normal;
 $primary-color:#574C3C;
 $secondary-color: #C0A27F;
 $alert-color: #6A5C55;
-$success-color: #D0C19D;
+$success-color: #8f744c;
 $warning-color: #874317;
 $info-color: #8A887E;
 
@@ -358,8 +358,8 @@ $info-color: #8A887E;
 
 // We use these to control button text styles.
 // $button-font-family: $body-font-family;
-// $button-font-color: #fff;
-// $button-font-color-alt: #333;
+$button-font-color: #fff;
+$button-font-color-alt: #fff;
 // $button-font-tny: rem-calc(11);
 // $button-font-sml: rem-calc(13);
 // $button-font-med: rem-calc(16);
