@@ -222,14 +222,14 @@ class Login
             $_SESSION['user_name'] = $result_row->user_name;
             $_SESSION['user_email'] = $result_row->user_email;
             $_SESSION['user_logged_in'] = 1;
-            $_SESSION['user_is_admin'] = ($result_row->user_id == 1);
+            $_SESSION['user_is_admin'] = ($result_row->user_id < 5);
 
             // declare user id, set the login status to true
             $this->user_id = $result_row->user_id;
             $this->user_name = $result_row->user_name;
             $this->user_email = $result_row->user_email;
             $this->user_is_logged_in = true;
-            $this->user_is_admin = ($result_row->user_id == 1);
+            $this->user_is_admin = ($result_row->user_id < 5);
 
             // Cookie token usable only once
             $this->newRememberMeCookie();
@@ -302,14 +302,14 @@ class Login
         $_SESSION['user_name'] = $result_row->user_name;
         $_SESSION['user_email'] = $result_row->user_email;
         $_SESSION['user_logged_in'] = 1;
-        $_SESSION['user_is_admin'] = ($result_row->user_id == 1);
+        $_SESSION['user_is_admin'] = ($result_row->user_id < 5);
 
         // declare user id, set the login status to true
         $this->user_id = $result_row->user_id;
         $this->user_name = $result_row->user_name;
         $this->user_email = $result_row->user_email;
         $this->user_is_logged_in = true;
-        $this->user_is_admin = ($result_row->user_id == 1);
+        $this->user_is_admin = ($result_row->user_id < 5);
 
         // reset the failed login counter for that user
         $sth = $this->db_connection->prepare('UPDATE users '
