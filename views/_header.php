@@ -15,9 +15,9 @@
 
 <body>
     <div id="img" style="text-align:center;">
-        <a href="index.php"><img src="img/choc_logo.gif" width="494" height="231"></a>
+        <a href="index.php"><img src="img/logo.jpg" style="height: 200px; width: auto"></a>
     </div>
-
+    <br>
     <div class="small-12 large-6 small-centered columns">
         <?php
         // show potential errors / feedback (from login object)
