@@ -562,7 +562,7 @@ class Admin
       $query = $this->db_connection->prepare('INSERT INTO patients (first_name, last_name, patient_id, birth_date, doctor_id, create_date, gender) VALUES (:first_name, :last_name, :patient_id, :birth_date, :doctor_id, now(), :gender)');
       $query->bindValue(':first_name', $patient_first_name, PDO::PARAM_STR);
       $query->bindValue(':last_name', $patient_last_name, PDO::PARAM_STR);
-      $query->bindValue(':patient_id', $patient_birth_date, PDO::PARAM_INT);
+      $query->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
       $query->bindValue(':birth_date', $patient_birth_date, PDO::PARAM_STR);
       $query->bindValue(':doctor_id', $patient_doctor, PDO::PARAM_INT);
       $query->bindValue(':gender', $patient_gender, PDO::PARAM_STR);
