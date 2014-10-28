@@ -12,6 +12,8 @@
       <h3>Patient List</h3>
 
       <p><?php $patient->showPatientOverview(); ?></p>
+      <a href="?export_all">Export all data</a>
+
     </div>
   </div>
 </div>
@@ -23,4 +25,11 @@
   <a href="index.php?logout" class="button alert expand"><?php echo WORDING_LOGOUT; ?></a>
 </div>
 
+<script>
+  $(document).ready(function()
+    {
+      $("#myTable").tablesorter();
+    }
+  );
+</script>
 <?php include('_footer.php'); ?>

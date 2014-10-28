@@ -12,6 +12,8 @@
   <link rel="stylesheet" href="stylesheets/app.css"/>
   <link rel="stylesheet" href="stylesheets/custom.css">
   <script src="bower_components/modernizr/modernizr.js"></script>
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="js/jquery.tablesorter.min.js"></script>
 </head>
 
 <body>

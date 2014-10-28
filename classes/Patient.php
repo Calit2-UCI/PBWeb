@@ -18,6 +18,10 @@ class Patient
     if (!isset($_SESSION)) {
       session_start();
     }
+
+    if (isset($_GET['export_all'])) {
+      $this->exportAllPatientData();
+    }
   }
 
   /**
@@ -62,7 +66,7 @@ class Patient
       if ($query->rowCount() == 1) {
         $patient_overview = $query->fetch();
         echo "<h3>Information for {$patient_overview['first_name']} {$patient_overview['last_name']}</h3>";
-        echo "<b>Birth Date: </b> {$patient_overview['birth_date']}";
+        echo "<b>Age: </b> {$patient_overview['age']}";
       } else {
         echo "Invalid Patient";
       }
@@ -81,7 +85,8 @@ class Patient
 
     if ($query_get_all_patients->rowCount() > 0) {
       $result = $query_get_all_patients->fetchAll();
-      echo "<table width=\"100%\">";
+      echo '<table id="myTable" class="tablesorter" style="table-layout: fixed; width: 100%">';
+      echo '<thead>';
       echo "<tr>
               <th>Patient Id</th>
               <th>First Name</th>
@@ -89,7 +94,8 @@ class Patient
               <th>Alerts<th>
               <th>Patient Info</th>
             </tr>";
-
+      echo '</thead>';
+      echo '<tbody>';
       foreach ($result as $row) {
         $patient_id = $row['id'];
         $first_name = $row['first_name'];
@@ -104,6 +110,7 @@ class Patient
                 <td><a href=\"patient_details.php?patient_id={$patient_id}\" class=\"button secondary tiny\">Info</a></td>
               </tr>";
       }
+      echo '<tbody>';
       echo "</table>";
     } else {
       echo "No patients";
@@ -130,6 +137,41 @@ class Patient
 
     return 0;
   }
-}
 
+  public function exportAllPatientData()
+  {
+    if ($this->databaseConnection()) {
+      $output = "";
+      $query = $this->db_connection->prepare('SELECT *FROM patients WHERE doctor_id=:doctor_id');
+      $query->bindValue(':doctor_id', $_SESSION['user_id'], PDO::PARAM_INT);
+
+      $query->execute();
+      $columns_total = $query->columnCount();
+
+      $column_query = $this->db_connection->prepare("DESCRIBE patients");
+      $column_query->execute();
+
+      $table_fields = $column_query->fetchAll(PDO::FETCH_COLUMN);
+
+      foreach ($table_fields as $heading) {
+        $output .= '"' . $heading . '",';
+      }
+      $output .= "\n";
+
+      while ($row = $query->fetch()) {
+        for ($i = 0; $i < $columns_total; $i++) {
+          $output .= '"' . $row["$i"] . '",';
+        }
+        $output .= "\n";
+      }
+
+      $filename = "AllPatientData.csv";
+      header('Content-type: application/csv');
+      header('Content-Disposition: attachment; filename=' . $filename);
+
+      echo $output;
+      exit;
+    }
+  }
+}
 ?>
