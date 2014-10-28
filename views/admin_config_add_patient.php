@@ -49,15 +49,6 @@
             </select>
           </div>
 
-          <div class="row">
-            <label for="patient_gender">Gender</label>
-            <select id="patient_gender" name="patient_gender" required>
-              <option value="M">Male</option>
-              <option value="F">Female</option>
-              <small class="error">Select a gender</small>
-            </select>
-          </div>
-
           <input type="submit" class="button  expand" name="admin_add_patient_submit" value="Add Patient"/>
         </div>
       </form>
