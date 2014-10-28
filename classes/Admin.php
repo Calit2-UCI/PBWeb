@@ -723,9 +723,9 @@ class Admin
       $query->execute();
 
       if ($query->rowCount() > 0) {
-        $this->messages[] = "Age change successful";
+        $this->messages[] = "Patient deleted";
       } else {
-        $this->errors[] = "Age change not successful";
+        $this->errors[] = "Patient not deleted";
       }
     }
   }
