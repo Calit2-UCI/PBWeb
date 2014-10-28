@@ -17,9 +17,11 @@
       <h3>Active Users</h3>
 
       <h4>Admins</h4>
+
       <p><?php $admin->printActiveUsers(1); ?></p>
 
       <h4>Healthcare Providers</h4>
+
       <p><?php $admin->printActiveUsers(0); ?></p>
 
     </div>

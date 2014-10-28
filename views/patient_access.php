@@ -10,6 +10,7 @@
   <div class="large-14 columns">
     <div class="callout panel">
       <h3>Patient List</h3>
+
       <p><?php $patient->showPatientOverview(); ?></p>
     </div>
   </div>

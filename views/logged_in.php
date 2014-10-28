@@ -3,10 +3,12 @@
 <div class="small-12 large-6 small-centered columns">
   <div class="panel">
     <br>
+
     <div style="text-align:center">
       <h2>Welcome, <?php echo $_SESSION['user_name']; ?>!</h2>
     </div>
     <br>
+
     <div class="small-10 large-6 small-centered columns">
       <div class="row">
         <a href="patient.php" class="button success expand"><?php echo WORDING_PATIENT_ACCESS; ?></a>
