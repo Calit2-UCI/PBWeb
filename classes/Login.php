@@ -34,14 +34,6 @@ class Login
    */
   private $is_admin = false;
   /**
-   * @var string $user_gravatar_image_url The user's gravatar profile pic url (or a default one)
-   */
-  public $user_gravatar_image_url = "";
-  /**
-   * @var string $user_gravatar_image_tag The user's gravatar profile pic url with <img ... /> around
-   */
-  public $user_gravatar_image_tag = "";
-  /**
    * @var boolean $password_reset_link_is_valid Marker for view handling
    */
   private $password_reset_link_is_valid = false;
@@ -114,11 +106,6 @@ class Login
       $this->checkIfEmailVerificationCodeIsValid($_GET["user_name"], $_GET["verification_code"]);
     } elseif (isset($_POST["submit_new_password"])) {
       $this->editNewPassword($_POST['user_name'], $_POST['user_password_reset_hash'], $_POST['user_password_new'], $_POST['user_password_repeat']);
-    }
-
-    // get gravatar profile picture if user is logged in
-    if ($this->isUserLoggedIn() == true) {
-      $this->getGravatarImageUrl($this->user_email);
     }
   }
 
