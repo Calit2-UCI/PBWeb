@@ -102,16 +102,9 @@ class Login
         $this->editUserPassword($_POST['user_password_old'], $_POST['user_password_new'], $_POST['user_password_repeat']);
       }
 
-      // login with cookie
-    } elseif (isset($_COOKIE['rememberme'])) {
-      $this->loginWithCookieData();
-
       // if user just submitted a login form
     } elseif (isset($_POST["login"])) {
-      if (!isset($_POST['user_rememberme'])) {
-        $_POST['user_rememberme'] = null;
-      }
-      $this->loginWithPostData($_POST['user_name'], $_POST['user_password'], $_POST['user_rememberme']);
+      $this->loginWithPostData($_POST['user_name'], $_POST['user_password']);
     }
 
     // checking if user requested a password reset mail
@@ -195,62 +188,11 @@ class Login
   }
 
   /**
-   * Logs in via the Cookie
-   * @return bool success state of cookie login
-   */
-  private function loginWithCookieData()
-  {
-    if (isset($_COOKIE['rememberme'])) {
-      // extract data from the cookie
-      list ($user_id, $token, $hash) = explode(':', $_COOKIE['rememberme']);
-      // check cookie hash validity
-      if ($hash == hash('sha256', $user_id . ':' . $token . COOKIE_SECRET_KEY) && !empty($token)) {
-        // cookie looks good, try to select corresponding user
-        if ($this->databaseConnection()) {
-          // get real token from database (and all other data)
-          $sth = $this->db_connection->prepare("SELECT user_id, user_name, user_email FROM users WHERE user_id = :user_id
-                                                      AND user_rememberme_token = :user_rememberme_token AND user_rememberme_token IS NOT NULL");
-          $sth->bindValue(':user_id', $user_id, PDO::PARAM_INT);
-          $sth->bindValue(':user_rememberme_token', $token, PDO::PARAM_STR);
-          $sth->execute();
-          // get result row (as an object)
-          $result_row = $sth->fetchObject();
-
-          if (isset($result_row->user_id)) {
-            // write user data into PHP SESSION [a file on your server]
-            $_SESSION['user_id'] = $result_row->user_id;
-            $_SESSION['user_name'] = $result_row->user_name;
-            $_SESSION['user_email'] = $result_row->user_email;
-            $_SESSION['user_logged_in'] = 1;
-            $_SESSION['is_admin'] = ($result_row->is_admin == 1);
-
-            // declare user id, set the login status to true
-            $this->user_id = $result_row->user_id;
-            $this->user_name = $result_row->user_name;
-            $this->user_email = $result_row->user_email;
-            $this->user_is_logged_in = true;
-            $this->is_admin = ($result_row->is_admin == 1);
-
-            // Cookie token usable only once
-            $this->newRememberMeCookie();
-            return true;
-          }
-        }
-      }
-      // A cookie has been used but is not valid... we delete it
-      $this->deleteRememberMeCookie();
-      $this->errors[] = MESSAGE_COOKIE_INVALID;
-    }
-    return false;
-  }
-
-  /**
    * Logs in with the data provided in $_POST, coming from the login form
    * @param $user_name
    * @param $user_password
-   * @param $user_rememberme
    */
-  private function loginWithPostData($user_name, $user_password, $user_rememberme)
+  private function loginWithPostData($user_name, $user_password)
   {
     if (empty($user_name)) {
       $this->errors[] = MESSAGE_USERNAME_EMPTY;
@@ -317,14 +259,6 @@ class Login
           . 'WHERE user_id = :user_id AND user_failed_logins != 0');
         $sth->execute(array(':user_id' => $result_row->user_id));
 
-        // if user has check the "remember me" checkbox, then generate token and write cookie
-        if (isset($user_rememberme)) {
-          $this->newRememberMeCookie();
-        } else {
-          // Reset remember-me token
-          $this->deleteRememberMeCookie();
-        }
-
         // OPTIONAL: recalculate the user's password hash
         // DELETE this if-block if you like, it only exists to recalculate users's hashes when you provide a cost factor,
         // by default the script will use a cost factor of 10 and never change it.
@@ -354,52 +288,10 @@ class Login
   }
 
   /**
-   * Create all data needed for remember me cookie connection on client and server side
-   */
-  private function newRememberMeCookie()
-  {
-    // if database connection opened
-    if ($this->databaseConnection()) {
-      // generate 64 char random string and store it in current user data
-      $random_token_string = hash('sha256', mt_rand());
-      $sth = $this->db_connection->prepare("UPDATE users SET user_rememberme_token = :user_rememberme_token WHERE user_id = :user_id");
-      $sth->execute(array(':user_rememberme_token' => $random_token_string, ':user_id' => $_SESSION['user_id']));
-
-      // generate cookie string that consists of userid, randomstring and combined hash of both
-      $cookie_string_first_part = $_SESSION['user_id'] . ':' . $random_token_string;
-      $cookie_string_hash = hash('sha256', $cookie_string_first_part . COOKIE_SECRET_KEY);
-      $cookie_string = $cookie_string_first_part . ':' . $cookie_string_hash;
-
-      // set cookie
-      setcookie('rememberme', $cookie_string, time() + COOKIE_RUNTIME, "/", COOKIE_DOMAIN);
-    }
-  }
-
-  /**
-   * Delete all data needed for remember me cookie connection on client and server side
-   */
-  private function deleteRememberMeCookie()
-  {
-    // if database connection opened
-    if ($this->databaseConnection()) {
-      // Reset rememberme token
-      $sth = $this->db_connection->prepare("UPDATE users SET user_rememberme_token = NULL WHERE user_id = :user_id");
-      $sth->execute(array(':user_id' => $_SESSION['user_id']));
-    }
-
-    // set the rememberme-cookie to ten years ago (3600sec * 365 days * 10).
-    // that's obivously the best practice to kill a cookie via php
-    // @see http://stackoverflow.com/a/686166/1114320
-    setcookie('rememberme', false, time() - (3600 * 3650), '/', COOKIE_DOMAIN);
-  }
-
-  /**
    * Perform the logout, resetting the session
    */
   public function doLogout()
   {
-    $this->deleteRememberMeCookie();
-
     $_SESSION = array();
     session_destroy();
 
@@ -763,38 +655,4 @@ class Login
     return $this->user_name;
   }
 
-  /**
-   * Get either a Gravatar URL or complete image tag for a specified email address.
-   * Gravatar is the #1 (free) provider for email address based global avatar hosting.
-   * The URL (or image) returns always a .jpg file !
-   * For deeper info on the different parameter possibilities:
-   * @see http://de.gravatar.com/site/implement/images/
-   *
-   * @param string $email The email address
-   * @param string $s Size in pixels, defaults to 50px [ 1 - 2048 ]
-   * @param string $d Default imageset to use [ 404 | mm | identicon | monsterid | wavatar ]
-   * @param string $r Maximum rating (inclusive) [ g | pg | r | x ]
-   * @param array $atts Optional, additional key/value attributes to include in the IMG tag
-   * @source http://gravatar.com/site/implement/images/php/
-   */
-  public function getGravatarImageUrl($email, $s = 50, $d = 'mm', $r = 'g', $atts = array())
-  {
-    $url = 'http://www.gravatar.com/avatar/';
-    $url .= md5(strtolower(trim($email)));
-    $url .= "?s=$s&d=$d&r=$r&f=y";
-
-    // the image url (on gravatarr servers), will return in something like
-    // http://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=80&d=mm&r=g
-    // note: the url does NOT have something like .jpg
-    $this->user_gravatar_image_url = $url;
-
-    // build img tag around
-    $url = '<img src="' . $url . '"';
-    foreach ($atts as $key => $val)
-      $url .= ' ' . $key . '="' . $val . '"';
-    $url .= ' />';
-
-    // the image url like above but with an additional <img src .. /> around
-    $this->user_gravatar_image_tag = $url;
-  }
 }
