@@ -501,14 +501,15 @@ class Admin
         $doctors = $this->getAllUsers();
 
         foreach ($result as $row) {
-          $id = $row['patient_id'];
+          $id = $row['id'];
+          $patient_id = $row['patient_id'];
           $first_name = $row['first_name'];
           $last_name = $row['last_name'];
           $doctor_id = $row['doctor_id'];
           $doctor = isset($doctors[$doctor_id]) ? $doctors[$doctor_id] : "Unassigned";
 
           echo "<tr>
-                  <td>{$id}</td>
+                  <td>{$patient_id}</td>
                   <td>{$first_name}</td>
                   <td>{$last_name}</td>
                   <td>{$doctor}</td>
