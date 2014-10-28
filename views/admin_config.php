@@ -43,5 +43,12 @@
     </div>
   </div>
 </div>
+<script>
+  $(document).ready(function()
+    {
+      $("#myTable").tablesorter();
+    }
+  );
+</script>
 
 <?php include('_footer.php'); ?>

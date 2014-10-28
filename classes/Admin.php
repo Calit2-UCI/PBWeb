@@ -496,7 +496,8 @@ class Admin
 
       if ($query->rowCount() > 0) {
         $result = $query->fetchAll();
-        echo "<table width=\"100%\">";
+        echo '<table id="myTable" class="tablesorter" style="table-layout: fixed; width: 100%">';
+        echo '<thead>';
         echo "<tr>
                 <th>Patient Id</th>
                 <th>First Name</th>
@@ -505,7 +506,8 @@ class Admin
                 <th>Edit</th>
                 <th>Delete Patient</th>
             </tr>";
-
+        echo '</thead>';
+        echo '<tbody>';
         // Populate the doctors array with their ID and name so we can display the doctors for each patient
         $doctors = $this->getAllUsers();
 
@@ -531,6 +533,7 @@ class Admin
               </tr>";
         }
         echo "</table>";
+        echo '</tbody>';
       } else {
         echo "No Patients";
       }
