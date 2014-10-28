@@ -11,6 +11,31 @@
 
       <hr/>
 
+      <form data-abide method="post" action="admin.php" name="admin_edit_patient_doctor">
+        <div style="text-align:center">
+          <h5>Change Doctor</h5>
+        </div>
+
+        <br>
+
+        <div class="row">
+          <!-- Doctor -->
+          <label for="patient_doctor">Doctor</label>
+          <select id="patient_doctor" name="patient_doctor" required>
+            <?php $admin->printUserOptions() ?>
+            <small class="error">Select a doctor</small>
+          </select>
+        </div>
+
+        <div class="row">
+          <button type="submit" class="button success expand" name="admin_edit_submit_password"
+                  value="<?php echo $_GET['edit_patient']; ?>">Change Doctor
+          </button>
+        </div>
+      </form>
+
+      <hr/>
+
       <form data-abide method="post" action="admin.php" name="admin_edit_patient_name">
         <div class="row">
           <div style="text-align:center">
@@ -55,31 +80,6 @@
 
           <button type="submit" class="button success expand" name="admin_edit_submit_patient_age"
                   value="<?php echo $_GET['edit_patient']; ?>">Change Age
-          </button>
-        </div>
-      </form>
-
-      <hr/>
-
-      <form data-abide method="post" action="admin.php" name="admin_edit_patient_doctor">
-        <div style="text-align:center">
-          <h5>Change Doctor</h5>
-        </div>
-
-        <br>
-
-        <div class="row">
-          <!-- Doctor -->
-          <label for="patient_doctor">Doctor</label>
-          <select id="patient_doctor" name="patient_doctor" required>
-            <?php $admin->printUserOptions() ?>
-            <small class="error">Select a doctor</small>
-          </select>
-        </div>
-
-        <div class="row">
-          <button type="submit" class="button success expand" name="admin_edit_submit_password"
-                  value="<?php echo $_GET['edit_patient']; ?>">Change Doctor
           </button>
         </div>
       </form>
