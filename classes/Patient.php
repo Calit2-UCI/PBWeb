@@ -91,7 +91,7 @@ class Patient
               <th>Patient Id</th>
               <th>First Name</th>
               <th>Last Name</th>
-              <th>Alerts<th>
+              <th>Alerts</th>
               <th>Patient Info</th>
             </tr>";
       echo '</thead>';
