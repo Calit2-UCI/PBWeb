@@ -56,8 +56,15 @@ class Admin
       $this->approve($_POST['approve_user_id']);
     } elseif (isset($_POST['delete_user_id'])) {
       $this->deleteUser($_POST['delete_user_id']);
+
     } elseif (isset($_POST['admin_add_patient_submit'])) {
       $this->addNewPatient($_POST['patient_first_name'], $_POST['patient_last_name'], $_POST['patient_id'], $_POST['patient_age'], $_POST['patient_doctor']);
+    } elseif (isset($_POST["admin_edit_submit_patient_doctor"])) {
+      $this->editPatientDoctor($_POST['admin_edit_submit_patient_doctor'], $_POST['patient_doctor']);
+    } elseif (isset($_POST["admin_edit_submit_patient_name"])) {
+      $this->editPatientName($_POST['admin_edit_submit_patient_name'], $_POST['patient_first_name'], $_POST['patient_last_name']);
+    } elseif (isset($_POST["admin_edit_submit_patient_age"])) {
+      $this->editPatientAge($_POST['admin_edit_submit_patient_age'], $_POST['patient_age']);
     }
   }
 
@@ -643,6 +650,61 @@ class Admin
 
       echo $output;
       exit;
+    }
+  }
+
+  private function editPatientDoctor($edit_patient, $patient_doctor)
+  {
+    // if database connection opened
+    if ($this->databaseConnection()) {
+      // try to update user with specified information
+      $query = $this->db_connection->prepare('UPDATE patients SET doctor_id=:doctor_id WHERE id = :id');
+      $query->bindValue(':doctor_id', intval(trim($patient_doctor)), PDO::PARAM_INT);
+      $query->bindValue(':id', intval(trim($edit_patient)), PDO::PARAM_INT);
+      $query->execute();
+
+      if ($query->rowCount() > 0) {
+        $this->messages[] = "Doctor change successful";
+      } else {
+        $this->errors[] = "Doctor change not successful";
+      }
+    }
+  }
+
+  private function editPatientName($edit_patient, $patient_first_name, $patient_last_name)
+  {
+    // if database connection opened
+    if ($this->databaseConnection()) {
+      // try to update user with specified information
+      $query = $this->db_connection->prepare('UPDATE patients SET first_name=:first_name, last_name=:last_name WHERE id = :id');
+      $query->bindValue(':first_name', $patient_first_name, PDO::PARAM_STR);
+      $query->bindValue(':last_name', $patient_last_name, PDO::PARAM_STR);
+      $query->bindValue(':id', intval(trim($edit_patient)), PDO::PARAM_INT);
+      $query->execute();
+
+      if ($query->rowCount() > 0) {
+        $this->messages[] = "Name change successful";
+      } else {
+        $this->errors[] = "Name change not successful";
+      }
+    }
+  }
+
+  private function editPatientAge($edit_patient, $patient_age)
+  {
+    // if database connection opened
+    if ($this->databaseConnection()) {
+      // try to update user with specified information
+      $query = $this->db_connection->prepare('UPDATE patients SET age=:age WHERE id = :id');
+      $query->bindValue(':age', intval(trim($patient_age)), PDO::PARAM_INT);
+      $query->bindValue(':id', intval(trim($edit_patient)), PDO::PARAM_INT);
+      $query->execute();
+
+      if ($query->rowCount() > 0) {
+        $this->messages[] = "Age change successful";
+      } else {
+        $this->errors[] = "Age change not successful";
+      }
     }
   }
 }

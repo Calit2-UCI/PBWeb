@@ -28,7 +28,7 @@
         </div>
 
         <div class="row">
-          <button type="submit" class="button success expand" name="admin_edit_submit_password"
+          <button type="submit" class="button success expand" name="admin_edit_submit_patient_doctor"
                   value="<?php echo $_GET['edit_patient']; ?>">Change Doctor
           </button>
         </div>
