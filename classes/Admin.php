@@ -88,6 +88,9 @@ class Admin
     return false;
   }
 
+  /**
+   * Prints out a table of everyone who has registered but has not yet been approved.
+   */
   public function printPendingUsers()
   {
     if ($this->databaseConnection()) {
@@ -146,15 +149,15 @@ class Admin
     }
   }
 
-  /*
-     * Prints a table of the current active users
-     * TODO: make admin account stand out
-     */
-  public function printActiveUsers()
+  /**
+   * @param $type 0 for HCP, 1 for admin
+   */
+  public function printActiveUsers($type)
   {
     if ($this->databaseConnection()) {
       // try to update user with specified information
-      $query = $this->db_connection->prepare('SELECT * FROM users WHERE user_active = 1');
+      $query = $this->db_connection->prepare('SELECT * FROM users WHERE user_active = 1 AND is_admin=:is_admin');
+      $query->bindValue("is_admin", $type, PDO::PARAM_INT);
       $query->execute();
 
       if ($query->rowCount() > 0) {
@@ -196,7 +199,7 @@ class Admin
         }
         echo "</table>";
       } else {
-        echo "No active users";
+        echo "No active Healthcare Providers";
       }
     }
   }
@@ -556,14 +559,14 @@ class Admin
     }
   }
 
-  private function addNewPatient($patient_first_name, $patient_last_name, $patient_id, $patient_birth_date, $patient_doctor, $patient_gender)
+  private function addNewPatient($patient_first_name, $patient_last_name, $patient_id, $patient_age, $patient_doctor, $patient_gender)
   {
     if ($this->databaseConnection()) {
-      $query = $this->db_connection->prepare('INSERT INTO patients (first_name, last_name, patient_id, birth_date, doctor_id, create_date, gender) VALUES (:first_name, :last_name, :patient_id, :birth_date, :doctor_id, now(), :gender)');
+      $query = $this->db_connection->prepare('INSERT INTO patients (patient_id, first_name, last_name, age, doctor_id, create_date, gender) VALUES (:patient_id, :first_name, :last_name, :age, :doctor_id, now(), :gender)');
       $query->bindValue(':first_name', $patient_first_name, PDO::PARAM_STR);
       $query->bindValue(':last_name', $patient_last_name, PDO::PARAM_STR);
       $query->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
-      $query->bindValue(':birth_date', $patient_birth_date, PDO::PARAM_STR);
+      $query->bindValue(':age', $patient_age, PDO::PARAM_INT);
       $query->bindValue(':doctor_id', $patient_doctor, PDO::PARAM_INT);
       $query->bindValue(':gender', $patient_gender, PDO::PARAM_STR);
 

@@ -35,18 +35,9 @@
           </div>
 
           <div class="row">
-            <!-- some js stuff for date -->
-            <script src="js/jquery.js" type="text/javascript"></script>
-            <script src="js/jquery.maskedinput.min.js" type="text/javascript"></script>
-            <script type-="text/javascript">
-              jQuery(function ($) {
-                $("#patient_birth_date").mask("9999-99-99");
-              });
-            </script>
-
-            <label for="patient_birth_date">Birth Date</label>
-            <input id="patient_birth_date" type="date" name="patient_birth_date" required placeholder="YYYY-MM-DD"/>
-            <small class="error">Invalid birth date</small>
+            <label for="patient_age">Age</label>
+            <input id="patient_age" type="number" min="0" name="patient_age" required placeholder="Age"/>
+            <small class="error">Invalid age</small>
           </div>
 
           <div class="row">
