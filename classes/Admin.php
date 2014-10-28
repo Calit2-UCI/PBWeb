@@ -65,6 +65,8 @@ class Admin
       $this->editPatientName($_POST['admin_edit_submit_patient_name'], $_POST['patient_first_name'], $_POST['patient_last_name']);
     } elseif (isset($_POST["admin_edit_submit_patient_age"])) {
       $this->editPatientAge($_POST['admin_edit_submit_patient_age'], $_POST['patient_age']);
+    } elseif (isset($_POST["delete_patient_id"])) {
+      $this->deletePatient($_POST['delete_patient_id']);
     }
   }
 
@@ -698,6 +700,23 @@ class Admin
       $query = $this->db_connection->prepare('UPDATE patients SET age=:age WHERE id = :id');
       $query->bindValue(':age', intval(trim($patient_age)), PDO::PARAM_INT);
       $query->bindValue(':id', intval(trim($edit_patient)), PDO::PARAM_INT);
+      $query->execute();
+
+      if ($query->rowCount() > 0) {
+        $this->messages[] = "Age change successful";
+      } else {
+        $this->errors[] = "Age change not successful";
+      }
+    }
+  }
+
+  private function deletePatient($id)
+  {
+    // if database connection opened
+    if ($this->databaseConnection()) {
+      // try to update user with specified information
+      $query = $this->db_connection->prepare('DELETE FROM patients WHERE id = :id');
+      $query->bindValue(':id', intval(trim($id)), PDO::PARAM_INT);
       $query->execute();
 
       if ($query->rowCount() > 0) {
