@@ -17,6 +17,11 @@ PRIMARY KEY (`response_id`)
 $query1->execute();
 */
 
+if (isset($_POST['delete_confirm']) && $_POST['delete_confirm'] == "delete") {
+    $query = $db_connection->prepare('TRUNCATE tg_test_responses');
+    $query->execute();
+}
+
 if (isset($_POST['response_string']) && $_POST['response_string'] != null) {
     $response_string = urldecode($_POST['response_string']);
     // Verify that the response string is always multiple of 4
