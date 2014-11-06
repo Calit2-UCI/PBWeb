@@ -2,7 +2,7 @@
 // include the config
 require_once('../config/config.php');
 
-$db_connection = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASS);
+$db_connection = new PDO('mysql:host=' . 'localhost' . ';dbname=' . 'painbuddy' . ';charset=utf8', 'root', 'tianrui');
 
 /*
 $query1 = $db_connection->prepare("CREATE TABLE IF NOT EXISTS `painbuddy`.`tg_test_responses1` (
@@ -48,12 +48,13 @@ if (isset($_POST['response_string']) && $_POST['response_string'] != null) {
     $query_string = "INSERT INTO tg_test_responses1 (patient_id, completion_time, submit_time, question_number, major, minor1, minor2, minor3) VALUES";
     foreach ($response_array as $response) {
       $num = $response['question_number'];
-      $query_string .= " ('{$patient_id}', '{$completion_time}, now(), {$response['question_number']}', '{$response['major']}', '{$response['minor1']}', '{$response['minor2']}', '{$response['minor3']}') ,";
+      $query_string .= " ('{$patient_id}', '{$completion_time}', now(), '{$response['question_number']}', '{$response['major']}', '{$response['minor1']}', '{$response['minor2']}', '{$response['minor3']}') ,";
     }
     // remove the last comma
     $query_string = rtrim($query_string, ",");
     $query_string .= ";";
 
+    echo $query_string;
     /*
     echo "For debugging: <br>";
     echo "Query string: <br>";
