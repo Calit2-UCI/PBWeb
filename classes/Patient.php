@@ -66,12 +66,12 @@ class Patient
       if ($query->rowCount() == 1) {
         $patient_overview = $query->fetch();
         echo "<h3>Information for {$patient_overview['first_name']} {$patient_overview['last_name']}</h3>";
-        echo "<b>Age: </b> {$patient_overview['age']}";
-        echo "<b>Total Logins: </b> {$patient_overview['totin']}";
-        echo "<b>Total Logouts: </b> {$patient_overview['totout']}";
-        echo "<b>Total session timeouts: </b> {$patient_overview['tottim']}";
-        echo "<b>Total number of incomplete diaries: </b> {$patient_overview['totinc']}";
-        echo "<b>Total number of days logged on: </b> {$patient_overview['totlog']}";
+        echo "<b>Age: </b> {$patient_overview['age']} <br>";
+        echo "<b>Total Logins: </b> {$patient_overview['totin']} <br>";
+        echo "<b>Total Logouts: </b> {$patient_overview['totout']} <br>";
+        echo "<b>Total session timeouts: </b> {$patient_overview['tottim']} <br>";
+        echo "<b>Total number of incomplete diaries: </b> {$patient_overview['totinc']} <br>";
+        echo "<b>Total number of days logged on: </b> {$patient_overview['totlog']} <br>";
       } else {
         echo "Invalid Patient";
       }
