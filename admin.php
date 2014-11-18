@@ -29,15 +29,15 @@ if ($login->isUserLoggedIn() == true && $login->isUserAdmin() == true) {
   require_once('classes/Admin.php');
   $admin = new Admin();
   if (isset($_GET['edit_user']) && $admin->isValidUserId($_GET['edit_user'])) {
-    include("views/admin_edit.php");
+    include("views/admin/edit.php");
   } elseif (isset($_GET['edit_patient']) && $admin->isValidPatientId($_GET['edit_patient'])) {
-    include("views/admin_edit_patient.php");
+    include("views/admin/edit_patient.php");
   } elseif (isset($_GET['add_patient'])) {
-    include("views/admin_config_add_patient.php");
+    include("views/admin/add_patient.php");
   } elseif (isset($_GET['export_all'])) {
     $admin->exportAllPatientData();
   } else {
-    include("views/admin_config.php");
+    include("views/admin/config.php");
   }
 } else {
   // the user is not logged in. you can do whatever you want here.

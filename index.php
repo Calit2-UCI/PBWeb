@@ -37,9 +37,9 @@ $login = new Login();
 // ... ask if we are logged in here:
 if ($login->isUserLoggedIn() == true) {
     if ($login->isUserAdmin() == true) {
-        include("views/logged_in_admin.php");
-    } else {
-        include("views/logged_in.php");
+        include("views/admin/main_page.php");
+    } else { // user is HCP
+        include("views/HCP/logged_in.php");
     }
 } else {
     // the user is not logged in. you can do whatever you want here.

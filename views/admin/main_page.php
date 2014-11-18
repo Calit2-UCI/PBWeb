@@ -16,7 +16,7 @@
         <a href="admin.php" class="button success expand"><?php echo WORDING_ADMIN_MANAGE_USERS; ?></a>
       </div>
       <div class="row">
-        <a href="edit.php" class="button success expand"><?php echo WORDING_SETTINGS; ?></a>
+        <a href="../HCP/edit.php" class="button success expand"><?php echo WORDING_SETTINGS; ?></a>
       </div>
       <div class="row">
         <a href="index.php?logout" class="button success expand"><?php echo WORDING_LOGOUT; ?></a>
