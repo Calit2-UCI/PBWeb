@@ -40,7 +40,7 @@ $patient = new Patient();
 if ($login->isUserLoggedIn() == true) {
   // Just for debugging purposes
 //    if ($patient->isValidId($_GET['patient_id'])) {
-        include("views/patient_detail.php");
+        include("views/HCP/patient_detail.php");
 //    } else {
 //        include("views/patient_access.php");
 //    }
