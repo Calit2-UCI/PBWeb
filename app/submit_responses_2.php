@@ -2,7 +2,7 @@
 // include the config
 require_once('../config/config.php');
 
-$db_connection = new PDO('mysql:host=' . 'localhost' . ';dbname=' . 'painbuddy' . ';charset=utf8', 'root', 'tianrui');
+$db_connection = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASS);
 
 /*
 $query1 = $db_connection->prepare("CREATE TABLE IF NOT EXISTS `painbuddy`.`tg_test_responses1` (
@@ -54,7 +54,7 @@ if (isset($_POST['response_string']) && $_POST['response_string'] != null) {
     $query_string = rtrim($query_string, ",");
     $query_string .= ";";
 
-    echo $query_string;
+    // echo $query_string;
     /*
     echo "For debugging: <br>";
     echo "Query string: <br>";
