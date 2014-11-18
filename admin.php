@@ -29,7 +29,7 @@ if ($login->isUserLoggedIn() == true && $login->isUserAdmin() == true) {
   require_once('classes/Admin.php');
   $admin = new Admin();
   if (isset($_GET['edit_user']) && $admin->isValidUserId($_GET['edit_user'])) {
-    include("views/admin/edit.php");
+    include("views/admin/edit_HCP.php");
   } elseif (isset($_GET['edit_patient']) && $admin->isValidPatientId($_GET['edit_patient'])) {
     include("views/admin/edit_patient.php");
   } elseif (isset($_GET['add_patient'])) {
@@ -42,5 +42,5 @@ if ($login->isUserLoggedIn() == true && $login->isUserAdmin() == true) {
 } else {
   // the user is not logged in. you can do whatever you want here.
   // for demonstration purposes, we simply show the "you are not logged in" view.
-  include("views/not_logged_in.php");
+  include("views/login.php");
 }
