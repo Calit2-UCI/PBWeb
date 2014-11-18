@@ -51,22 +51,27 @@ class Patient
     }
   }
 
-  public function doPatientLookup($id)
+  public function doPatientLookup($patient_id)
   {
-    $id = trim($id);
+    $patient_id = trim($patient_id);
 
-    if (!$this->isValidPatientId($id)) {
+    if (!$this->isValidPatientId($patient_id)) {
       $this->errors[] = "MESSAGE_PATIENT_ID_INVALID";
     } else {
       $this->databaseConnection();
-      $query = $this->db_connection->prepare('SELECT * FROM patients WHERE id=:id');
-      $query->bindValue(':id', $id, PDO::PARAM_INT);
+      $query = $this->db_connection->prepare('SELECT * FROM patients WHERE patient_id=:patient_id');
+      $query->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
       $query->execute();
 
       if ($query->rowCount() == 1) {
         $patient_overview = $query->fetch();
         echo "<h3>Information for {$patient_overview['first_name']} {$patient_overview['last_name']}</h3>";
         echo "<b>Age: </b> {$patient_overview['age']}";
+        echo "<b>Total Logins: </b> {$patient_overview['totin']}";
+        echo "<b>Total Logouts: </b> {$patient_overview['totout']}";
+        echo "<b>Total session timeouts: </b> {$patient_overview['tottim']}";
+        echo "<b>Total number of incomplete diaries: </b> {$patient_overview['totinc']}";
+        echo "<b>Total number of days logged on: </b> {$patient_overview['totlog']}";
       } else {
         echo "Invalid Patient";
       }
@@ -97,7 +102,7 @@ class Patient
       echo '</thead>';
       echo '<tbody>';
       foreach ($result as $row) {
-        $patient_id = $row['id'];
+        $patient_id = $row['patient_id'];
         $first_name = $row['first_name'];
         $last_name = $row['last_name'];
         // $num_alerts = $this->getNumberAlerts($patient_id);
@@ -172,6 +177,52 @@ class Patient
       echo $output;
       exit;
     }
+  }
+
+  public function getPatientResponses($patient_id) {
+    $query3 = $this->db_connection->prepare('SELECT * FROM tg_test_responses1 WHERE patient_id=:patient_id');
+    $query3->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
+    $query3->execute();
+
+    if ($query3->rowCount() > 0) {
+      $result = $query3->fetchAll();
+      echo "<table>";
+      echo "<tr>
+          <th>Completion Time</th>
+          <th>Submit Time</th>
+          <th>Question Number</th>
+          <th>Major</th>
+          <th>Minor 1</th>
+          <th>Minor 2</th>
+          <th>Minor 3</th>
+        </tr>";
+
+      foreach ($result as $row) {
+        $completion_time = $row['completion_time'];
+        $submit_time = $row['submit_time'];
+        $question_number = $row['question_number'];
+        $major = $row['major'];
+        $minor1 = $row['minor1'];
+        $minor2 = $row['minor2'];
+        $minor3 = $row['minor3'];
+
+
+        echo "<tr>
+            <td>{$completion_time}</td>
+            <td>{$submit_time}</td>
+            <td>{$question_number}</td>
+            <td>{$major}</td>
+            <td>{$minor1}</td>
+            <td>{$minor2}</td>
+            <td>{$minor3}</td>
+          </tr>";
+      }
+
+      echo "</table>";
+    } else {
+      echo "Nothing here";
+    }
+
   }
 }
 ?>
