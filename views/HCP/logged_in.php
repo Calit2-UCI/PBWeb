@@ -1,4 +1,4 @@
-<?php include('_header.php'); ?>
+<?php include('/views/_header.php'); ?>
 
 <div class="small-12 large-6 small-centered columns">
   <div class="panel">
@@ -11,17 +11,17 @@
 
     <div class="small-10 large-6 small-centered columns">
       <div class="row">
-        <a href="patient.php" class="button success expand"><?php echo WORDING_PATIENT_ACCESS; ?></a>
+        <a href="patient.php" class="button expand"><?php echo WORDING_PATIENT_ACCESS; ?></a>
       </div>
       <div class="row">
-        <a href="edit.php" class="button success expand"><?php echo WORDING_SETTINGS; ?></a>
+        <a href="edit.php" class="button expand"><?php echo WORDING_SETTINGS; ?></a>
       </div>
       <div class="row">
-        <a href="index.php?logout" class="button success expand"><?php echo WORDING_LOGOUT; ?></a>
+        <a href="index.php?logout" class="button expand"><?php echo WORDING_LOGOUT; ?></a>
       </div>
       <br>
     </div>
   </div>
 </div>
 
-<?php include('_footer.php'); ?>
+<?php include('/views/_footer.php'); ?>

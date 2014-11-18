@@ -1,4 +1,4 @@
-<?php include('_header.php'); ?>
+<?php include('/views/_header.php'); ?>
 
 <div class="small-12 medium-10 large-6 small-centered columns">
   <div class="panel">
@@ -95,4 +95,4 @@
   <a href="index.php?logout" class="button alert expand"><?php echo WORDING_LOGOUT; ?></a>
 </div>
 
-<?php include('_footer.php'); ?>
+<?php include('/views/_footer.php'); ?>

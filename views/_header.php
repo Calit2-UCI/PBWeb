@@ -9,10 +9,10 @@
   <!-- if you remove this meta tag, the NSA will spy on you through your Xbox Kinect camera -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Painbuddy Web</title>
-  <link rel="stylesheet" href="stylesheets/app.css"/>
-  <link rel="stylesheet" href="stylesheets/custom.css">
-  <script src="bower_components/modernizr/modernizr.js"></script>
-  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <link rel="stylesheet" href="css/foundation.css" />
+  <script src="js/vendor/modernizr.js"></script>
+  <script src="js/vendor/jquery.js"></script>
+
   <script type="text/javascript" src="js/jquery.tablesorter.min.js"></script>
 </head>
 

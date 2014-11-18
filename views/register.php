@@ -54,7 +54,7 @@
           </div>
         </div>
         <!-- http://cristersmedia.com/eliminate-spam-in-modx-eform-without-captcha -->
-        <div class="special">
+        <div class="special" style="display:none">
           <label for="cfSpecial">
             <p>Special<br/><input value="" name="special" id="cfSpecial" class="text" type="text"
                                   eform="Special:date:0"/></p>
@@ -66,7 +66,7 @@
           <div class="small-8 medium-6 large-6 columns small-centered">
             <div class="row">
               <button type="submit" name="register"
-                      class="button success expand"><?php echo WORDING_REGISTER; ?></button>
+                      class="button expand"><?php echo WORDING_REGISTER; ?></button>
             </div>
             <div class="row">
               <a href="index.php"><?php echo WORDING_BACK_TO_LOGIN; ?></a>
