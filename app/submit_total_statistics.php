@@ -43,14 +43,14 @@ $totmess = $_POST['totmess'];
 
 try {
   $db_connection = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASS);
+  $db_connection->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
 
   $query = $db_connection->prepare('UPDATE patients SET totin=:totin, totout=:totout, tottim=:tottim, totinc=:totinc,
   totlog=:totlog, tottrig=:tottrig, totccom=:totccom, totcses=:totcses, totcself=:totcself, totlogtm=:totlogtm, tothour=:tothour,
   viscb=:viscb, durcb=:durcb, viscd1=:viscd1, durcd1=:durcd1, viscd2=:viscd2, durcd2=:durcd2, viscd3=:viscd3, durcd3=:durcd3,
   viscg1=:viscg1, durcg1=:durcg1, viscg2=:viscg2, durcg2=:durcg2, viscg3=:viscg3, durcg3=:durcg3, viscm1=:viscm1, durcm1=:durcm1,
   viscm2=:viscm2, durcm2=:durcm2, viscp=:viscp, durcp=:durcp, totpers=:totpers, totpref=:totpref, totback=:totback, totava=:totava,
-  totcoin=:totcoin, totmess=:totmess
-  WHERE patient_id=:patient_id');
+  totcoin=:totcoin, totmess=:totmess  WHERE patient_id=:patient_id');
 
   $query->bindValue(':totin', $totin, PDO::PARAM_STR);
   $query->bindValue(':totout', $totout, PDO::PARAM_STR);
@@ -89,12 +89,13 @@ try {
   $query->bindValue(':totava', $totava, PDO::PARAM_STR);
   $query->bindValue(':totcoin', $totcoin, PDO::PARAM_STR);
   $query->bindValue(':totmess', $totmess, PDO::PARAM_STR);
+  $query->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
 
   print_r($query->errorInfo());
 
   $query->execute();
 
-  if ($query->rowCount() == 1) {
+  if ($query->rowCount() > 0) {
     echo "success";
   } else {
     print_r($query->errorInfo());
