@@ -43,7 +43,6 @@ $totmess = $_POST['totmess'];
 
 try {
   $db_connection = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASS);
-  $db_connection->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
 
   $query = $db_connection->prepare('UPDATE patients SET totin=:totin, totout=:totout, tottim=:tottim, totinc=:totinc,
   totlog=:totlog, tottrig=:tottrig, totccom=:totccom, totcses=:totcses, totcself=:totcself, totlogtm=:totlogtm, tothour=:tothour,
@@ -90,9 +89,6 @@ try {
   $query->bindValue(':totcoin', $totcoin, PDO::PARAM_STR);
   $query->bindValue(':totmess', $totmess, PDO::PARAM_STR);
   $query->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
-
-  print_r($query->errorInfo());
-
   $query->execute();
 
   if ($query->rowCount() > 0) {
