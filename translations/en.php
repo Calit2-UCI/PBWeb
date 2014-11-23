@@ -57,13 +57,16 @@ define("MESSAGE_USERNAME_SAME_LIKE_OLD_ONE", "Sorry, that username is the same a
 // Patient access
 define("MESSAGE_PATIENT_ID_INVALID", "Patient ID not valid");
 
+
 // views
 define("WORDING_ADMIN_ADD_PATIENT", "Add patient");
 define("WORDING_ADMIN_MANAGE_USERS", "Manage Users");
+define("WORDING_BACK_TO_CONFIG", "Return to Config Page");
 define("WORDING_BACK_TO_LOGIN", "Back to Login Page");
 define("WORDING_CHANGE_EMAIL", "Change email");
 define("WORDING_CHANGE_PASSWORD", "Change password");
 define("WORDING_CHANGE_USERNAME", "Change username");
+define("WORDING_CONFIRM_PASSWORD", "Delete Patient");
 define("WORDING_CURRENTLY", "currently");
 define("WORDING_EDIT_YOUR_CREDENTIALS", "You are logged in and can edit your credentials here");
 define("WORDING_FORGOT_MY_PASSWORD", "Forgot password?");
