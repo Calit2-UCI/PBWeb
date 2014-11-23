@@ -526,9 +526,9 @@ class Admin
         <td>{$doctor}</td>
         <td><a href=\"?edit_patient={$id}\" class=\"button secondary tiny\">Edit</a></td>
         <td><a href=\"?delete_confirm={$id}\" class=\"button secondary tiny\" 
-        onclick=\"return confirm('Are you sure you would like to delete {$first_name} {$last_name} from patients?\")>Delete</a></td>
-         
-      
+          onclick=\"return confirm('Are you sure you would like to delete {$first_name} {$last_name} from patients?\")>Delete</a></td>
+
+
         </form>
       </td>
     </tr>";
@@ -714,24 +714,6 @@ class Admin
     }
   }
 
-
-  private function deletePatient($id)
-  {
-    // if database connection opened
-    if ($this->databaseConnection()) {
-      // try to update user with specified information
-      $query = $this->db_connection->prepare('DELETE FROM patients WHERE id = :id');
-      $query->bindValue(':id', intval(trim($id)), PDO::PARAM_INT);
-      $query->execute();
-
-      if ($query->rowCount() > 0) {
-        $this->messages[] = "Patient deleted";
-      } else {
-        $this->errors[] = "Patient not deleted";
-      }
-    }
-  }
-
   private function confirmDelete($user_password, $id){
     if (empty($user_password)) {
       $this->errors[] = MESSAGE_PASSWORD_EMPTY;
@@ -743,19 +725,24 @@ class Admin
         $query_user->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
         $query_user->execute();
       // get result row (as an object)
-        return $query_user->fetchObject();
+        $result_row = $query_user->fetchObject();
       } 
     }
 
     if (password_verify($user_password, $result_row->user_password_hash)){
-      deletePatient($id);
-    } else {
-        // increment the failed login counter for that user
-      $sth = $this->db_connection->prepare('UPDATE users '
-        . 'SET user_failed_logins = user_failed_logins+1, user_last_failed_login = :user_last_failed_login '
-        . 'WHERE user_name = :user_name OR user_email = :user_name');
-      $sth->execute(array(':user_name' => $user_name, ':user_last_failed_login' => time()));
+      if ($this->databaseConnection()) {
+      // try to update user with specified information
+        $query = $this->db_connection->prepare('DELETE FROM patients WHERE id = :id');
+        $query->bindValue(':id', intval(trim($id)), PDO::PARAM_INT);
+        $query->execute();
 
+        if ($query->rowCount() > 0) {
+          $this->messages[] = "Patient deleted";
+        } else {
+          $this->errors[] = "Patient not deleted";
+        }
+      }
+    } else {
       $this->errors[] = MESSAGE_PASSWORD_WRONG;
         // has the user activated their account with the verification email
     } 
