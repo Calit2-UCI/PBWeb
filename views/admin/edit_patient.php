@@ -82,6 +82,7 @@
       value="<?php echo $_GET['edit_patient']; ?>">Change Age</button>
     </div>
   </form>
+   <hr>
   <div class="row">
     <a href="admin.php" class="button expand">Back To User List</a>
   </div>

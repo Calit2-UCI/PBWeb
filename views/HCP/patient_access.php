@@ -14,22 +14,22 @@
       <p><?php $patient->showPatientOverview(); ?></p>
       <a href="?export_all">Export all data</a>
 
+      <br>
+      <br>
+      <div class="row">
+        <a href="index.php" class="button expand">Menu</a>
+      </div>
     </div>
+
   </div>
 </div>
 
-<div class="row">
-  <a href="index.php" class="button expand">Menu</a>
-</div>
-<div class="row">
-  <a href="index.php?logout" class="button alert expand"><?php echo WORDING_LOGOUT; ?></a>
-</div>
 
 <script>
   $(document).ready(function()
-    {
-      $("#myTable").tablesorter();
-    }
+  {
+    $("#myTable").tablesorter();
+  }
   );
 </script>
 <?php include('/views/_footer.php'); ?>

@@ -33,7 +33,7 @@
       <br>
       <a href="?export_all">Export all data</a>
       <br>
-      <br>
+      <hr>
       <div class="row">
         <a href="index.php" class="button expand">Menu</a>
       </div>

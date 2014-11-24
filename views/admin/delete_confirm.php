@@ -4,6 +4,7 @@
 <div class="small-12 large-6 small-centered columns">
   <div class="panel">
     <br>
+    <div class="small-10 large-8 small-centered columns">
     <div style="text-align:center">
       <h2>Confirm Patient Delete</h2>
     </div>
@@ -12,6 +13,7 @@
       <form method="post" action="admin.php">
         <label for="user_password">Enter Password for Confirmation</label>
         <input name="user_password" type="password" required placeholder="Your Password"/>
+        <hr>
         <button type="submit" name="delete_confirm" value="<?php echo($_GET["delete_confirm"]); ?>" 
         class="button success expand"><?php echo WORDING_CONFIRM_PASSWORD; ?></button>
 
@@ -20,6 +22,7 @@
        <?php echo WORDING_BACK_TO_CONFIG;?></a>
      </div>
    </div>
+ </div>
  </div>
 
  <?php include('/views/_footer.php'); ?>

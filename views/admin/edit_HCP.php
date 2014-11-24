@@ -79,7 +79,7 @@
       <button type="submit" class="button success expand" name="admin_edit_submit_password"
       value="<?php echo $_GET['edit_user']; ?>">Change Password</button>
     </div>
-
+ <hr>
     <div class="row">
       <a href="admin.php" class="button expand">Back To User List</a>
     </div>
