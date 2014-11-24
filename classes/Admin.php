@@ -65,8 +65,8 @@ class Admin
       $this->editPatientName($_POST['admin_edit_submit_patient_name'], $_POST['patient_first_name'], $_POST['patient_last_name']);
     } elseif (isset($_POST["admin_edit_submit_patient_age"])) {
       $this->editPatientAge($_POST['admin_edit_submit_patient_age'], $_POST['patient_age']);
-    } elseif (isset($_POST["delete_patient_id"])) {
-      $this->deletePatient($_POST['delete_patient_id']);
+    } elseif (isset($_POST["delete_confirm"])) {
+      $this->confirmDelete($_POST['user_password'], $_SESSION['delete_confirm']);
     }
   }
 
@@ -111,52 +111,52 @@ class Admin
         $result = $query_get_pending_users->fetchAll();
         echo "<table width=\"100%\">";
         echo "<tr>
-                <th>Id</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Verified Email?</th>
-                <th>Approve Account</th>
-                <th>Delete Account</th>
-            </tr>";
+        <th>Id</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Verified Email?</th>
+        <th>Approve Account</th>
+        <th>Delete Account</th>
+      </tr>";
 
-        foreach ($result as $row) {
-          $id = $row['user_id'];
-          $first_name = $row['first_name'];
-          $last_name = $row['last_name'];
-          $user_name = $row['user_name'];
-          $email = $row['user_email'];
-          $verified = $row['user_activation_hash'] == NULL ? "Yes" : "No";
+      foreach ($result as $row) {
+        $id = $row['user_id'];
+        $first_name = $row['first_name'];
+        $last_name = $row['last_name'];
+        $user_name = $row['user_name'];
+        $email = $row['user_email'];
+        $verified = $row['user_activation_hash'] == NULL ? "Yes" : "No";
 
-          echo "<tr>
-                  <td>{$id}</td>
-                  <td>{$first_name}</td>
-                  <td>{$last_name}</td>
-                  <td>{$user_name}</td>
-                  <td>{$email}</td>
-                  <td>{$verified}</td>
-                  <td>
-                    <form method=\"post\">
-                      <button type=\"submit\"  name=\"approve_user_id\" value=\"{$id}\" class=\"button secondary tiny\"
-                      onclick=\"return confirm('Are you sure you would like to approve {$first_name} {$last_name}?');\">Approve</button>
-                    </form>
-                  </td>
-                  <td>
-                    <form method=\"post\">
-                      <button type=\"submit\"  name=\"delete_user_id\" value=\"{$id}\" class=\"button secondary tiny\"
-                      onclick=\"return confirm('Are you sure you would like to delete {$first_name} {$last_name}?');\">Delete</button>
-                    </form>
-                  </td>
-                </tr>";
-        }
-
-        echo "</table>";
-      } else {
-        echo "No pending users";
-      }
+        echo "<tr>
+        <td>{$id}</td>
+        <td>{$first_name}</td>
+        <td>{$last_name}</td>
+        <td>{$user_name}</td>
+        <td>{$email}</td>
+        <td>{$verified}</td>
+        <td>
+          <form method=\"post\">
+            <button type=\"submit\"  name=\"approve_user_id\" value=\"{$id}\" class=\"button secondary tiny\"
+            onclick=\"return confirm('Are you sure you would like to approve {$first_name} {$last_name}?');\">Approve</button>
+          </form>
+        </td>
+        <td>
+          <form method=\"post\">
+            <button type=\"submit\"  name=\"delete_user_id\" value=\"{$id}\" class=\"button secondary tiny\"
+            onclick=\"return confirm('Are you sure you would like to delete {$first_name} {$last_name}?');\">Delete</button>
+          </form>
+        </td>
+      </tr>";
     }
+
+    echo "</table>";
+  } else {
+    echo "No pending users";
   }
+}
+}
 
   /**
    * @param $type 0 for HCP, 1 for admin
@@ -173,45 +173,45 @@ class Admin
         $result = $query->fetchAll();
         echo "<table width=\"100%\">";
         echo "<tr>
-                <th>Id</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Edit</th>
-                <th>Delete Account</th>
-            </tr>";
+        <th>Id</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Edit</th>
+        <th>Delete Account</th>
+      </tr>";
 
-        foreach ($result as $row) {
-          $id = $row['user_id'];
-          $first_name = $row['first_name'];
-          $last_name = $row['last_name'];
-          $user_name = $row['user_name'];
-          $email = $row['user_email'];
+      foreach ($result as $row) {
+        $id = $row['user_id'];
+        $first_name = $row['first_name'];
+        $last_name = $row['last_name'];
+        $user_name = $row['user_name'];
+        $email = $row['user_email'];
 
-          echo "<tr>
-                  <td>{$id}</td>
-                  <td>{$first_name}</td>
-                  <td>{$last_name}</td>
-                  <td>{$user_name}</td>
-                  <td>{$email}</td>
-                  <td><a href=\"?edit_user={$id}\" class=\"button secondary tiny\">Edit</a></td>
-                  <td>";
+        echo "<tr>
+        <td>{$id}</td>
+        <td>{$first_name}</td>
+        <td>{$last_name}</td>
+        <td>{$user_name}</td>
+        <td>{$email}</td>
+        <td><a href=\"?edit_user={$id}\" class=\"button secondary tiny\">Edit</a></td>
+        <td>";
           if ($id != 1) {
             echo "<form method=\"post\">
-                    <button type=\"submit\"  name=\"delete_user_id\" value=\"{$id}\" class=\"button secondary tiny\"
-                    onclick=\"return confirm('Are you sure you would like to delete {$first_name} {$last_name}?');\">Delete</button>
-                  </form>";
-          }
-          echo "</td>
-              </tr>";
+            <button type=\"submit\"  name=\"delete_user_id\" value=\"{$id}\" class=\"button secondary tiny\"
+            onclick=\"return confirm('Are you sure you would like to delete {$first_name} {$last_name}?');\">Delete</button>
+          </form>";
         }
-        echo "</table>";
-      } else {
-        echo "No active Healthcare Providers";
-      }
+        echo "</td>
+      </tr>";
     }
+    echo "</table>";
+  } else {
+    echo "No active Healthcare Providers";
   }
+}
+}
 
   /**
    * Approves the user account
@@ -499,46 +499,47 @@ class Admin
         echo '<table id="myTable" class="tablesorter" style="table-layout: fixed; width: 100%">';
         echo '<thead>';
         echo "<tr>
-                <th>Patient Id</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Doctor</th>
-                <th>Edit</th>
-                <th>Delete Patient</th>
-            </tr>";
-        echo '</thead>';
-        echo '<tbody>';
+        <th>Patient Id</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Doctor</th>
+        <th>Edit</th>
+        <th>Delete Patient</th>
+      </tr>";
+      echo '</thead>';
+      echo '<tbody>';
         // Populate the doctors array with their ID and name so we can display the doctors for each patient
-        $doctors = $this->getAllUsers();
+      $doctors = $this->getAllUsers();
 
-        foreach ($result as $row) {
-          $id = $row['id'];
-          $patient_id = $row['patient_id'];
-          $first_name = $row['first_name'];
-          $last_name = $row['last_name'];
-          $doctor_id = $row['doctor_id'];
-          $doctor = isset($doctors[$doctor_id]) ? $doctors[$doctor_id] : "Unassigned";
+      foreach ($result as $row) {
+        $id = $row['id'];
+        $patient_id = $row['patient_id'];
+        $first_name = $row['first_name'];
+        $last_name = $row['last_name'];
+        $doctor_id = $row['doctor_id'];
+        $doctor = isset($doctors[$doctor_id]) ? $doctors[$doctor_id] : "Unassigned";
 
-          echo "<tr>
-                  <td>{$patient_id}</td>
-                  <td>{$first_name}</td>
-                  <td>{$last_name}</td>
-                  <td>{$doctor}</td>
-                  <td><a href=\"?edit_patient={$id}\" class=\"button secondary tiny\">Edit</a></td>
-                  <td><form method=\"post\">
-                    <button type=\"submit\"  name=\"delete_patient_id\" value=\"{$id}\" class=\"button secondary tiny\"
-                    onclick=\"return confirm('Are you sure you would like to delete {$first_name} {$last_name} from patients?');\">Delete</button>
-                  </form>
-              </td>
-              </tr>";
-        }
-        echo "</table>";
-        echo '</tbody>';
-      } else {
-        echo "No Patients";
-      }
-    }
+        echo "<tr>
+        <td>{$patient_id}</td>
+        <td>{$first_name}</td>
+        <td>{$last_name}</td>
+        <td>{$doctor}</td>
+        <td><a href=\"?edit_patient={$id}\" class=\"button secondary tiny\">Edit</a></td>
+        <td><a href=\"?delete_confirm={$id}\" class=\"button secondary tiny\" 
+          onclick=\"return confirm('Are you sure you would like to delete {$first_name} {$last_name} from patients?\")>Delete</a></td>
+
+
+        </form>
+      </td>
+    </tr>";
   }
+  echo "</table>";
+  echo '</tbody>';
+} else {
+  echo "No Patients";
+}
+}
+}
 
   /**
    * Returns array of the full names of all users with their id as index
@@ -713,20 +714,38 @@ class Admin
     }
   }
 
-  private function deletePatient($id)
-  {
-    // if database connection opened
-    if ($this->databaseConnection()) {
-      // try to update user with specified information
-      $query = $this->db_connection->prepare('DELETE FROM patients WHERE id = :id');
-      $query->bindValue(':id', intval(trim($id)), PDO::PARAM_INT);
-      $query->execute();
-
-      if ($query->rowCount() > 0) {
-        $this->messages[] = "Patient deleted";
-      } else {
-        $this->errors[] = "Patient not deleted";
-      }
+  private function confirmDelete($user_password, $id){
+    if (empty($user_password)) {
+      $this->errors[] = MESSAGE_PASSWORD_EMPTY;
+      // if POST data (from login form) contains non-empty user_name and non-empty user_password
+    } else {
+      if ($this->databaseConnection()) {
+      // database query, getting all the info of the selected user
+        $query_user = $this->db_connection->prepare('SELECT * FROM users WHERE user_id = :user_id');
+        $query_user->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+        $query_user->execute();
+      // get result row (as an object)
+        $result_row = $query_user->fetchObject();
+      } 
     }
+
+    if (password_verify($user_password, $result_row->user_password_hash)){
+      if ($this->databaseConnection()) {
+      // try to update user with specified information
+        $query = $this->db_connection->prepare('DELETE FROM patients WHERE id = :id');
+        $query->bindValue(':id', intval(trim($id)), PDO::PARAM_INT);
+        $query->execute();
+
+        if ($query->rowCount() > 0) {
+          $this->messages[] = "Patient deleted";
+        } else {
+          $this->errors[] = "Patient not deleted";
+        }
+      }
+    } else {
+      $this->errors[] = MESSAGE_PASSWORD_WRONG;
+        // has the user activated their account with the verification email
+    } 
   }
 }
+
