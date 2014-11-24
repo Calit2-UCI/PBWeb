@@ -12,9 +12,9 @@
       <form method="post" action="admin.php">
         <label for="user_password">Enter Password for Confirmation</label>
         <input name="user_password" type="password" required placeholder="Your Password"/>
-        <input type="hidden" name="delete_confirm" value="<?php echo($_GET["delete_confirm"]); ?>"/>
-        <input type="submit" class="button success expand"
-        value="<?php echo WORDING_CONFIRM_PASSWORD; ?>"/>
+        <button type="submit" name="delete_confirm" value="<?php echo($_GET["delete_confirm"]); ?>" 
+        class="button success expand"><?php echo WORDING_CONFIRM_PASSWORD; ?></button>
+
       </form>
       <a href="admin.php" class="button alert expand">
        <?php echo WORDING_BACK_TO_CONFIG;?></a>
