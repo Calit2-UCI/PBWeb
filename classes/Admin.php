@@ -471,8 +471,8 @@ class Admin
     if (is_numeric($id)) {
       // if database connection opened
       if ($this->databaseConnection()) {
-        $query = $this->db_connection->prepare('SELECT * FROM patients WHERE id = :id');
-        $query->bindValue(':id', intval(trim($id)), PDO::PARAM_INT);
+        $query = $this->db_connection->prepare('SELECT * FROM patients WHERE patient_id = :patient_id');
+        $query->bindValue(':patient_id', intval(trim($id)), PDO::PARAM_INT);
         $query->execute();
 
         if ($query->rowCount() > 0) {
@@ -524,8 +524,7 @@ class Admin
         <td>{$last_name}</td>
         <td>{$doctor}</td>
         <td><a href=\"?edit_patient={$patient_id}\" class=\"button secondary tiny\">Edit</a></td>
-        <td><a href=\"?delete_confirm={$patient_id}\" class=\"button secondary tiny\" 
-          onclick=\"return confirm('Are you sure you would like to delete {$first_name} {$last_name} from patients?\")>Delete</a></td>
+        <td><a href=\"?delete_confirm={$patient_id}\" class=\"button secondary tiny\">Delete</a></td>
 
 
         </form>
@@ -663,9 +662,9 @@ class Admin
     // if database connection opened
     if ($this->databaseConnection()) {
       // try to update user with specified information
-      $query = $this->db_connection->prepare('UPDATE patients SET doctor_id=:doctor_id WHERE id = :id');
+      $query = $this->db_connection->prepare('UPDATE patients SET doctor_id=:doctor_id WHERE patient_id = :patient_id');
       $query->bindValue(':doctor_id', intval(trim($patient_doctor)), PDO::PARAM_INT);
-      $query->bindValue(':id', intval(trim($edit_patient)), PDO::PARAM_INT);
+      $query->bindValue(':patient_id', intval(trim($edit_patient)), PDO::PARAM_INT);
       $query->execute();
 
       if ($query->rowCount() > 0) {
@@ -681,10 +680,10 @@ class Admin
     // if database connection opened
     if ($this->databaseConnection()) {
       // try to update user with specified information
-      $query = $this->db_connection->prepare('UPDATE patients SET first_name=:first_name, last_name=:last_name WHERE id = :id');
+      $query = $this->db_connection->prepare('UPDATE patients SET first_name=:first_name, last_name=:last_name WHERE patient_id = :patient_id');
       $query->bindValue(':first_name', $patient_first_name, PDO::PARAM_STR);
       $query->bindValue(':last_name', $patient_last_name, PDO::PARAM_STR);
-      $query->bindValue(':id', intval(trim($edit_patient)), PDO::PARAM_INT);
+      $query->bindValue(':patient_id', intval(trim($edit_patient)), PDO::PARAM_INT);
       $query->execute();
 
       if ($query->rowCount() > 0) {
@@ -700,9 +699,9 @@ class Admin
     // if database connection opened
     if ($this->databaseConnection()) {
       // try to update user with specified information
-      $query = $this->db_connection->prepare('UPDATE patients SET age=:age WHERE id = :id');
+      $query = $this->db_connection->prepare('UPDATE patients SET age=:age WHERE patient_id = :patient_id');
       $query->bindValue(':age', intval(trim($patient_age)), PDO::PARAM_INT);
-      $query->bindValue(':id', intval(trim($edit_patient)), PDO::PARAM_INT);
+      $query->bindValue(':patient_id', intval(trim($edit_patient)), PDO::PARAM_INT);
       $query->execute();
 
       if ($query->rowCount() > 0) {
