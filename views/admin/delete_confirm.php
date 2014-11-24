@@ -6,7 +6,7 @@
     <br>
     <div class="small-10 large-8 small-centered columns">
     <div style="text-align:center">
-      <h2>Confirm Deletion of <?php echo $admin->getPatientFullName($_GET['delete_confirm']); ?></h2>
+      <h2>Confirm Deletion of <br> <?php echo $admin->getPatientFullName($_GET['delete_confirm']); ?></h2>
     </div>
     <br>
     <div class="row">

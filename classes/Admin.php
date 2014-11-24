@@ -512,7 +512,6 @@ class Admin
       $doctors = $this->getAllUsers();
 
       foreach ($result as $row) {
-        $id = $row['id'];
         $patient_id = $row['patient_id'];
         $first_name = $row['first_name'];
         $last_name = $row['last_name'];
@@ -524,8 +523,8 @@ class Admin
         <td>{$first_name}</td>
         <td>{$last_name}</td>
         <td>{$doctor}</td>
-        <td><a href=\"?edit_patient={$id}\" class=\"button secondary tiny\">Edit</a></td>
-        <td><a href=\"?delete_confirm={$id}\" class=\"button secondary tiny\" 
+        <td><a href=\"?edit_patient={$patient_id}\" class=\"button secondary tiny\">Edit</a></td>
+        <td><a href=\"?delete_confirm={$patient_id}\" class=\"button secondary tiny\" 
           onclick=\"return confirm('Are you sure you would like to delete {$first_name} {$last_name} from patients?\")>Delete</a></td>
 
 
@@ -594,8 +593,8 @@ class Admin
   public function getPatientFirstName($patient_id)
   {
     if ($this->databaseConnection()) {
-      $query = $this->db_connection->prepare('SELECT (first_name) FROM patients WHERE id=:patient_id');
-      $query->bindValue(':patient_id', $patient_id, PDO::PARAM_STR);
+      $query = $this->db_connection->prepare('SELECT (first_name) FROM patients WHERE patient_id=:patient_id');
+      $query->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
       $query->execute();
       if ($query->rowCount() > 0) {
         $patient = $query->fetch();
@@ -607,8 +606,8 @@ class Admin
   public function getPatientLastName($patient_id)
   {
     if ($this->databaseConnection()) {
-      $query = $this->db_connection->prepare('SELECT (last_name) FROM patients WHERE id=:patient_id');
-      $query->bindValue(':patient_id', $patient_id, PDO::PARAM_STR);
+      $query = $this->db_connection->prepare('SELECT (last_name) FROM patients WHERE patient_id=:patient_id');
+      $query->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
       $query->execute();
       if ($query->rowCount() > 0) {
         $patient = $query->fetch();
@@ -732,12 +731,14 @@ class Admin
     if (password_verify($user_password, $result_row->user_password_hash)){
       if ($this->databaseConnection()) {
       // try to update user with specified information
-        $query = $this->db_connection->prepare('DELETE FROM patients WHERE id = :id');
-        $query->bindValue(':id', intval(trim($id)), PDO::PARAM_INT);
+
+        $query = $this->db_connection->prepare('DELETE FROM patients WHERE patient_id = :patient_id');
+        $query->bindValue(':patient_id', intval(trim($id)), PDO::PARAM_INT);
         $query->execute();
 
         if ($query->rowCount() > 0) {
-          $this->messages[] = "Patient deleted";
+          $this->messages[] = "Patient successfully deleted";
+
         } else {
           $this->errors[] = "Patient not deleted";
         }
