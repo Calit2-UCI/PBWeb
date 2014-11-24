@@ -49,7 +49,7 @@ try {
   viscb=:viscb, durcb=:durcb, viscd1=:viscd1, durcd1=:durcd1, viscd2=:viscd2, durcd2=:durcd2, viscd3=:viscd3, durcd3=:durcd3,
   viscg1=:viscg1, durcg1=:durcg1, viscg2=:viscg2, durcg2=:durcg2, viscg3=:viscg3, durcg3=:durcg3, viscm1=:viscm1, durcm1=:durcm1,
   viscm2=:viscm2, durcm2=:durcm2, viscp=:viscp, durcp=:durcp, totpers=:totpers, totpref=:totpref, totback=:totback, totava=:totava,
-  totcoin=:totcoin, totmess=:totmess  WHERE patient_id=:patient_id');
+  totcoin=:totcoin, totmess=:totmess, last_update=now() WHERE patient_id=:patient_id');
 
   $query->bindValue(':totin', $totin, PDO::PARAM_STR);
   $query->bindValue(':totout', $totout, PDO::PARAM_STR);
