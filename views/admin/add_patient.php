@@ -49,21 +49,18 @@
             </select>
           </div>
 
-          <input type="submit" class="button  expand" name="admin_add_patient_submit" value="Add Patient"/>
+          <input type="submit" class="button success expand" name="admin_add_patient_submit" value="Add Patient"/>
         </div>
       </form>
-
-    </div>
-  </div>
-</div>
-
 <div class="row">
   <a href="admin.php" class="button expand">Back To User List</a>
 </div>
 <div class="row">
   <a href="index.php" class="button expand">Menu</a>
 </div>
-<div class="row">
-  <a href="index.php?logout" class="button expand"><?php echo WORDING_LOGOUT; ?></a>
+    </div>
+  </div>
 </div>
+
+
 <?php include('/views/_footer.php'); ?>
