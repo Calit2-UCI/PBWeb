@@ -61,7 +61,7 @@ try {
   $query->bindValue(':totcses', $totcses, PDO::PARAM_STR);
   $query->bindValue(':totcself', $totcself, PDO::PARAM_STR);
   $query->bindValue(':totlogtm', $totlogtm, PDO::PARAM_STR);
-  $query->bindValue(':tothour', $viscb, PDO::PARAM_STR);
+  $query->bindValue(':tothour', $tothour, PDO::PARAM_STR);
   $query->bindValue(':viscb', $viscb, PDO::PARAM_STR);
   $query->bindValue(':durcb', $durcb, PDO::PARAM_STR);
   $query->bindValue(':viscd1', $viscd1, PDO::PARAM_STR);
