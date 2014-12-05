@@ -367,7 +367,7 @@ function process_response2_words($db_connection, $patient_id, $day, $ampm)
 
 function process_response2_input()
 {
-  $response2_input = substr($_POST['response2'], 110);
+  $response2_input = substr($_POST['response2'], 111);
   $response2_query = 'INSERT INTO patient_responses2_words (input) VALUES (:input);';
   try {
     $query_response2_input = $db_connection->prepare($response2_query);
@@ -424,17 +424,17 @@ function execute($db_connection, $patient_id, $day, $ampm)
           } else {
             echo "Error: response2_input or not set";
           }
+
+        } else {
+          echo "Error: response2 not set";
         }
       } else {
-        echo "Error: response2 not set";
+        echo "Error: response1_input not set";
       }
+
     } else {
-      echo "Error: response1_input not set";
+      echo "Error: response1 not set";
     }
-
-  } else {
-    echo "Error: response1 not set";
-
   } else {
     echo "Error: patient_id, day, or ampm not set";
   }
