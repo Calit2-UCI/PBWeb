@@ -61,7 +61,8 @@ function process_response1_A($db_connection, $patient_id, $day, $ampm)
   // 0 = missing
   // 1 = not applicable
   // etc. (basically add 2 to everything)
-  for ($i = 0; $i < 5; ++$i) {
+  // TODO: hardcoding how many questions is a bad idea probably
+  for ($i = 0; $i < 8; ++$i) {
     $response1_array[$i] = array();
 
     if (isset($array[$i][0])) {
@@ -74,7 +75,11 @@ function process_response1_A($db_connection, $patient_id, $day, $ampm)
       $response1_array[$i][0] = 0;
     }
 
-    for ($j = 1; $j < 4; ++$j) {
+    $how_many_questions_r_in_this_group = 4;
+    if ($i > 4 && $i < 7) $how_many_questions_r_in_this_group = 3;
+    if ($i == 7) $how_many_questions_r_in_this_group = 2;
+
+    for ($j = 1; $j < $how_many_questions_r_in_this_group; ++$j) {
       if (isset($array[$i][$j])) {
         if ($array[$i][$j] == "*") {
           $response1_array[$i][$j] = 1;
@@ -88,6 +93,9 @@ function process_response1_A($db_connection, $patient_id, $day, $ampm)
       }
     }
   }
+
+
+
 
   $response1_query = "INSERT INTO section1_MSAS_8_9 (patient_id, Datecomp, DayNum, ampm,
                       pain7, paint7, painf7, painb7, tired7, tiredt7, tiredf7, tiredb7,
