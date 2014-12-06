@@ -6,7 +6,6 @@ $db_connection = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';char
 
 $db_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-
 $query1 = $db_connection->prepare("CREATE TABLE IF NOT EXISTS `painbuddy`.`section1_MSAS_8_9` (
   `response_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'unique id for each question response',
   `patient_id` INT(11) NOT NULL COMMENT 'ID of the patient',
@@ -179,7 +178,7 @@ $query2 = $db_connection->prepare("CREATE TABLE IF NOT EXISTS `painbuddy`.`secti
 
   PRIMARY KEY (`response_id`)
   ) AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='patient responses for section 2'");
-
+$query2->execute();
 
 function process_response1_A($db_connection, $patient_id, $day, $ampm)
 {
