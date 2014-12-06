@@ -4,6 +4,7 @@ require_once('../config/config.php');
 
 $db_connection = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASS);
 
+
 $query1 = $db_connection->prepare("CREATE TABLE IF NOT EXISTS `painbuddy`.`patient_responses1` (
   `response_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'unique id for each question response',
   `patient_id` INT(11) NOT NULL COMMENT 'ID of the patient',
@@ -24,49 +25,49 @@ $query2 = $db_connection->prepare("CREATE TABLE IF NOT EXISTS `painbuddy`.`patie
   `patient_id` INT(11) NOT NULL COMMENT 'ID of the patient',
   `day` INT(11) NOT NULL COMMENT 'day number',
   `ampm` ENUM('am','pm') NOT NULL COMMENT 'am or pm survey',
-  `bod1` VARCHAR(1) DEFAULT '*',
-  `bod2` VARCHAR(1) DEFAULT '*',
-  `bod3` VARCHAR(1) DEFAULT '*',
-  `bod4` VARCHAR(1) DEFAULT '*',
-  `bod5` VARCHAR(1) DEFAULT '*',
-  `bod6` VARCHAR(1) DEFAULT '*',
-  `bod7` VARCHAR(1) DEFAULT '*',
-  `bod8` VARCHAR(1) DEFAULT '*',
-  `bod9` VARCHAR(1) DEFAULT '*',
-  `bod10` VARCHAR(1) DEFAULT '*',
-  `bod11` VARCHAR(1) DEFAULT '*',
-  `bod12` VARCHAR(1) DEFAULT '*',
-  `bod13` VARCHAR(1) DEFAULT '*',
-  `bod14` VARCHAR(1) DEFAULT '*',
-  `bod15` VARCHAR(1) DEFAULT '*',
-  `bod16` VARCHAR(1) DEFAULT '*',
-  `bod17` VARCHAR(1) DEFAULT '*',
-  `bod18` VARCHAR(1) DEFAULT '*',
-  `bod19` VARCHAR(1) DEFAULT '*',
-  `bod20` VARCHAR(1) DEFAULT '*',
-  `bod21` VARCHAR(1) DEFAULT '*',
-  `bod22` VARCHAR(1) DEFAULT '*',
-  `bod23` VARCHAR(1) DEFAULT '*',
-  `bod24` VARCHAR(1) DEFAULT '*',
-  `bod25` VARCHAR(1) DEFAULT '*',
-  `bod26` VARCHAR(1) DEFAULT '*',
-  `bod27` VARCHAR(1) DEFAULT '*',
-  `bod28` VARCHAR(1) DEFAULT '*',
-  `bod29` VARCHAR(1) DEFAULT '*',
-  `bod30` VARCHAR(1) DEFAULT '*',
-  `bod31` VARCHAR(1) DEFAULT '*',
-  `bod32` VARCHAR(1) DEFAULT '*',
-  `bod33` VARCHAR(1) DEFAULT '*',
-  `bod34` VARCHAR(1) DEFAULT '*',
-  `bod35` VARCHAR(1) DEFAULT '*',
-  `bod36` VARCHAR(1) DEFAULT '*',
-  `bod37` VARCHAR(1) DEFAULT '*',
-  `bod38` VARCHAR(1) DEFAULT '*',
-  `bod39` VARCHAR(1) DEFAULT '*',
-  `bod40` VARCHAR(1) DEFAULT '*',
-  `bod41` VARCHAR(1) DEFAULT '*',
-  `bod42` VARCHAR(1) DEFAULT '*',
-  `bod43` VARCHAR(1) DEFAULT '*',
+  `bod1` VARCHAR(3) DEFAULT '*',
+  `bod2` VARCHAR(3) DEFAULT '*',
+  `bod3` VARCHAR(3) DEFAULT '*',
+  `bod4` VARCHAR(3) DEFAULT '*',
+  `bod5` VARCHAR(3) DEFAULT '*',
+  `bod6` VARCHAR(3) DEFAULT '*',
+  `bod7` VARCHAR(3) DEFAULT '*',
+  `bod8` VARCHAR(3) DEFAULT '*',
+  `bod9` VARCHAR(3) DEFAULT '*',
+  `bod10` VARCHAR(3) DEFAULT '*',
+  `bod11` VARCHAR(3) DEFAULT '*',
+  `bod12` VARCHAR(3) DEFAULT '*',
+  `bod13` VARCHAR(3) DEFAULT '*',
+  `bod14` VARCHAR(3) DEFAULT '*',
+  `bod15` VARCHAR(3) DEFAULT '*',
+  `bod16` VARCHAR(3) DEFAULT '*',
+  `bod17` VARCHAR(3) DEFAULT '*',
+  `bod18` VARCHAR(3) DEFAULT '*',
+  `bod19` VARCHAR(3) DEFAULT '*',
+  `bod20` VARCHAR(3) DEFAULT '*',
+  `bod21` VARCHAR(3) DEFAULT '*',
+  `bod22` VARCHAR(3) DEFAULT '*',
+  `bod23` VARCHAR(3) DEFAULT '*',
+  `bod24` VARCHAR(3) DEFAULT '*',
+  `bod25` VARCHAR(3) DEFAULT '*',
+  `bod26` VARCHAR(3) DEFAULT '*',
+  `bod27` VARCHAR(3) DEFAULT '*',
+  `bod28` VARCHAR(3) DEFAULT '*',
+  `bod29` VARCHAR(3) DEFAULT '*',
+  `bod30` VARCHAR(3) DEFAULT '*',
+  `bod31` VARCHAR(3) DEFAULT '*',
+  `bod32` VARCHAR(3) DEFAULT '*',
+  `bod33` VARCHAR(3) DEFAULT '*',
+  `bod34` VARCHAR(3) DEFAULT '*',
+  `bod35` VARCHAR(3) DEFAULT '*',
+  `bod36` VARCHAR(3) DEFAULT '*',
+  `bod37` VARCHAR(3) DEFAULT '*',
+  `bod38` VARCHAR(3) DEFAULT '*',
+  `bod39` VARCHAR(3) DEFAULT '*',
+  `bod40` VARCHAR(3) DEFAULT '*',
+  `bod41` VARCHAR(3) DEFAULT '*',
+  `bod42` VARCHAR(3) DEFAULT '*',
+  `bod43` VARCHAR(3) DEFAULT '*',
   `submit_time` DATETIME NOT NULL COMMENT 'time when survey was submitted (from now() when inserting records into database)',
   PRIMARY KEY (`response_id`)
   ) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='patient responses for section 2'");
@@ -235,8 +236,8 @@ function process_response2($db_connection, $patient_id, $day, $ampm)
     $query_response2->bindValue(':ampm', $ampm, PDO::PARAM_STR);
     for ($i = 0; $i < 43; ++$i) {
       $query_response2->bindValue(':bod' . ($i + 1), $response2_array[$i], PDO::PARAM_STR);
-
     }
+
     $query_response2->execute();
   } catch (Exception $e) {
     echo($e->getMessage());
@@ -245,18 +246,21 @@ function process_response2($db_connection, $patient_id, $day, $ampm)
 
 function process_response2_words($db_connection, $patient_id, $day, $ampm)
 {
+    $db_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   $response2_words = $_POST['response2_words'];
   $response2_input = $_POST['response2_input'];
+ 
   $words_array = array(':annoy', ':bad', ':horib', ':miser', ':terrib', ':uncom', ':ache', ':hurt', ':lkach', ':lkhrt', ':sore', ':beat', ':hit', ':poun', ':punc', ':throb', ':bitin', ':cutt', ':lkpin', ':lkshar', ':pinlk', ':shar', ':stab', ':blis', ':bur', ':hot', ':cram', ':crus', ':lkpinc', ':pinc', ':pres', ':itch', ':lkscr', ':lkstin', ':scra', ':stin', ':shoc', ':sho', ':spli', ':numb', ':stif', ':swol', ':tight', ':awf', ':dead', ':dyin', ':kil', ':cry', ':frig', ':scream', ':terrif', ':diz', ':sic', ':suf', ':nev', ':uncon', ':alw', ':comgo', ':comsud', ':cons', ':cont', ':for', ':offon', ':oncwhi', ':sneak', ':some', ':stead');
   $response2_query = 'INSERT INTO patient_responses2_words (`patient_id`, `day`, `ampm`, `submit_time`, `annoy`, `bad`, `horib`, `miser`, `terrib`, `uncom`, `ache`, `hurt`, `lkach`, `lkhrt`, `sore`, `beat`, `hit`, `poun`, `punc`, `throb`, `bitin`, `cutt`, `lkpin`, `lkshar`, `pinlk`, `shar`, `stab`, `blis`, `bur`, `hot`, `cram`, `crus`, `lkpinc`, `pinc`, `pres`, `itch`, `lkscr`, `lkstin`, `scra`, `stin`, `shoc`, `sho`, `spli`, `numb`, `stif`, `swol`, `tight`, `awf`, `dead`, `dyin`, `kil`, `cry`, `frig`, `scream`, `terrif`, `diz`, `sic`, `suf`, `nev`, `uncon`, `alw`, `comgo`, `comsud`, `cons`, `cont`, `for`, `offon`, `oncwhi`, `sneak`, `some`, `stead`, `input`) VALUES';
-  $response2_query .= " (:patient_id, :day, :ampm, now(),:annoy, :bad, :horib, :miser, :terrib, :uncom, :ache, :hurt, :lkach, :lkhrt, :sore, :beat, :hit, :poun, :punc, :throb, :bitin, :cutt, :lkpin, :lkshar, :pinlk, :shar, :stab, :blis, :bur, :hot, :cram, :crus, :lkpinc, :pinc, :pres, :itch, :lkscr, :lkstin, :scra, :stin, :shoc, :sho, :spli, :numb, :stif, :swol, :tight, :awf, :dead, :dyin, :kil, :cry, :frig, :scream, :terrif, :diz, :sic, :suf, :nev, :uncon, :alw, :comgo, :comsud, :cons, :cont, :for, :offon, :oncwhi, :sneak, :some, :stead, :input));";
-  try {
+  $response2_query .= " (:patient_id, :day, :ampm, now(), :annoy, :bad, :horib, :miser, :terrib, :uncom, :ache, :hurt, :lkach, :lkhrt, :sore, :beat, :hit, :poun, :punc, :throb, :bitin, :cutt, :lkpin, :lkshar, :pinlk, :shar, :stab, :blis, :bur, :hot, :cram, :crus, :lkpinc, :pinc, :pres, :itch, :lkscr, :lkstin, :scra, :stin, :shoc, :sho, :spli, :numb, :stif, :swol, :tight, :awf, :dead, :dyin, :kil, :cry, :frig, :scream, :terrif, :diz, :sic, :suf, :nev, :uncon, :alw, :comgo, :comsud, :cons, :cont, :for, :offon, :oncwhi, :sneak, :some, :stead, :input);";
+
+    try {
     $query_response2 = $db_connection->prepare($response2_query);
     $query_response2->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
     $query_response2->bindValue(':day', $day, PDO::PARAM_INT);
     $query_response2->bindValue(':ampm', $ampm, PDO::PARAM_STR);
-    for($i = 0; $i < 66; ++$i){
-      $query_response2->bindValue($words_array[$i+1], $response2_words[$i], PDO::PARAM_STR);
+    for($i = 0; $i <= 66; ++$i){
+      $query_response2->bindValue($words_array[$i], $response2_words[$i], PDO::PARAM_STR);
     }
     $query_response2->bindValue(':input', $response2_input, PDO::PARAM_STR);
     $query_response2->execute();
