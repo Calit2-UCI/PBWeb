@@ -247,84 +247,21 @@ function process_response2_words($db_connection, $patient_id, $day, $ampm)
 {
   $response2_words = $_POST['response2_words'];
   $response2_input = $_POST['response2_input'];
-
+  $words_array = array(':annoy', ':bad', ':horib', ':miser', ':terrib', ':uncom', ':ache', ':hurt', ':lkach', ':lkhrt', ':sore', ':beat', ':hit', ':poun', ':punc', ':throb', ':bitin', ':cutt', ':lkpin', ':lkshar', ':pinlk', ':shar', ':stab', ':blis', ':bur', ':hot', ':cram', ':crus', ':lkpinc', ':pinc', ':pres', ':itch', ':lkscr', ':lkstin', ':scra', ':stin', ':shoc', ':sho', ':spli', ':numb', ':stif', ':swol', ':tight', ':awf', ':dead', ':dyin', ':kil', ':cry', ':frig', ':scream', ':terrif', ':diz', ':sic', ':suf', ':nev', ':uncon', ':alw', ':comgo', ':comsud', ':cons', ':cont', ':for', ':offon', ':oncwhi', ':sneak', ':some', ':stead'); 
+)
   $response2_query = 'INSERT INTO patient_responses2_words (`patient_id`, `day`, `ampm`, `submit_time`, `annoy`, `bad`, `horib`, `miser`, `terrib`, `uncom`, `ache`, `hurt`, `lkach`, `lkhrt`, `sore`, `beat`, `hit`, `poun`, `punc`, `throb`, `bitin`, `cutt`, `lkpin`, `lkshar`, `pinlk`, `shar`, `stab`, `blis`, `bur`, `hot`, `cram`, `crus`, `lkpinc`, `pinc`, `pres`, `itch`, `lkscr`, `lkstin`, `scra`, `stin`, `shoc`, `sho`, `spli`, `numb`, `stif`, `swol`, `tight`, `awf`, `dead`, `dyin`, `kil`, `cry`, `frig`, `scream`, `terrif`, `diz`, `sic`, `suf`, `nev`, `uncon`, `alw`, `comgo`, `comsud`, `cons`, `cont`, `for`, `offon`, `oncwhi`, `sneak`, `some`, `stead`, `input`) VALUES';
   $response2_query .= " (:patient_id, :day, :ampm, now(),:annoy, :bad, :horib, :miser, :terrib, :uncom, :ache, :hurt, :lkach, :lkhrt, :sore, :beat, :hit, :poun, :punc, :throb, :bitin, :cutt, :lkpin, :lkshar, :pinlk, :shar, :stab, :blis, :bur, :hot, :cram, :crus, :lkpinc, :pinc, :pres, :itch, :lkscr, :lkstin, :scra, :stin, :shoc, :sho, :spli, :numb, :stif, :swol, :tight, :awf, :dead, :dyin, :kil, :cry, :frig, :scream, :terrif, :diz, :sic, :suf, :nev, :uncon, :alw, :comgo, :comsud, :cons, :cont, :for, :offon, :oncwhi, :sneak, :some, :stead, :input));";
+  $respone
   try {
     $query_response2 = $db_connection->prepare($response2_query);
     $query_response2->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
     $query_response2->bindValue(':day', $day, PDO::PARAM_INT);
     $query_response2->bindValue(':ampm', $ampm, PDO::PARAM_STR);
-    $query_response2->bindValue(':annoy', $response2_words[0], PDO::PARAM_STR);
-    $query_response2->bindValue(':bad', $response2_words[1], PDO::PARAM_STR);
-    $query_response2->bindValue(':horib', $response2_words[2], PDO::PARAM_STR);
-    $query_response2->bindValue(':miser', $response2_words[3], PDO::PARAM_STR);
-    $query_response2->bindValue(':terrib', $response2_words[4], PDO::PARAM_STR);
-    $query_response2->bindValue(':uncom', $response2_words[5], PDO::PARAM_STR);
-    $query_response2->bindValue(':ache', $response2_words[6], PDO::PARAM_STR);
-    $query_response2->bindValue(':hurt', $response2_words[7], PDO::PARAM_STR);
-    $query_response2->bindValue(':lkach', $response2_words[8], PDO::PARAM_STR);
-    $query_response2->bindValue(':lkhrt', $response2_words[9], PDO::PARAM_STR);
-    $query_response2->bindValue(':sore', $response2_words[10], PDO::PARAM_STR);
-    $query_response2->bindValue(':beat', $response2_words[11], PDO::PARAM_STR);
-    $query_response2->bindValue(':hit', $response2_words[12], PDO::PARAM_STR);
-    $query_response2->bindValue(':poun', $response2_words[13], PDO::PARAM_STR);
-    $query_response2->bindValue(':punc', $response2_words[14], PDO::PARAM_STR);
-    $query_response2->bindValue(':throb', $response2_words[15], PDO::PARAM_STR);
-    $query_response2->bindValue(':bitin', $response2_words[16], PDO::PARAM_STR);
-    $query_response2->bindValue(':cutt', $response2_words[17], PDO::PARAM_STR);
-    $query_response2->bindValue(':lkpin', $response2_words[18], PDO::PARAM_STR);
-    $query_response2->bindValue(':lkshar', $response2_words[19], PDO::PARAM_STR);
-    $query_response2->bindValue(':pinlk', $response2_words[20], PDO::PARAM_STR);
-    $query_response2->bindValue(':shar', $response2_words[21], PDO::PARAM_STR);
-    $query_response2->bindValue(':stab', $response2_words[22], PDO::PARAM_STR);
-    $query_response2->bindValue(':blis', $response2_words[23], PDO::PARAM_STR);
-    $query_response2->bindValue(':bur', $response2_words[24], PDO::PARAM_STR);
-    $query_response2->bindValue(':hot', $response2_words[25], PDO::PARAM_STR);
-    $query_response2->bindValue(':cram', $response2_words[26], PDO::PARAM_STR);
-    $query_response2->bindValue(':crus', $response2_words[27], PDO::PARAM_STR);
-    $query_response2->bindValue(':lkpinc', $response2_words[28], PDO::PARAM_STR);
-    $query_response2->bindValue(':pinc', $response2_words[29], PDO::PARAM_STR);
-    $query_response2->bindValue(':pres', $response2_words[30], PDO::PARAM_STR);
-    $query_response2->bindValue(':itch', $response2_words[31], PDO::PARAM_STR);
-    $query_response2->bindValue(':lkscr', $response2_words[32], PDO::PARAM_STR);
-    $query_response2->bindValue(':lkstin', $response2_words[33], PDO::PARAM_STR);
-    $query_response2->bindValue(':scra', $response2_words[34], PDO::PARAM_STR);
-    $query_response2->bindValue(':stin', $response2_words[35], PDO::PARAM_STR);
-    $query_response2->bindValue(':shoc', $response2_words[36], PDO::PARAM_STR);
-    $query_response2->bindValue(':sho', $response2_words[37], PDO::PARAM_STR);
-    $query_response2->bindValue(':spli', $response2_words[38], PDO::PARAM_STR);
-    $query_response2->bindValue(':numb', $response2_words[39], PDO::PARAM_STR);
-    $query_response2->bindValue(':stif', $response2_words[40], PDO::PARAM_STR);
-    $query_response2->bindValue(':swol', $response2_words[41], PDO::PARAM_STR);
-    $query_response2->bindValue(':tight', $response2_words[42], PDO::PARAM_STR);
-    $query_response2->bindValue(':awf', $response2_words[43], PDO::PARAM_STR);
-    $query_response2->bindValue(':dead', $response2_words[44], PDO::PARAM_STR);
-    $query_response2->bindValue(':dyin', $response2_words[45], PDO::PARAM_STR);
-    $query_response2->bindValue(':kil', $response2_words[46], PDO::PARAM_STR);
-    $query_response2->bindValue(':cry', $response2_words[47], PDO::PARAM_STR);
-    $query_response2->bindValue(':frig', $response2_words[48], PDO::PARAM_STR);
-    $query_response2->bindValue(':scream', $response2_words[49], PDO::PARAM_STR);
-    $query_response2->bindValue(':terrif', $response2_words[50], PDO::PARAM_STR);
-    $query_response2->bindValue(':diz', $response2_words[51], PDO::PARAM_STR);
-    $query_response2->bindValue(':sic', $response2_words[52], PDO::PARAM_STR);
-    $query_response2->bindValue(':suf', $response2_words[53], PDO::PARAM_STR);
-    $query_response2->bindValue(':nev', $response2_words[54], PDO::PARAM_STR);
-    $query_response2->bindValue(':uncon', $response2_words[55], PDO::PARAM_STR);
-    $query_response2->bindValue(':alw', $response2_words[56], PDO::PARAM_STR);
-    $query_response2->bindValue(':comgo', $response2_words[57], PDO::PARAM_STR);
-    $query_response2->bindValue(':comsud', $response2_words[58], PDO::PARAM_STR);
-    $query_response2->bindValue(':cons', $response2_words[59], PDO::PARAM_STR);
-    $query_response2->bindValue(':cont', $response2_words[60], PDO::PARAM_STR);
-    $query_response2->bindValue(':for', $response2_words[61], PDO::PARAM_STR);
-    $query_response2->bindValue(':offon', $response2_words[62], PDO::PARAM_STR);
-    $query_response2->bindValue(':oncwhi', $response2_words[63], PDO::PARAM_STR);
-    $query_response2->bindValue(':sneak', $response2_words[64], PDO::PARAM_STR);
-    $query_response2->bindValue(':some', $response2_words[65], PDO::PARAM_STR);
-    $query_response2->bindValue(':stead', $response2_words[66], PDO::PARAM_STR);
+    for($i = 0; $i < 66; ++$i){
+      $query_response2->bindValue($words_array[$i+1], $response2_words[$i], PDO::PARAM_STR);
+    }
     $query_response2->bindValue(':input', $response2_input, PDO::PARAM_STR);
     $query_response2->execute();
-
   } catch (Exception $e) {
     echo($e->getMessage());
   }
