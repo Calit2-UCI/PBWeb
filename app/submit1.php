@@ -290,37 +290,36 @@ function process_response1_B($db_connection, $patient_id, $day, $ampm)
   // 1 = not applicable
   // etc. (basically add 2 to everything)
   // TODO: hardcoding how many questions is a bad idea probably
-//  for ($i = 0; $i < 8; ++$i) {
-//    $response1_array[$i] = array();
-//
-//    if (isset($array[$i][0])) {
-//      if ($array[$i][0] == "0") {
-//        $response1_array[$i][0] = 2;
-//      } elseif ($array[$i][0] == "1") {
-//        $response1_array[$i][0] = 3;
-//      }
-//    } else {
-//      $response1_array[$i][0] = 0;
-//    }
-//
-//    $how_many_questions_r_in_this_group = 4;
-//    if ($i > 4 && $i < 7) $how_many_questions_r_in_this_group = 3;
-//    if ($i == 7) $how_many_questions_r_in_this_group = 2;
-//
-//    for ($j = 1; $j < $how_many_questions_r_in_this_group; ++$j) {
-//      if (isset($array[$i][$j])) {
-//        if ($array[$i][$j] == "*") {
-//          $response1_array[$i][$j] = 1;
-//        } elseif (is_numeric($array[$i][$j])) {
-//          $response1_array[$i][$j] = $array[$i][$j] + 2;
-//        } else {
-//          $response1_array[$i][$j] = 0;
-//        }
-//      } else {
-//        $response1_array[$i][$j] = 0;
-//      }
-//    }
-//  }
+  for ($i = 0; $i < 8; ++$i) {
+    $response1_array[$i] = array();
+
+    if (isset($array[$i][0])) {
+      if ($array[$i][0] == "0") {
+        $response1_array[$i][0] = 2;
+      } elseif ($array[$i][0] == "1") {
+        $response1_array[$i][0] = 3;
+      }
+    } else {
+      $response1_array[$i][0] = 0;
+    }
+
+    $how_many_questions_r_in_this_group = 4;
+    if ($i < 22) $how_many_questions_r_in_this_group = 3;
+
+    for ($j = 1; $j < $how_many_questions_r_in_this_group; ++$j) {
+      if (isset($array[$i][$j])) {
+        if ($array[$i][$j] == "*") {
+          $response1_array[$i][$j] = 1;
+        } elseif (is_numeric($array[$i][$j])) {
+          $response1_array[$i][$j] = $array[$i][$j] + 2;
+        } else {
+          $response1_array[$i][$j] = 0;
+        }
+      } else {
+        $response1_array[$i][$j] = 0;
+      }
+    }
+  }
   $response1_query = "INSERT INTO section1_MSAS_10_18 (patient_id, Datecomp, DayNum, ampm, conc, conoft, consev, conboth,
     pain, painoft, painsev, painboth, ener, eneroft, enersev, enerboth, coug, cougoft, cougsev, cougboth,
     nerv, nervoft, nervsev, nervboth, mout, moutoft, moutsev, moutboth, naus, nausoft, naussev, nausboth,
@@ -343,48 +342,137 @@ function process_response1_B($db_connection, $patient_id, $day, $ampm)
     :hair, :hairsev, :hairboth, :cons, :conssev, :consboth, :swel, :swelsev, :swelboth, :look, :looksev, :lookboth, :skin, :skinsev, :skinboth)";
 
 
-//  try {
-//    $query_response1 = $db_connection->prepare($response1_query);
-//    $query_response1->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
-//    // TODO: insert actual date
-//    $query_response1->bindValue(':Datecomp', "11112011", PDO::PARAM_STR);
-//    $query_response1->bindValue(':DayNum', $day, PDO::PARAM_INT);
-//    $query_response1->bindValue(':ampm', ($ampm == "am" ? 1 : 2), PDO::PARAM_STR);
-//
-//    $query_response1->bindValue(':pain7', ($response1_array[0][0] - 2), PDO::PARAM_INT);
-//    $query_response1->bindValue(':paint7', ($response1_array[0][1] - 2), PDO::PARAM_INT);
-//    $query_response1->bindValue(':painf7', ($response1_array[0][2] - 2), PDO::PARAM_INT);
-//    $query_response1->bindValue(':painb7', ($response1_array[0][3] - 2), PDO::PARAM_INT);
-//    $query_response1->bindValue(':tired7', ($response1_array[1][0] - 2), PDO::PARAM_INT);
-//    $query_response1->bindValue(':tiredt7', ($response1_array[1][1] - 2), PDO::PARAM_INT);
-//    $query_response1->bindValue(':tiredf7', ($response1_array[1][2] - 2), PDO::PARAM_INT);
-//    $query_response1->bindValue(':tiredb7', ($response1_array[1][3] - 2), PDO::PARAM_INT);
-//    $query_response1->bindValue(':sad7', ($response1_array[2][0] - 2), PDO::PARAM_INT);
-//    $query_response1->bindValue(':sadt7', ($response1_array[2][1] - 2), PDO::PARAM_INT);
-//    $query_response1->bindValue(':sadf7', ($response1_array[2][2] - 2), PDO::PARAM_INT);
-//    $query_response1->bindValue(':sadb7', ($response1_array[2][3] - 2), PDO::PARAM_INT);
-//    $query_response1->bindValue(':itchy7', ($response1_array[3][0] - 2), PDO::PARAM_INT);
-//    $query_response1->bindValue(':itchyt7', ($response1_array[3][1] - 2), PDO::PARAM_INT);
-//    $query_response1->bindValue(':itchyf7', ($response1_array[3][2] - 2), PDO::PARAM_INT);
-//    $query_response1->bindValue(':itchyb7', ($response1_array[3][3] - 2), PDO::PARAM_INT);
-//    $query_response1->bindValue(':worry7', ($response1_array[4][0] - 2), PDO::PARAM_INT);
-//    $query_response1->bindValue(':worryt7', ($response1_array[4][1] - 2), PDO::PARAM_INT);
-//    $query_response1->bindValue(':worryf7', ($response1_array[4][2] - 2), PDO::PARAM_INT);
-//    $query_response1->bindValue(':worryb7', ($response1_array[4][3] - 2), PDO::PARAM_INT);
-//    $query_response1->bindValue(':eat7', ($response1_array[5][0] - 2), PDO::PARAM_INT);
-//    $query_response1->bindValue(':eatt7', ($response1_array[5][1] - 2), PDO::PARAM_INT);
-//    $query_response1->bindValue(':eatb7', ($response1_array[5][2] - 2), PDO::PARAM_INT);
-//    $query_response1->bindValue(':vomit7', ($response1_array[6][0] - 2), PDO::PARAM_INT);
-//    $query_response1->bindValue(':vomitt7', ($response1_array[6][1] - 2), PDO::PARAM_INT);
-//    $query_response1->bindValue(':vomitb7', ($response1_array[6][2] - 2), PDO::PARAM_INT);
-//    $query_response1->bindValue(':sleep7', ($response1_array[7][0] - 2), PDO::PARAM_INT);
-//    $query_response1->bindValue(':sleepb7', ($response1_array[7][1] - 2), PDO::PARAM_INT);
-////    $query_response1->debugDumpParams();
-//
-//    $query_response1->execute();
-//  } catch (Exception $e) {
-//    echo($e->getMessage());
-//  }
+  try {
+    $query_response1 = $db_connection->prepare($response1_query);
+    $query_response1->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
+    // TODO: insert actual date
+    $query_response1->bindValue(':Datecomp', "11112011", PDO::PARAM_STR);
+    $query_response1->bindValue(':DayNum', $day, PDO::PARAM_INT);
+    $query_response1->bindValue(':ampm', ($ampm == "am" ? 1 : 2), PDO::PARAM_STR);
+
+  $query_response1->bindValue(':conc', ($response1_array[0][0] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':conoft', ($response1_array[0][1] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':consev', ($response1_array[0][2] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':conboth', ($response1_array[0][3] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':pain', ($response1_array[1][0] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':painoft', ($response1_array[1][1] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':painsev', ($response1_array[1][2] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':painboth', ($response1_array[1][3] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':ener', ($response1_array[2][0] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':eneroft', ($response1_array[2][1] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':enersev', ($response1_array[2][2] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':enerboth', ($response1_array[2][3] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':coug', ($response1_array[3][0] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':cougoft', ($response1_array[3][1] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':cougsev', ($response1_array[3][2] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':cougboth', ($response1_array[3][3] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':nerv', ($response1_array[4][0] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':nervoft', ($response1_array[4][1] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':nervsev', ($response1_array[4][2] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':nervboth', ($response1_array[4][3] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':mout', ($response1_array[5][0] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':moutoft', ($response1_array[5][1] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':moutsev', ($response1_array[5][2] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':moutboth', ($response1_array[5][3] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':naus', ($response1_array[6][0] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':nausoft', ($response1_array[6][1] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':naussev', ($response1_array[6][2] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':nausboth', ($response1_array[6][3] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':drow', ($response1_array[7][0] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':drowoft', ($response1_array[7][1] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':drowsev', ($response1_array[7][2] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':drowboth', ($response1_array[7][3] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':numb', ($response1_array[8][0] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':numboft', ($response1_array[8][1] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':numbsev', ($response1_array[8][2] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':numbboth', ($response1_array[8][3] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':slep', ($response1_array[9][0] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':slepoft', ($response1_array[9][1] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':slepsev', ($response1_array[9][2] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':slepboth', ($response1_array[9][3] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':urin', ($response1_array[10][0] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':urinoft', ($response1_array[10][1] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':urinsev', ($response1_array[10][2] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':urinboth', ($response1_array[10][3] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':vomi', ($response1_array[11][0] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':vomioft', ($response1_array[11][1] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':vomisev', ($response1_array[11][2] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':vomiboth', ($response1_array[11][3] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':brea', ($response1_array[12][0] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':breaoft', ($response1_array[12][1] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':breasev', ($response1_array[12][2] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':breaboth', ($response1_array[12][3] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':diar', ($response1_array[13][0] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':diaroft', ($response1_array[13][1] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':diarsev', ($response1_array[13][2] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':diarboth', ($response1_array[13][3] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':sad', ($response1_array[14][0] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':sadoft', ($response1_array[14][1] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':sadsev', ($response1_array[14][2] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':sadboth', ($response1_array[14][3] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':swea', ($response1_array[15][0] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':sweaoft', ($response1_array[15][1] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':sweasev', ($response1_array[15][2] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':sweaboth', ($response1_array[15][3] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':worr', ($response1_array[16][0] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':worroft', ($response1_array[16][1] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':worrsev', ($response1_array[16][2] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':worrboth', ($response1_array[16][3] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':itch', ($response1_array[17][0] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':itchoft', ($response1_array[17][1] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':itchsev', ($response1_array[17][2] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':itchboth', ($response1_array[17][3] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':app', ($response1_array[18][0] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':appoft', ($response1_array[18][1] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':appsev', ($response1_array[18][2] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':appboth', ($response1_array[18][3] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':dizz', ($response1_array[19][0] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':dizzoft', ($response1_array[19][1] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':dizzsev', ($response1_array[19][2] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':dizzboth', ($response1_array[19][3] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':swal', ($response1_array[20][0] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':swaloft', ($response1_array[20][1] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':swalsev', ($response1_array[20][2] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':swalboth', ($response1_array[20][3] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':irri', ($response1_array[21][0] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':irrioft', ($response1_array[21][1] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':irrisev', ($response1_array[21][2] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':irriboth', ($response1_array[21][3] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':head', ($response1_array[22][0] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':headoft', ($response1_array[22][1] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':headsev', ($response1_array[22][2] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':headboth', ($response1_array[22][3] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':msor', ($response1_array[23][0] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':msorsev', ($response1_array[23][1] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':msorboth', ($response1_array[23][2] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':food', ($response1_array[24][0] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':foodsev', ($response1_array[24][1] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':foodboth', ($response1_array[24][2] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':weit', ($response1_array[25][0] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':weitsev', ($response1_array[25][1] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':weitboth', ($response1_array[25][2] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':hair', ($response1_array[26][0] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':hairsev', ($response1_array[26][1] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':hairboth', ($response1_array[26][2] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':cons', ($response1_array[27][0] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':conssev', ($response1_array[27][1] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':consboth', ($response1_array[27][2] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':swel', ($response1_array[28][0] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':swelsev', ($response1_array[28][1] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':swelboth', ($response1_array[28][2] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':look', ($response1_array[29][0] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':looksev', ($response1_array[29][1] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':lookboth', ($response1_array[29][2] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':skin', ($response1_array[30][0] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':skinsev', ($response1_array[30][1] - 2), PDO::PARAM_INT);
+  $query_response1->bindValue(':skinboth', ($response1_array[30][2] - 2), PDO::PARAM_INT);
+
+//    $query_response1->debugDumpParams();
+
+    $query_response1->execute();
+  } catch (Exception $e) {
+    echo($e->getMessage());
+  }
 }
 
 if (isset($_POST['patient_id']) && isset($_POST['day']) && isset($_POST['ampm'])) {
@@ -392,6 +480,6 @@ if (isset($_POST['patient_id']) && isset($_POST['day']) && isset($_POST['ampm'])
   $day = $_POST['day'];
   $ampm = $_POST['ampm'];
 
-  process_response1_A($db_connection, $patient_id, $day, $ampm);
+  process_response1_B($db_connection, $patient_id, $day, $ampm);
 
 }
