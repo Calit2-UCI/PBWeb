@@ -51,6 +51,8 @@ $query1 = $db_connection->prepare("CREATE TABLE IF NOT EXISTS `painbuddy`.`secti
   ) AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='patient responses for section 1'");
 $query1->execute();
 
+$db_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
 $query2 = $db_connection->prepare("CREATE TABLE IF NOT EXISTS `painbuddy`.`section1_MSAS_10_18` (
   `response_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'unique id for each question response',
   `patient_id` INT(11) NOT NULL COMMENT 'ID of the patient',
@@ -174,16 +176,11 @@ $query2 = $db_connection->prepare("CREATE TABLE IF NOT EXISTS `painbuddy`.`secti
   'skinsev' TINYINT DEFAULT '-2' COMMENT '', 
   'skinboth' TINYINT DEFAULT '-2' COMMENT '', 
     PRIMARY KEY (`response_id`)
-  ) AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='patient responses for section 1'");
+  ) AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='patient responses for section 2'");
 
 
-
-
-
-
-
-  function process_response1_A($db_connection, $patient_id, $day, $ampm)
-  {
+function process_response1_A($db_connection, $patient_id, $day, $ampm)
+{
 
   $array = explode(",", $_POST['response1']);
 
@@ -224,16 +221,13 @@ $query2 = $db_connection->prepare("CREATE TABLE IF NOT EXISTS `painbuddy`.`secti
       }
     }
   }
-
-
-
-
+  $db_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   $response1_query = "INSERT INTO section1_MSAS_8_9 (patient_id, Datecomp, DayNum, ampm,
     pain7, paint7, painf7, painb7, tired7, tiredt7, tiredf7, tiredb7,
     sad7, sadt7, sadf7, sadb7, itchy7, itchyt7, itchyf7, itchyb7,
     worry7, worryt7, worryf7, worryb7, eat7, eatt7, eatb7,
     vomit7, vomitt7, vomitb7, sleep7, sleepb7) VALUES
-  (:patient_id, :Datecomp, :DayNum, :ampm,
+    (:patient_id, :Datecomp, :DayNum, :ampm,
     :pain7, :paint7, :painf7, :painb7, :tired7, :tiredt7, :tiredf7, :tiredb7,
     :sad7, :sadt7, :sadf7, :sadb7, itchy7, itchyt7, :itchyf7, :itchyb7,
     :worry7, :worryt7, :worryf7, :worryb7, :eat7, :eatt7, :eatb7,
@@ -244,7 +238,7 @@ $query2 = $db_connection->prepare("CREATE TABLE IF NOT EXISTS `painbuddy`.`secti
     $query_response1->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
     // TODO: insert actual date
     $query_response1->bindValue(':Datecomp', "11112011", PDO::PARAM_INT);
-    $query_response1->bindValue(':DayNum' , $day, PDO::PARAM_INT);
+    $query_response1->bindValue(':DayNum', $day, PDO::PARAM_INT);
     $query_response1->bindValue(':ampm', ($ampm == "am" ? 1 : 2), PDO::PARAM_STR);
 
     $query_response1->bindValue(':pain7', ($response1_array[0][0] - 2), PDO::PARAM_INT);
