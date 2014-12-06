@@ -4,6 +4,9 @@ require_once('../config/config.php');
 
 $db_connection = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASS);
 
+$db_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+
 $query1 = $db_connection->prepare("CREATE TABLE IF NOT EXISTS `painbuddy`.`section1_MSAS_8_9` (
   `response_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'unique id for each question response',
   `patient_id` INT(11) NOT NULL COMMENT 'ID of the patient',
@@ -50,8 +53,6 @@ $query1 = $db_connection->prepare("CREATE TABLE IF NOT EXISTS `painbuddy`.`secti
   PRIMARY KEY (`response_id`)
   ) AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='patient responses for section 1'");
 $query1->execute();
-
-$db_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 $query2 = $db_connection->prepare("CREATE TABLE IF NOT EXISTS `painbuddy`.`section1_MSAS_10_18` (
   `response_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'unique id for each question response',
@@ -222,7 +223,6 @@ function process_response1_A($db_connection, $patient_id, $day, $ampm)
       }
     }
   }
-  $db_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   $response1_query = "INSERT INTO section1_MSAS_8_9 (patient_id, Datecomp, DayNum, ampm,
     pain7, paint7, painf7, painb7, tired7, tiredt7, tiredf7, tiredb7,
     sad7, sadt7, sadf7, sadb7, itchy7, itchyt7, itchyf7, itchyb7,
