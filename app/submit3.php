@@ -14,17 +14,17 @@ $query1 = $db_connection->prepare("CREATE TABLE IF NOT EXISTS `painbuddy`.`secti
   `ampm` TINYINT NOT NULL COMMENT 'am or pm survey (1=AM, 2=PM)',
 
   `med1` TINYINT DEFAULT '-2' COMMENT 'Have you taken any pain medications since last entry?',
-  `med1name` VARCHAR(256)DEFAULT '-2' COMMENT 'What was the name of this medication?',
+  `med1name` VARCHAR(256) DEFAULT '-2' COMMENT 'What was the name of this medication?',
   `med1num` TINYINT DEFAULT '-2' COMMENT 'How many times was this medication taken since last entry?',
   `med1help` TINYINT DEFAULT '-2' COMMENT 'How much did the medication help?',
 
   `med2` TINYINT DEFAULT '-2' COMMENT 'Have you taken a second pain medications since last entry?',
-  `med2name` VARCHAR(256)DEFAULT '-2' COMMENT 'What was the name of this medication?',
+  `med2name` VARCHAR(256) DEFAULT '-2' COMMENT 'What was the name of this medication?',
   `med2num` TINYINT DEFAULT '-2' COMMENT 'How many times was this medication taken since last entry?',
   `med2help` TINYINT DEFAULT '-2' COMMENT 'How much did the medication help?',
 
   `med3` TINYINT DEFAULT '-2' COMMENT 'Have you taken a third pain medications since last entry?',
-  `med3name` VARCHAR(256)DEFAULT '-2' COMMENT 'What was the name of this medication?',
+  `med3name` VARCHAR(256) DEFAULT '-2' COMMENT 'What was the name of this medication?',
   `med3num` TINYINT DEFAULT '-2' COMMENT 'How many times was this medication taken since last entry?',
   `med3help` TINYINT DEFAULT '-2' COMMENT 'How much did the medication help?',
 
@@ -69,7 +69,7 @@ $query1 = $db_connection->prepare("CREATE TABLE IF NOT EXISTS `painbuddy`.`secti
   `socsuph` TINYINT DEFAULT '-2' COMMENT 'How much did this activity help?',
 
   `intoth` TINYINT DEFAULT '-2' COMMENT 'Did you do any other activities?',
-  `intothnm` VARCHAR(256)DEFAULT '-2' COMMENT 'What was the name of this activity?',
+  `intothnm` VARCHAR(256) DEFAULT '-2' COMMENT 'What was the name of this activity?',
   `intothn` TINYINT DEFAULT '-2' COMMENT 'How many times was this activity done since the last entry?',
   `intotht` TINYINT DEFAULT '-2' COMMENT 'What time was this activity last done?',
   `intothh` TINYINT DEFAULT '-2' COMMENT 'How much did this activity help?',
@@ -88,10 +88,10 @@ function process_response3($db_connection, $patient_id, $day, $ampm)
     $response3_array[$i] = array();
 
     // 1. Have you taken any pain medications since last entry?
-    if (isset($array1[$i][0])) {
-      if ($array1[$i][0] == "0") {
+    if (isset($array1[($i * 3)])) {
+      if ($array1[($i * 3)] == "0") {
         $response3_array[$i][0] = 2;
-      } elseif ($array1[$i][0] == "1") {
+      } elseif ($array1[($i * 3)] == "1") {
         $response3_array[$i][0] = 3;
       }
     } else {
@@ -99,8 +99,8 @@ function process_response3($db_connection, $patient_id, $day, $ampm)
     }
 
     // 2. What was the name of this medication?
-    if (isset($array1[$i][1])) {
-      $response3_array[$i][1] = $array1[$i][1];
+    if (isset($array1[($i * 3 + 1)])) {
+      $response3_array[$i][1] = $array1[($i * 3 + 1)];
     } else {
       $response3_array[$i][1] = "-2";
     }
@@ -109,11 +109,11 @@ function process_response3($db_connection, $patient_id, $day, $ampm)
     // 3. How many times was this medication taken since last entry?
     // 4. How much did the medication help?
     for ($j = 2; $j < $how_many_questions_r_in_this_group; ++$j) {
-      if (isset($array[$i][$j])) {
-        if ($array[$i][$j] == "*") {
+      if (isset($array1[($i * 3 + $j)])) {
+        if ($array1[($i * 3 + $j)] == "*") {
           $response1_array[$i][$j] = 1;
-        } elseif (is_numeric($array[$i][$j])) {
-          $response1_array[$i][$j] = $array[$i][$j] + 2;
+        } elseif (is_numeric($array1[($i * 3 + $j)])) {
+          $response1_array[$i][$j] = $array1[($i * 3 + $j)] + 2;
         } else {
           $response1_array[$i][$j] = 0;
         }
@@ -122,6 +122,100 @@ function process_response3($db_connection, $patient_id, $day, $ampm)
       }
     }
   }
+
+  $array2 = explode(",", $_POST['response3_activty']);
+
+  // next few questions about activities
+  for ($i = 3; $i < 8; ++$i) {
+    $response3_array[$i] = array();
+
+    $eh = $i - 3;
+
+    // 1. have you tried ...
+    if (isset($array2[$eh][0])) {
+      if ($array2[$eh][0] == "0") {
+        $response3_array[$i][0] = 2;
+      } elseif ($array2[$eh][0] == "1") {
+        $response3_array[$i][0] = 3;
+      }
+    } else {
+      $response3_array[$i][0] = 0;
+    }
+
+    // 3. What time was this activity last done?
+    if (isset($array2[$eh][2])) {
+      $response3_array[$i][1] = $array2[$eh][1];
+    } else {
+      $response3_array[$i][1] = "-2";
+    }
+
+    $how_many_questions_r_in_this_group = 4;
+    // 2. How many times was this activity done since the last entry?
+    // 4. How much did this activity help?
+    for ($j = 1; $j < $how_many_questions_r_in_this_group; $j += 2) {
+      if (isset($array2[$eh][$j])) {
+        if ($array2[$eh][$j] == "*") {
+          $response1_array[$i][$j] = 1;
+        } elseif (is_numeric($array2[$eh][$j])) {
+          $response1_array[$i][$j] = $array2[$eh][$j] + 2;
+        } else {
+          $response1_array[$i][$j] = 0;
+        }
+      } else {
+        $response1_array[$i][$j] = 0;
+      }
+    }
+  }
+
+  $array3 = explode(",", $_POST['response3_input']);
+
+  for ($i = 8; $i < 9; ++$i) {
+    $response3_array[$i] = array();
+
+    // 1. Did you do any other activities?
+    if (isset($array3[$i][0])) {
+      if ($array3[$i][0] == "0") {
+        $response3_array[$i][0] = 2;
+      } elseif ($array3[$i][0] == "1") {
+        $response3_array[$i][0] = 3;
+      }
+    } else {
+      $response3_array[$i][0] = 0;
+    }
+
+    // 2. What was the name of this activity?
+    if (isset($array3[$i][2])) {
+      $response3_array[$i][1] = $array1[$i][1];
+    } else {
+      $response3_array[$i][1] = "-2";
+    }
+
+     // 4. What time was this activity last done?
+    if (isset($array3[$i][2])) {
+      $response3_array[$i][1] = $array1[$i][1];
+    } else {
+      $response3_array[$i][1] = "-2";
+    }
+
+    $how_many_questions_r_in_this_group = 4;
+    // 3. How many times was this activity done since the last entry?
+    // 5. How much did this activity help?
+    for ($j = 1; $j < $how_many_questions_r_in_this_group; $j += 2) {
+      if (isset($array3[$i][$j])) {
+        if ($array3[$i][$j] == "*") {
+          $response1_array[$i][$j] = 1;
+        } elseif (is_numeric($array[$i][$j])) {
+          $response1_array[$i][$j] = $array3[$i][$j] + 2;
+        } else {
+          $response1_array[$i][$j] = 0;
+        }
+      } else {
+        $response1_array[$i][$j] = 0;
+      }
+    }
+  }
+
+
 }
 
 if (isset($_POST['patient_id']) && isset($_POST['day']) && isset($_POST['ampm'])) {
