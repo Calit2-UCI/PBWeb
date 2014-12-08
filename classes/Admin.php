@@ -657,6 +657,59 @@ class Admin
     }
   }
 
+  /**
+   * Exporting the csv of a particular section
+   * 0 = section 1, 8-9
+   * 1 = section 1, 10-18
+   * 2 = section 2
+   * 3 = section 3
+   */
+  public function exportSection($section_id)
+  {
+    if ($this->databaseConnection()) {
+      $section_array = array(
+        0 => "section1_MSAS_8_9",
+        1 => "section1_MSAS_10_18",
+        2 => "section2_APPT",
+        3 => "section3_intervention",
+      );
+
+      if (!isset($section_array[$section_id])) {
+        return false;
+      }
+
+      $output = "";
+      $query = $this->db_connection->prepare('SELECT * FROM ' . $section_array[$section_id]);
+
+      $query->execute();
+      $columns_total = $query->columnCount();
+
+      $column_query = $this->db_connection->prepare('DESCRIBE ' . $section_array[$section_id]);
+      $column_query->execute();
+
+      $table_fields = $column_query->fetchAll(PDO::FETCH_COLUMN);
+
+      foreach ($table_fields as $heading) {
+        $output .= '"' . $heading . '",';
+      }
+      $output .= "\n";
+
+      while ($row = $query->fetch()) {
+        for ($i = 0; $i < $columns_total; $i++) {
+          $output .= '"' . $row["$i"] . '",';
+        }
+        $output .= "\n";
+      }
+
+      $filename = "Painbuddy_" . $section_array[$section_id] . ".csv";
+      header('Content-type: application/csv');
+      header('Content-Disposition: attachment; filename=' . $filename);
+
+      echo $output;
+      exit;
+    }
+  }
+
   private function editPatientDoctor($edit_patient, $patient_doctor)
   {
     // if database connection opened

@@ -31,7 +31,13 @@
       <p><?php $admin->printPatients(); ?></p>
       <a href="?add_patient">Add New Patient</a>
       <br>
-      <a href="?export_all">Export all data</a>
+      <a href="?export_all">Export Patient Info</a>
+      <br>
+      <a href="?export_section=0">Export Section 1 (8-9)</a>
+      <br>
+      <a href="?export_section=1">Export Section 1 (10-18)</a>
+      <br>
+      <a href="?export_section=3">Export Section 3</a>
       <br>
       <hr>
       <div class="row">

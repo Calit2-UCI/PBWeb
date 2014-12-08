@@ -38,6 +38,8 @@ if ($login->isUserLoggedIn() == true && $login->isUserAdmin() == true) {
     include("views/admin/delete_confirm.php");
   } elseif (isset($_GET['export_all'])) {
     $admin->exportAllPatientData();
+  } elseif (isset($_GET['export_section']) && is_numeric($_GET['export_section'])) {
+    $admin->exportSection($_GET['export_section']);
   } else {
     include("views/admin/config.php");
   }
