@@ -108,7 +108,7 @@ function process_response3($db_connection, $patient_id, $day, $ampm)
     // 2. What was the name of this medication?
     if (isset($response3_medications[($i * 4 + 1)])) {
       if ($response3_medications[($i * 4 + 1)] == "*") {
-        $response3_array[$i][1] = 1;
+        $response3_array[$i][1] = -1;
       } else {
         $response3_array[$i][1] = $response3_medications[($i * 4 + 1)];
       }
@@ -150,11 +150,11 @@ function process_response3($db_connection, $patient_id, $day, $ampm)
     } else {
       $response3_array[($i + 3)][0] = 0;
     }
-    
+
     // 3. What time was this last done?
     if (isset($response3_activity[($i * 4 + 2)])) {
       if ($response3_activity[($i * 4 + 2)] == "*") {
-        $response3_array[($i + 3)][2] = 1;
+        $response3_array[($i + 3)][2] = -1;
       } else {
         $response3_array[($i + 3)][2] = $response3_activity[($i * 4 + 2)];
       }
@@ -200,7 +200,7 @@ function process_response3($db_connection, $patient_id, $day, $ampm)
     // 2. What is name of activity
     if (isset($response3_input[($i * 4 + 1)])) {
       if ($response3_input[($i * 4 + 1)] == "*") {
-        $response3_array[($i + 3 + 8)][1] = 1;
+        $response3_array[($i + 3 + 8)][1] = -1;
       } else {
         $response3_array[($i + 3 + 8)][1] = $response3_input[($i * 4 + 1)];
       }
