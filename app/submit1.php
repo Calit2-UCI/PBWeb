@@ -283,7 +283,7 @@ function process_response1_A($db_connection, $patient_id, $day, $ampm)
 
 function process_response1_B($db_connection, $patient_id, $day, $ampm)
 {
-  $array = explode(",", $_POST['response1']);
+  $response1 = explode(",", $_POST['response1']);
 
   $response1_array = array();
   // do some sorcery here
@@ -294,10 +294,10 @@ function process_response1_B($db_connection, $patient_id, $day, $ampm)
   for ($i = 0; $i < 8; ++$i) {
     $response1_array[$i] = array();
 
-    if (isset($array[$i][0])) {
-      if ($array[$i][0] == "0") {
+    if (isset($response1[$i][0])) {
+      if ($response1[$i][0] == 0) {
         $response1_array[$i][0] = 2;
-      } elseif ($array[$i][0] == "1") {
+      } elseif ($response1[$i][0] == 1) {
         $response1_array[$i][0] = 3;
       }
     } else {
@@ -308,11 +308,11 @@ function process_response1_B($db_connection, $patient_id, $day, $ampm)
     if ($i < 22) $how_many_questions_r_in_this_group = 3;
 
     for ($j = 1; $j < $how_many_questions_r_in_this_group; ++$j) {
-      if (isset($array[$i][$j])) {
-        if ($array[$i][$j] == "*") {
+      if (isset($response1[$i][$j])) {
+        if ($response1[$i][$j] == "*") {
           $response1_array[$i][$j] = 1;
-        } elseif (is_numeric($array[$i][$j])) {
-          $response1_array[$i][$j] = $array[$i][$j] + 2;
+        } elseif (is_numeric($response1[$i][$j])) {
+          $response1_array[$i][$j] = $response1[$i][$j] + 2;
         } else {
           $response1_array[$i][$j] = 0;
         }
@@ -321,6 +321,7 @@ function process_response1_B($db_connection, $patient_id, $day, $ampm)
       }
     }
   }
+
   $response1_query = "INSERT INTO section1_MSAS_10_18 (patient_id, Datecomp, DayNum, ampm, conc, conoft, consev, conboth,
     pain, painoft, painsev, painboth, ener, eneroft, enersev, enerboth, coug, cougoft, cougsev, cougboth,
     nerv, nervoft, nervsev, nervboth, mout, moutoft, moutsev, moutboth, naus, nausoft, naussev, nausboth,
