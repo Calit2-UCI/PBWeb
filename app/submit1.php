@@ -13,41 +13,41 @@ $query1 = $db_connection->prepare("CREATE TABLE IF NOT EXISTS `painbuddy`.`secti
   `DayNum` INT(11) NOT NULL COMMENT 'day number',
   `ampm` TINYINT NOT NULL COMMENT 'am or pm survey (1=AM, 2=PM)',
 
-  `pain7` TINYINT DEFAULT '-2' COMMENT '',
-  `paint7` TINYINT DEFAULT '-2' COMMENT '',
-  `painf7` TINYINT DEFAULT '-2' COMMENT '',
-  `painb7` TINYINT DEFAULT '-2' COMMENT '',
+  `pain7` TINYINT DEFAULT '-2' COMMENT 'Did you have any pain yesterday or today?',
+  `paint7` TINYINT DEFAULT '-2' COMMENT 'How much of the time did you have pain?',
+  `painf7` TINYINT DEFAULT '-2' COMMENT 'How much pain did you feel?',
+  `painb7` TINYINT DEFAULT '-2' COMMENT 'How much did the pain bother you or trouble you?',
 
-  `tired7` TINYINT DEFAULT '-2' COMMENT '',
-  `tiredt7` TINYINT DEFAULT '-2' COMMENT '',
-  `tiredf7` TINYINT DEFAULT '-2' COMMENT '',
-  `tiredb7` TINYINT DEFAULT '-2' COMMENT '',
+  `tired7` TINYINT DEFAULT '-2' COMMENT 'Did you feel more tired yesterday or today that you usually do?',
+  `tiredt7` TINYINT DEFAULT '-2' COMMENT 'How long did it last?',
+  `tiredf7` TINYINT DEFAULT '-2' COMMENT 'How tired did you feel?',
+  `tiredb7` TINYINT DEFAULT '-2' COMMENT 'How much did being tired bother you or trouble you?'
+  ,
+  `sad7` TINYINT DEFAULT '-2' COMMENT 'Did you feel sad yesterday or today:',
+  `sadt7` TINYINT DEFAULT '-2' COMMENT 'How long did you feel sad?',
+  `sadf7` TINYINT DEFAULT '-2' COMMENT 'How sad did you feel?',
+  `sadb7` TINYINT DEFAULT '-2' COMMENT 'How much did feeling sad bother you or trouble you?',
 
-  `sad7` TINYINT DEFAULT '-2' COMMENT '',
-  `sadt7` TINYINT DEFAULT '-2' COMMENT '',
-  `sadf7` TINYINT DEFAULT '-2' COMMENT '',
-  `sadb7` TINYINT DEFAULT '-2' COMMENT '',
+  `itchy7` TINYINT DEFAULT '-2' COMMENT 'Were you itchy yesterday or today?',
+  `itchyt7` TINYINT DEFAULT '-2' COMMENT 'How much of the time were you itchy?',
+  `itchyf7` TINYINT DEFAULT '-2' COMMENT 'How itchy were you?',
+  `itchyb7` TINYINT DEFAULT '-2' COMMENT 'How much did being ithcy bother you or trouble you?',
 
-  `itchy7` TINYINT DEFAULT '-2' COMMENT '',
-  `itchyt7` TINYINT DEFAULT '-2' COMMENT '',
-  `itchyf7` TINYINT DEFAULT '-2' COMMENT '',
-  `itchyb7` TINYINT DEFAULT '-2' COMMENT '',
+  `worry7` TINYINT DEFAULT '-2' COMMENT 'Did you feel worried yesterday or today?',
+  `worryt7` TINYINT DEFAULT '-2' COMMENT 'How much of the time did you feel worried?',
+  `worryf7` TINYINT DEFAULT '-2' COMMENT 'How worried did you feel?',
+  `worryb7` TINYINT DEFAULT '-2' COMMENT 'How much did feeling worried bother you or trouble you?',
 
-  `worry7` TINYINT DEFAULT '-2' COMMENT '',
-  `worryt7` TINYINT DEFAULT '-2' COMMENT '',
-  `worryf7` TINYINT DEFAULT '-2' COMMENT '',
-  `worryb7` TINYINT DEFAULT '-2' COMMENT '',
+  `eat7` TINYINT DEFAULT '-2' COMMENT 'Did you feel like eating yesterday or today as you normally do?',
+  `eatt7` TINYINT DEFAULT '-2' COMMENT 'How long did this last?',
+  `eatb7` TINYINT DEFAULT '-2' COMMENT 'How much did this bother you or trouble you?',
 
-  `eat7` TINYINT DEFAULT '-2' COMMENT '',
-  `eatt7` TINYINT DEFAULT '-2' COMMENT '',
-  `eatb7` TINYINT DEFAULT '-2' COMMENT '',
+  `vomit7` TINYINT DEFAULT '-2' COMMENT 'Did you feel like you werer going to vomit (or going to throw up) yesterday or today?',
+  `vomitt7` TINYINT DEFAULT '-2' COMMENT 'How much of the time did you feel like you could vomit (or could throw up)?',
+  `vomitb7` TINYINT DEFAULT '-2' COMMENT 'How much did this feeling bother you or trouble you?',
 
-  `vomit7` TINYINT DEFAULT '-2' COMMENT '',
-  `vomitt7` TINYINT DEFAULT '-2' COMMENT '',
-  `vomitb7` TINYINT DEFAULT '-2' COMMENT '',
-
-  `sleep7` TINYINT DEFAULT '-2' COMMENT '',
-  `sleepb7` TINYINT DEFAULT '-2' COMMENT '',
+  `sleep7` TINYINT DEFAULT '-2' COMMENT 'Did you have trouble going to sleep the last 2 nights?',
+  `sleepb7` TINYINT DEFAULT '-2' COMMENT 'How much did not being able to sleep bother you or trouble you?',
 
   PRIMARY KEY (`response_id`)
   ) AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='patient responses for section 1'");
@@ -182,7 +182,7 @@ $query2->execute();
 
 function process_response1_A($db_connection, $patient_id, $day, $ampm)
 {
-  $array = explode(",", $_POST['response1']);
+  $response1 = explode(",", $_POST['response1']);
 
   $response1_array = array();
   // do some sorcery here
@@ -193,10 +193,10 @@ function process_response1_A($db_connection, $patient_id, $day, $ampm)
   for ($i = 0; $i < 8; ++$i) {
     $response1_array[$i] = array();
 
-    if (isset($array[$i][0])) {
-      if ($array[$i][0] == "0") {
+    if (isset($response1[$i][0])) {
+      if ($response1[$i][0] == 0) {
         $response1_array[$i][0] = 2;
-      } elseif ($array[$i][0] == "1") {
+      } elseif ($response1[$i][0] == 1) {
         $response1_array[$i][0] = 3;
       }
     } else {
@@ -208,11 +208,11 @@ function process_response1_A($db_connection, $patient_id, $day, $ampm)
     if ($i == 7) $how_many_questions_r_in_this_group = 2;
 
     for ($j = 1; $j < $how_many_questions_r_in_this_group; ++$j) {
-      if (isset($array[$i][$j])) {
-        if ($array[$i][$j] == "*") {
+      if (isset($response1[$i][$j])) {
+        if ($response1[$i][$j] == "*") {
           $response1_array[$i][$j] = 1;
-        } elseif (is_numeric($array[$i][$j])) {
-          $response1_array[$i][$j] = $array[$i][$j] + 2;
+        } elseif (is_numeric($response1[$i][$j])) {
+          $response1_array[$i][$j] = $response1[$i][$j] + 2;
         } else {
           $response1_array[$i][$j] = 0;
         }
@@ -221,6 +221,7 @@ function process_response1_A($db_connection, $patient_id, $day, $ampm)
       }
     }
   }
+
   $response1_query = "INSERT INTO section1_MSAS_8_9 (patient_id, Datecomp, DayNum, ampm,
     pain7, paint7, painf7, painb7, tired7, tiredt7, tiredf7, tiredb7,
     sad7, sadt7, sadf7, sadb7, itchy7, itchyt7, itchyf7, itchyb7,
@@ -475,11 +476,16 @@ function process_response1_B($db_connection, $patient_id, $day, $ampm)
   }
 }
 
-if (isset($_POST['patient_id']) && isset($_POST['day']) && isset($_POST['ampm'])) {
+if (isset($_POST['patient_id']) && isset($_POST['day']) && isset($_POST['ampm']) && isset($_POST['patient_age'])) {
   $patient_id = $_POST['patient_id'];
   $day = $_POST['day'];
   $ampm = $_POST['ampm'];
+  $patient_age = $_POST['patient_age'];
 
-  process_response1_B($db_connection, $patient_id, $day, $ampm);
+  if ($patient_age <= 9) {
+    process_response1_A($db_connection, $patient_id, $day, $ampm);
+  } else {
+    process_response1_B($db_connection, $patient_id, $day, $ampm);
+  }
 
 }
