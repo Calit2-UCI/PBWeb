@@ -79,143 +79,58 @@ $query1->execute();
 
 function process_response3($db_connection, $patient_id, $day, $ampm)
 {
-  $array1 = explode(",", $_POST['response3_medications']);
+  // setup an array to write to db later
+  $query3_array = array();
 
-  $response3_array = array();
+  // Deal with the first 3 medication questions
+  // response3_medications: The responses to the 3 “Have you taken any pain medications since the last diary entry?” questions.
+  // Separate the responses with commas. Use * for not applicable.
+  // ex: 1,some medication,1,3,1,other medication,3,1,0,*,*,*
+  $response3_medications = explode(",", $_POST['response3_medications']);
 
-  // First 3 questions are about medications
   for ($i = 0; $i < 3; ++$i) {
-    $response3_array[$i] = array();
+    $query3_array[$i] = array();
 
     // 1. Have you taken any pain medications since last entry?
-    if (isset($array1[($i * 3)])) {
-      if ($array1[($i * 3)] == "0") {
-        $response3_array[$i][0] = 2;
-      } elseif ($array1[($i * 3)] == "1") {
-        $response3_array[$i][0] = 3;
+    if (isset($response3_medications[$i * 4])) {
+      if ($response3_medications[($i * 4)] == "*") {
+        $query3_array[$i][0] = 1;
+      } elseif ($response3_medications[($i * 4)] == 0) {
+        $query3_array[$i][0] = 2;
+      } elseif ($response3_medications[($i * 4)] == 1) {
+        $query3_array[$i][0] = 3;
       }
     } else {
-      $response3_array[$i][0] = 0;
+      $query3_array[$i][0] = -2;
     }
 
     // 2. What was the name of this medication?
-    if (isset($array1[($i * 3 + 1)])) {
-      $response3_array[$i][1] = $array1[($i * 3 + 1)];
+    if (isset($response3_medications[($i * 4 + 1)])) {
+      if ($response3_medications[($i * 4 + 1)] == "*") {
+        $query3_array[$i][1] = 1;
+      } else {
+        $query3_array[$i][1] = $response3_medications[($i * 4 + 1)];
+      }
     } else {
-      $response3_array[$i][1] = "-2";
+      $query3_array[$i][1] = -2;
     }
 
-    $how_many_questions_r_in_this_group = 4;
     // 3. How many times was this medication taken since last entry?
     // 4. How much did the medication help?
-    for ($j = 2; $j < $how_many_questions_r_in_this_group; ++$j) {
-      if (isset($array1[($i * 3 + $j)])) {
-        if ($array1[($i * 3 + $j)] == "*") {
-          $response1_array[$i][$j] = 1;
-        } elseif (is_numeric($array1[($i * 3 + $j)])) {
-          $response1_array[$i][$j] = $array1[($i * 3 + $j)] + 2;
-        } else {
-          $response1_array[$i][$j] = 0;
+    for ($j = 2; $j < 4; ++$j) {
+      if (isset($response3_medications[($i * 4 + $j)])) {
+        if ($response3_medications[($i * 4 + $j)] == "*") {
+          $query3_array[$i][$j] = 1;
+        } elseif (is_numeric($response3_medications[($i * 4 + $j)])) {
+          $query3_array[$i][$j] = $response3_medications[($i * 4 + $j)] + 2;
         }
       } else {
-        $response1_array[$i][$j] = 0;
+        $query3_array[$i][$j] = -2;
       }
     }
   }
 
-  $array2 = explode(",", $_POST['response3_activty']);
-
-  // next few questions about activities
-  for ($i = 3; $i < 8; ++$i) {
-    $response3_array[$i] = array();
-
-    $eh = $i - 3;
-
-    // 1. have you tried ...
-    if (isset($array2[$eh][0])) {
-      if ($array2[$eh][0] == "0") {
-        $response3_array[$i][0] = 2;
-      } elseif ($array2[$eh][0] == "1") {
-        $response3_array[$i][0] = 3;
-      }
-    } else {
-      $response3_array[$i][0] = 0;
-    }
-
-    // 3. What time was this activity last done?
-    if (isset($array2[$eh][2])) {
-      $response3_array[$i][1] = $array2[$eh][1];
-    } else {
-      $response3_array[$i][1] = "-2";
-    }
-
-    $how_many_questions_r_in_this_group = 4;
-    // 2. How many times was this activity done since the last entry?
-    // 4. How much did this activity help?
-    for ($j = 1; $j < $how_many_questions_r_in_this_group; $j += 2) {
-      if (isset($array2[$eh][$j])) {
-        if ($array2[$eh][$j] == "*") {
-          $response1_array[$i][$j] = 1;
-        } elseif (is_numeric($array2[$eh][$j])) {
-          $response1_array[$i][$j] = $array2[$eh][$j] + 2;
-        } else {
-          $response1_array[$i][$j] = 0;
-        }
-      } else {
-        $response1_array[$i][$j] = 0;
-      }
-    }
-  }
-
-  $array3 = explode(",", $_POST['response3_input']);
-
-  for ($i = 8; $i < 9; ++$i) {
-    $response3_array[$i] = array();
-
-    // 1. Did you do any other activities?
-    if (isset($array3[$i][0])) {
-      if ($array3[$i][0] == "0") {
-        $response3_array[$i][0] = 2;
-      } elseif ($array3[$i][0] == "1") {
-        $response3_array[$i][0] = 3;
-      }
-    } else {
-      $response3_array[$i][0] = 0;
-    }
-
-    // 2. What was the name of this activity?
-    if (isset($array3[$i][2])) {
-      $response3_array[$i][1] = $array1[$i][1];
-    } else {
-      $response3_array[$i][1] = "-2";
-    }
-
-     // 4. What time was this activity last done?
-    if (isset($array3[$i][2])) {
-      $response3_array[$i][1] = $array1[$i][1];
-    } else {
-      $response3_array[$i][1] = "-2";
-    }
-
-    $how_many_questions_r_in_this_group = 4;
-    // 3. How many times was this activity done since the last entry?
-    // 5. How much did this activity help?
-    for ($j = 1; $j < $how_many_questions_r_in_this_group; $j += 2) {
-      if (isset($array3[$i][$j])) {
-        if ($array3[$i][$j] == "*") {
-          $response1_array[$i][$j] = 1;
-        } elseif (is_numeric($array[$i][$j])) {
-          $response1_array[$i][$j] = $array3[$i][$j] + 2;
-        } else {
-          $response1_array[$i][$j] = 0;
-        }
-      } else {
-        $response1_array[$i][$j] = 0;
-      }
-    }
-  }
-
-
+  print_r($query3_array);
 }
 
 if (isset($_POST['patient_id']) && isset($_POST['day']) && isset($_POST['ampm'])) {
