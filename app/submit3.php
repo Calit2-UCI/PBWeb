@@ -62,7 +62,7 @@ $query1 = $db_connection->prepare("CREATE TABLE IF NOT EXISTS `painbuddy`.`secti
 
   `intoth` TINYINT DEFAULT '-2' COMMENT 'Did you do any other activities?',
   `intothnm` VARCHAR(256) DEFAULT '-2' COMMENT 'What was the name of this activity?',
-  `intothn` TINYINT DEFAULT '-2' COMMENT 'How many times was this activity done since the last entry?"
+  `intothn` TINYINT DEFAULT '-2' COMMENT 'How many times was this activity done since the last entry?',
   `intothh` TINYINT DEFAULT '-2' COMMENT 'How much did this activity help?',
   PRIMARY KEY (`response_id`)
   ) AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='patient responses for section 3'");
