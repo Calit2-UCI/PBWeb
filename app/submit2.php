@@ -4,8 +4,7 @@ require_once('../config/config.php');
 
 $db_connection = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASS);
 
-
-$query1 = $db_connection->prepare("CREATE TABLE IF NOT EXISTS `painbuddy`.`section2_APPT` (
+$query2 = $db_connection->prepare("CREATE TABLE IF NOT EXISTS `painbuddy`.`section2_APPT` (
   `response_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'unique id for each question response',
   `patient_id` INT(11) NOT NULL COMMENT 'ID of the patient',
   `day` INT(11) NOT NULL COMMENT 'day number',
@@ -124,7 +123,7 @@ $query1 = $db_connection->prepare("CREATE TABLE IF NOT EXISTS `painbuddy`.`secti
   `input` VARCHAR(255) DEFAULT '*',
   PRIMARY KEY (`response_id`)
   ) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='patient responses for section 1'");
-$query1->execute();
+$query2->execute();
 
 function process_response2($db_connection, $patient_id, $day, $ampm)
 {
@@ -156,7 +155,7 @@ function process_response2($db_connection, $patient_id, $day, $ampm)
     for ($i = 0; $i < 43; ++$i) {
       $query_response->bindValue(':bod' . ($i + 1), $response2_array[$i], PDO::PARAM_STR);
     }
-    for($i = 0; $i <= 66; ++$i){
+    for ($i = 0; $i <= 66; ++$i) {
       $query_response->bindValue($words_array[$i], $response2_words[$i], PDO::PARAM_STR);
     }
     $query_response->bindValue(':input', $response2_input, PDO::PARAM_STR);
@@ -176,8 +175,9 @@ if (isset($_POST['patient_id']) && isset($_POST['day']) && isset($_POST['ampm'])
   if (isset($_POST['response2']) && isset($_POST['response2_words']) && isset($_POST['response2_input'])) {
     process_response2($db_connection, $patient_id, $day, $ampm);
   } else {
-    echo "Error: response2 not set";
+    echo "Error: part of response2 not set";
   }
+
 } else {
   echo "Error: patient_id, day, or ampm not set";
 }

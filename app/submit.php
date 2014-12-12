@@ -682,17 +682,22 @@ function process_response2($db_connection, $patient_id, $day, $ampm, $start_time
   $response2_array = array();
 
   for ($k = 0; $k < 43; ++$k) {
-    $response2_array[$k] = $response2[$k];
 
-    if ($response2_array[$k] == 0) {
-      $response2_array[$k] = '*';
+    if (isset($response2)) {
+      if (is_numeric($response2))
+        $response2_array[$k] = $response2[$k] + 1;
+      elseif ($response2 == "*") {
+        $response2_array[$k] = 0;
+      } else {
+        $response2_array[$k] = -2;
+      }
     } else {
-      $response2_array[$k]++;
+      $response2_array[$k] = -2;
     }
   }
 
-  $response2_query = 'INSERT INTO section2_APPT (patient_id, day, ampm, start_time, completion_time, bod1, bod2, bod3, bod4, bod5, bod6, bod7, bod8, bod9, bod10, bod11, bod12, bod13, bod14, bod15, bod16, bod17, bod18, bod19, bod20, bod21, bod22, bod23, bod24, bod25, bod26, bod27, bod28, bod29, bod30, bod31, bod32, bod33, bod34, bod35, bod36, bod37, bod38, bod39, bod40, bod41, bod42, bod43, `annoy`, `bad`, `horib`, `miser`, `terrib`, `uncom`, `ache`, `hurt`, `lkach`, `lkhrt`, `sore`, `beat`, `hit`, `poun`, `punc`, `throb`, `bitin`, `cutt`, `lkpin`, `lkshar`, `pinlk`, `shar`, `stab`, `blis`, `bur`, `hot`, `cram`, `crus`, `lkpinc`, `pinc`, `pres`, `itch`, `lkscr`, `lkstin`, `scra`, `stin`, `shoc`, `sho`, `spli`, `numb`, `stif`, `swol`, `tight`, `awf`, `dead`, `dyin`, `kil`, `cry`, `frig`, `scream`, `terrif`, `diz`, `sic`, `suf`, `nev`, `uncon`, `alw`, `comgo`, `comsud`, `cons`, `cont`, `for`, `offon`, `oncwhi`, `sneak`, `some`, `stead`, `input`) VALUES';
-  $response2_query .= ' (:patient_id, :day, :ampm, :start_time, :completion_time, :bod1, :bod2, :bod3, :bod4, :bod5, :bod6, :bod7, :bod8, :bod9, :bod10, :bod11, :bod12, :bod13, :bod14, :bod15, :bod16, :bod17, :bod18, :bod19, :bod20, :bod21, :bod22, :bod23, :bod24, :bod25, :bod26, :bod27, :bod28, :bod29, :bod30, :bod31, :bod32, :bod33, :bod34, :bod35, :bod36, :bod37, :bod38, :bod39, :bod40, :bod41, :bod42, :bod43, :annoy, :bad, :horib, :miser, :terrib, :uncom, :ache, :hurt, :lkach, :lkhrt, :sore, :beat, :hit, :poun, :punc, :throb, :bitin, :cutt, :lkpin, :lkshar, :pinlk, :shar, :stab, :blis, :bur, :hot, :cram, :crus, :lkpinc, :pinc, :pres, :itch, :lkscr, :lkstin, :scra, :stin, :shoc, :sho, :spli, :numb, :stif, :swol, :tight, :awf, :dead, :dyin, :kil, :cry, :frig, :scream, :terrif, :diz, :sic, :suf, :nev, :uncon, :alw, :comgo, :comsud, :cons, :cont, :for, :offon, :oncwhi, :sneak, :some, :stead, :input);';
+  $response2_query = 'INSERT INTO section2_APPT (patient_id, dayNum, ampm, start_time, completion_time, bod1, bod2, bod3, bod4, bod5, bod6, bod7, bod8, bod9, bod10, bod11, bod12, bod13, bod14, bod15, bod16, bod17, bod18, bod19, bod20, bod21, bod22, bod23, bod24, bod25, bod26, bod27, bod28, bod29, bod30, bod31, bod32, bod33, bod34, bod35, bod36, bod37, bod38, bod39, bod40, bod41, bod42, bod43, `annoy`, `bad`, `horib`, `miser`, `terrib`, `uncom`, `ache`, `hurt`, `lkach`, `lkhrt`, `sore`, `beat`, `hit`, `poun`, `punc`, `throb`, `bitin`, `cutt`, `lkpin`, `lkshar`, `pinlk`, `shar`, `stab`, `blis`, `bur`, `hot`, `cram`, `crus`, `lkpinc`, `pinc`, `pres`, `itch`, `lkscr`, `lkstin`, `scra`, `stin`, `shoc`, `sho`, `spli`, `numb`, `stif`, `swol`, `tight`, `awf`, `dead`, `dyin`, `kil`, `cry`, `frig`, `scream`, `terrif`, `diz`, `sic`, `suf`, `nev`, `uncon`, `alw`, `comgo`, `comsud`, `cons`, `cont`, `for`, `offon`, `oncwhi`, `sneak`, `some`, `stead`, `input`) VALUES';
+  $response2_query .= ' (:patient_id, :dayNum, :ampm, :start_time, :completion_time, :bod1, :bod2, :bod3, :bod4, :bod5, :bod6, :bod7, :bod8, :bod9, :bod10, :bod11, :bod12, :bod13, :bod14, :bod15, :bod16, :bod17, :bod18, :bod19, :bod20, :bod21, :bod22, :bod23, :bod24, :bod25, :bod26, :bod27, :bod28, :bod29, :bod30, :bod31, :bod32, :bod33, :bod34, :bod35, :bod36, :bod37, :bod38, :bod39, :bod40, :bod41, :bod42, :bod43, :annoy, :bad, :horib, :miser, :terrib, :uncom, :ache, :hurt, :lkach, :lkhrt, :sore, :beat, :hit, :poun, :punc, :throb, :bitin, :cutt, :lkpin, :lkshar, :pinlk, :shar, :stab, :blis, :bur, :hot, :cram, :crus, :lkpinc, :pinc, :pres, :itch, :lkscr, :lkstin, :scra, :stin, :shoc, :sho, :spli, :numb, :stif, :swol, :tight, :awf, :dead, :dyin, :kil, :cry, :frig, :scream, :terrif, :diz, :sic, :suf, :nev, :uncon, :alw, :comgo, :comsud, :cons, :cont, :for, :offon, :oncwhi, :sneak, :some, :stead, :input);';
   $words_array = array(':annoy', ':bad', ':horib', ':miser', ':terrib', ':uncom', ':ache', ':hurt', ':lkach', ':lkhrt', ':sore', ':beat', ':hit', ':poun', ':punc', ':throb', ':bitin', ':cutt', ':lkpin', ':lkshar', ':pinlk', ':shar', ':stab', ':blis', ':bur', ':hot', ':cram', ':crus', ':lkpinc', ':pinc', ':pres', ':itch', ':lkscr', ':lkstin', ':scra', ':stin', ':shoc', ':sho', ':spli', ':numb', ':stif', ':swol', ':tight', ':awf', ':dead', ':dyin', ':kil', ':cry', ':frig', ':scream', ':terrif', ':diz', ':sic', ':suf', ':nev', ':uncon', ':alw', ':comgo', ':comsud', ':cons', ':cont', ':for', ':offon', ':oncwhi', ':sneak', ':some', ':stead');
   $response2_words = $_POST['response2_words'];
   $response2_input = $_POST['response2_input'];
@@ -708,7 +713,7 @@ function process_response2($db_connection, $patient_id, $day, $ampm, $start_time
       $query_response->bindValue(':bod' . ($i + 1), $response2_array[$i], PDO::PARAM_STR);
     }
     for($i = 0; $i <= 66; ++$i){
-      $query_response->bindValue($words_array[$i], $response2_words[$i], PDO::PARAM_STR);
+      $query_response->bindValue($words_array[$i], (isset($response2_words[$i]) ? $response2_words[$i] : "-2"), PDO::PARAM_STR);
     }
     $query_response->bindValue(':input', $response2_input, PDO::PARAM_STR);
     $query_response->execute();
