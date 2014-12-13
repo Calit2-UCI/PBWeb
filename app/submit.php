@@ -3,7 +3,6 @@
 require_once('../config/config.php');
 
 $db_connection = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASS);
-
 $db_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 function process_response1_A($db_connection, $patient_id, $day, $ampm, $start_time, $completion_time)
@@ -308,10 +307,10 @@ function process_response2($db_connection, $patient_id, $day, $ampm, $start_time
   $response2_array = array();
 
   for ($k = 0; $k < 43; ++$k) {
-    if (isset($response2)) {
-      if (is_numeric($response2))
+    if (isset($response2[$k])) {
+      if (is_numeric($response2[$k]))
         $response2_array[$k] = $response2[$k] + 1;
-      elseif ($response2 == "*") {
+      elseif ($response2[$k] == "*") {
         $response2_array[$k] = 0;
       } else {
         $response2_array[$k] = -2;
@@ -321,6 +320,7 @@ function process_response2($db_connection, $patient_id, $day, $ampm, $start_time
     }
   }
 
+  print_r($response2_array);
   $response2_query = "INSERT INTO section2_APPT (patient_id, dayNum, ampm, start_time, completion_time,
       bod1, bod2, bod3, bod4, bod5, bod6, bod7, bod8, bod9, bod10,
       bod11, bod12, bod13, bod14, bod15, bod16, bod17, bod18, bod19, bod20,
@@ -352,11 +352,11 @@ function process_response2($db_connection, $patient_id, $day, $ampm, $start_time
 
   $words_array = array(':annoy', ':bad', ':horib', ':miser', ':terrib', ':uncom', ':ache', ':hurt', ':lkach', ':lkhrt', ':sore', ':beat', ':hit', ':poun', ':punc', ':throb', ':bitin', ':cutt', ':lkpin', ':lkshar', ':pinlk', ':shar', ':stab', ':blis', ':bur', ':hot', ':cram', ':crus', ':lkpinc', ':pinc', ':pres', ':itch', ':lkscr', ':lkstin', ':scra', ':stin', ':shoc', ':sho', ':spli', ':numb', ':stif', ':swol', ':tight', ':awf', ':dead', ':dyin', ':kil', ':cry', ':frig', ':scream', ':terrif', ':diz', ':sic', ':suf', ':nev', ':uncon', ':alw', ':comgo', ':comsud', ':cons', ':cont', ':for', ':offon', ':oncwhi', ':sneak', ':some', ':stead');
   $response2_words = $_POST['response2_words'];
-  $response2_input = $_POST['response2_input'];
+  $response2_input = isset($_POST['response2_input']) ? $_POST['response2_input'] : "-2";
   try {
     $query_response = $db_connection->prepare($response2_query);
     $query_response->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
-    $query_response->bindValue(':DayNum', $day, PDO::PARAM_INT);
+    $query_response->bindValue(':dayNum', $day, PDO::PARAM_INT);
     $query_response->bindValue(':ampm', ($ampm == "am" ? 1 : 2), PDO::PARAM_STR);
     $query_response->bindValue(':start_time', $start_time, PDO::PARAM_STR);
     $query_response->bindValue(':completion_time', $completion_time, PDO::PARAM_STR);
