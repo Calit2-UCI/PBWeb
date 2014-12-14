@@ -376,3 +376,28 @@ $query3 = $db_connection->prepare("CREATE TABLE IF NOT EXISTS `painbuddy`.`secti
   PRIMARY KEY (`response_id`)
   ) AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='patient responses for section 3'");
 $query3->execute();
+
+$query4 = $db_connection->prepare("CREATE TABLE IF NOT EXISTS `painbuddy`.`session_statistics` (
+  `response_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'unique id for each survey',
+  `patient_id` INT(11) NOT NULL COMMENT 'ID of the patient',
+  `DayNum` INT(11) NOT NULL COMMENT 'day number',
+  `ampm` TINYINT NOT NULL COMMENT 'am or pm survey (1=AM, 2=PM)',
+  `submit_time` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'time when survey was submitted (from now() when inserting records into database)',
+
+  `ctrig` TINYINT DEFAULT '0' COMMENT 'triggered CBT  (Yes/No)',
+  `cvis` TINYINT DEFAULT '0' COMMENT 'Visited CBT page (Yes/No)',
+  `cdo` TINYINT DEFAULT '0' COMMENT 'Did user complete triggered CBT audio/video (YES/NO)',
+  `prefv` TINYINT DEFAULT '0' COMMENT 'number of \"save\" to changes',
+  `persv` TINYINT DEFAULT '0' COMMENT 'number times visited personalization page',
+  `backv` TINYINT DEFAULT '0' COMMENT 'number of backgrounds used',
+  `avav` TINYINT DEFAULT '0' COMMENT 'number of avatars used',
+  `coinv` TINYINT DEFAULT '0' COMMENT 'number of visits to coin bank',
+  `messv` TINYINT DEFAULT '0' COMMENT 'number of views to message center',
+  `ccom` TINYINT DEFAULT '0' COMMENT 'number of CBT skills completed',
+  `cses` TINYINT DEFAULT '0' COMMENT 'number of CBT sessions completed',
+  `atrig` TINYINT DEFAULT '0' COMMENT 'total count of algorithm triggers',
+  `sestm` TIME DEFAULT '00:00:00' COMMENT 'total time in session (HH:MM:SS format)',
+  `sesto` TIME DEFAULT '00:00:00' COMMENT 'total time in session not including log outs (HH:MM:SS format)',
+  PRIMARY KEY (`response_id`)
+  ) AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='Session statistics'");
+$query4->execute();
