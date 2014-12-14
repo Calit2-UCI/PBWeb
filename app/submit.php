@@ -3,6 +3,7 @@
 require_once('../config/config.php');
 
 $db_connection = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASS);
+//TODO: remove
 $db_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 function process_response1_A($db_connection, $patient_id, $day, $ampm, $start_time, $completion_time)
@@ -321,7 +322,7 @@ function process_response2($db_connection, $patient_id, $day, $ampm, $start_time
   }
 
   print_r($response2_array);
-  $response2_query = "INSERT INTO section2_APPT (patient_id, dayNum, ampm, start_time, completion_time,
+  $response2_query = "INSERT INTO section2_APPT (patient_id, DayNum, ampm, start_time, completion_time,
       bod1, bod2, bod3, bod4, bod5, bod6, bod7, bod8, bod9, bod10,
       bod11, bod12, bod13, bod14, bod15, bod16, bod17, bod18, bod19, bod20,
       bod21, bod22, bod23, bod24, bod25, bod26, bod27, bod28, bod29, bod30,
@@ -335,7 +336,7 @@ function process_response2($db_connection, $patient_id, $day, $ampm, $start_time
       `tight`, `awf`, `dead`, `dyin`, `kil`, `cry`, `frig`, `scream`, `terrif`,
       `diz`, `sic`, `suf`, `nev`, `uncon`, `alw`, `comgo`, `comsud`, `cons`,
       `cont`, `for`, `offon`, `oncwhi`, `sneak`, `some`, `stead`, `input`)
-       VALUES (:patient_id, :dayNum, :ampm, :start_time, :completion_time,
+       VALUES (:patient_id, :DayNum, :ampm, :start_time, :completion_time,
        :bod1, :bod2, :bod3, :bod4, :bod5, :bod6, :bod7, :bod8, :bod9, :bod10,
        :bod11, :bod12, :bod13, :bod14, :bod15, :bod16, :bod17, :bod18, :bod19, :bod20,
        :bod21, :bod22, :bod23, :bod24, :bod25, :bod26, :bod27, :bod28, :bod29, :bod30,
@@ -356,7 +357,7 @@ function process_response2($db_connection, $patient_id, $day, $ampm, $start_time
   try {
     $query_response = $db_connection->prepare($response2_query);
     $query_response->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
-    $query_response->bindValue(':dayNum', $day, PDO::PARAM_INT);
+    $query_response->bindValue(':DayNum', $day, PDO::PARAM_INT);
     $query_response->bindValue(':ampm', ($ampm == "am" ? 1 : 2), PDO::PARAM_STR);
     $query_response->bindValue(':start_time', $start_time, PDO::PARAM_STR);
     $query_response->bindValue(':completion_time', $completion_time, PDO::PARAM_STR);
