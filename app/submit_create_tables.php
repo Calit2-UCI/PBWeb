@@ -240,6 +240,13 @@ $query2 = $db_connection->prepare("CREATE TABLE IF NOT EXISTS `painbuddy`.`secti
   `bod41` TINYINT DEFAULT '-2',
   `bod42` TINYINT DEFAULT '-2',
   `bod43` TINYINT DEFAULT '-2',
+  `totlnum` TINYINT DEFAULT '0',
+
+  `wgr` TINYINT DEFAULT '-2',
+  `wgra` TINYINT DEFAULT '-2',
+  `wgrw` TINYINT DEFAULT '-2',
+  `wgrl` TINYINT DEFAULT '-2',
+
   `annoy` TINYINT DEFAULT '-2',
   `bad` TINYINT DEFAULT '-2',
   `horib` TINYINT DEFAULT '-2',
@@ -307,7 +314,19 @@ $query2 = $db_connection->prepare("CREATE TABLE IF NOT EXISTS `painbuddy`.`secti
   `sneak` TINYINT DEFAULT '-2',
   `some` TINYINT DEFAULT '-2',
   `stead` TINYINT DEFAULT '-2',
-  `input` VARCHAR(255) DEFAULT '*',
+  `none` TINYINT DEFAULT '-2',
+  `totlnumb` TINYINT DEFAULT '0',
+
+  `othpain` TINYINT DEFAULT '-2',
+  `othpain1` VARCHAR(256) DEFAULT '*',
+  `othpain2` VARCHAR(256) DEFAULT '*',
+  `othpain3` VARCHAR(256) DEFAULT '*',
+
+  `totlsens` TINYINT DEFAULT '0',
+  `totlaffe` TINYINT DEFAULT '0',
+  `totleval` TINYINT DEFAULT '0',
+  `totltemp` TINYINT DEFAULT '0',
+
   PRIMARY KEY (`response_id`)
   ) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='patient responses for section 1'");
 $query2->execute();
