@@ -328,7 +328,7 @@ $query2 = $db_connection->prepare("CREATE TABLE IF NOT EXISTS `painbuddy`.`secti
   `totltemp` TINYINT DEFAULT '0',
 
   PRIMARY KEY (`response_id`)
-  ) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='patient responses for section 1'");
+  ) AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='patient responses for section 2'");
 $query2->execute();
 
 $query3 = $db_connection->prepare("CREATE TABLE IF NOT EXISTS `painbuddy`.`section3_intervention` (

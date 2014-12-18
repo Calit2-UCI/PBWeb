@@ -321,7 +321,22 @@ function process_response2($db_connection, $patient_id, $day, $ampm, $start_time
     }
   }
 
-  $response2_wgr = explode(",", $_POST['response2_wgr']);
+  $wgr = $_POST['response2_wgr'];
+  $response2_wgr = array();
+
+  for ($i = 0; $i < 4; ++$i) {
+    if (isset($wgr[$i])) {
+      if (is_numeric($wgr[$i])) {
+        $response2_wgr[$i] = $wgr[$i] + 1;
+      } elseif ($wgr[$i] == "*") {
+        $response2_wgr[$i] = 0;
+      } else {
+        $response2_wgr[$i] = "-2";
+      }
+    } else {
+      $response2_wgr[$i] = "-2";
+    }
+  }
 
   $response2_words = $_POST['response2_words'];
   $response2_input = explode(",", $_POST['response2_input']);
