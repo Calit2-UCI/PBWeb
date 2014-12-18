@@ -308,16 +308,10 @@ function process_response2($db_connection, $patient_id, $day, $ampm, $start_time
   $response2_array = array();
 
   for ($k = 0; $k < 43; ++$k) {
-    if (isset($response2[$k])) {
-      if (is_numeric($response2[$k]))
-        $response2_array[$k] = $response2[$k] + 1;
-      elseif ($response2[$k] == "*") {
-        $response2_array[$k] = 0;
-      } else {
-        $response2_array[$k] = -2;
-      }
+    if ($response2[$k] == 1 || $response2[$k] == 0) {
+      $response2_array[$k] = $response2[$k];
     } else {
-      $response2_array[$k] = -2;
+      $response2_array[$k] = -1;
     }
   }
 
