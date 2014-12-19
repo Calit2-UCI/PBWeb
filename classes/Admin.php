@@ -66,7 +66,7 @@ class Admin
     } elseif (isset($_POST["admin_edit_submit_patient_age"])) {
       $this->editPatientAge($_POST['admin_edit_submit_patient_age'], $_POST['patient_age']);
     } elseif (isset($_POST["delete_confirm"])) {
-      $this->confirmDelete($_POST['user_password'], $_SESSION['delete_confirm']);
+      $this->confirmDelete($_POST['user_password'], $_SESSION['delete_confirm'], $_SESSION["delete_type"]);
     }
   }
 
@@ -197,11 +197,8 @@ class Admin
         <td>{$email}</td>
         <td><a href=\"?edit_user={$id}\" class=\"button secondary tiny\">Edit</a></td>
         <td>";
-          if ($id != 1) {
-            echo "<form method=\"post\">
-            <button type=\"submit\"  name=\"delete_user_id\" value=\"{$id}\" class=\"button secondary tiny\"
-            onclick=\"return confirm('Are you sure you would like to delete {$first_name} {$last_name}?');\">Delete</button>
-          </form>";
+          if ($type == 0) {
+            echo "<a href=\"?delete_HCP={$id}\" class=\"button secondary tiny\">Delete</a>";
         }
         echo "</td>
       </tr>";
@@ -524,7 +521,7 @@ class Admin
         <td>{$last_name}</td>
         <td>{$doctor}</td>
         <td><a href=\"?edit_patient={$patient_id}\" class=\"button secondary tiny\">Edit</a></td>
-        <td><a href=\"?delete_confirm={$patient_id}\" class=\"button secondary tiny\">Delete</a></td>
+        <td><a href=\"?delete_patient={$patient_id}\" class=\"button secondary tiny\">Delete</a></td>
 
 
         </form>
@@ -801,7 +798,12 @@ class Admin
     }
   }
 
-  private function confirmDelete($user_password, $id){
+  /**
+   * @param $user_password
+   * @param $id
+   * @param $type 1 = patient, 2 = HCP
+   */
+  private function confirmDelete($user_password, $id, $type){
     if (empty($user_password)) {
       $this->errors[] = MESSAGE_PASSWORD_EMPTY;
       // if POST data (from login form) contains non-empty user_name and non-empty user_password
@@ -820,21 +822,35 @@ class Admin
       if ($this->databaseConnection()) {
       // try to update user with specified information
 
-        $query = $this->db_connection->prepare('DELETE FROM patients WHERE patient_id = :patient_id');
-        $query->bindValue(':patient_id', intval(trim($id)), PDO::PARAM_INT);
+        if ($type == 2) { // HCP
+          // Check to make sure HCP doesn't have any patients assigned to them
+          $check = $this->db_connection->prepare('SELECT patient_id FROM patients WHERE doctor_id=:doctor_id');
+          $check->bindValue(':doctor_id', intval(trim($id)), PDO::PARAM_INT);
+          $check->execute();
+
+          if ($check->rowCount() > 0) {
+            $this->errors[] = "HCP is assigned to patients; unable to delete";
+            return;
+          } else {
+            $query = $this->db_connection->prepare('DELETE FROM users WHERE user_id = :user_id');
+            $query->bindValue(':user_id', intval(trim($id)), PDO::PARAM_INT);
+          }
+        } else { //
+          $query = $this->db_connection->prepare('DELETE FROM patients WHERE patient_id = :patient_id');
+          $query->bindValue(':patient_id', intval(trim($id)), PDO::PARAM_INT);
+        }
+
         $query->execute();
 
         if ($query->rowCount() > 0) {
-          $this->messages[] = "Patient successfully deleted";
-
+          $this->messages[] = (($type == 2) ? "HCP" : "Patient") . " successfully deleted";
         } else {
-          $this->errors[] = "Patient not deleted";
+          $this->errors[] = (($type == 2) ? "HCP" : "Patient") . " not deleted";
         }
       }
     } else {
       $this->errors[] = MESSAGE_PASSWORD_WRONG;
-        // has the user activated their account with the verification email
-    } 
+    }
   }
 }
 
