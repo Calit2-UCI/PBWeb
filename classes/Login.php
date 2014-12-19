@@ -270,6 +270,14 @@ class Login
             }
           }
         }
+
+        // Redirect to page the user was intending to go to
+        // TODO: test this stuff - things may break because of this, idk what
+        // Behaviour may be weird if user tries to go into an admin page but logs in with HCP account
+        // TODO: fixeh
+        if (isset($_GET['location'])) {
+          header("Location: " . $_GET['location']);
+        }
       }
     }
   }

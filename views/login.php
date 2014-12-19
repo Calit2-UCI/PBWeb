@@ -10,7 +10,7 @@
     <br>
 
     <div class="small-10 large-6 small-centered columns">
-      <form method="post" action="index.php" name="loginform">
+      <form method="post" action="index.php?location=<?php echo urlencode($_SERVER['REQUEST_URI']);?>" name="loginform">
         <div class="row">
           <label for="user_name"><?php echo WORDING_USERNAME; ?></label>
           <input id="user_name" type="text" name="user_name" required placeholder="Username"/>
