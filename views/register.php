@@ -1,4 +1,4 @@
-<?php include(dirname(__FILE__) . '_header.php'); ?>
+<?php include(dirname(__FILE__) . '/_header.php'); ?>
 
 <div class="medium-9 large-7 small-centered columns">
   <div class="panel">
@@ -84,4 +84,4 @@
   </div>
 </div>
 
-<?php include(dirname(__FILE__) . '_footer.php'); ?>
+<?php include(dirname(__FILE__) . '/_footer.php'); ?>
