@@ -1,4 +1,4 @@
-<?php include('/views/_header.php'); ?>
+<?php include(dirname(__FILE__) . '/../_header.php'); ?>
 
 <div class="row">
   <div class="large-14 columns">
@@ -16,6 +16,7 @@
 
       <br>
       <br>
+
       <div class="row">
         <a href="index.php" class="button expand">Menu</a>
       </div>
@@ -26,10 +27,10 @@
 
 
 <script>
-  $(document).ready(function()
-  {
-    $("#myTable").tablesorter();
-  }
+  $(document).ready(function () {
+      $("#myTable").tablesorter();
+    }
   );
 </script>
-<?php include('/views/_footer.php'); ?>
+
+<?php include(dirname(__FILE__) . '/../_footer.php'); ?>

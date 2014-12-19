@@ -1,4 +1,4 @@
-<?php include('/views/_header.php'); ?>
+<?php include(dirname(__FILE__) . '/../_header.php'); ?>
 
 <div class="row">
   <div class="large-14 columns">
@@ -61,4 +61,4 @@
   );
 </script>
 
-<?php include('/views/_footer.php'); ?>
+<?php include(dirname(__FILE__) . '/../_footer.php'); ?>
