@@ -1,8 +1,12 @@
 <?php
 require_once('../config/config.php');
+$db_connection = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASS);
+// TODO: remove this
+$db_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 $patient_id = $_POST['patient_id'];
 
+// TODO: stick all words into one array so that everything is easier
 $totin = $_POST['totin'];
 $totout = $_POST['totout'];
 $tottim = $_POST['tottim'];
@@ -42,7 +46,6 @@ $totcoin = $_POST['totcoin'];
 $totmess = $_POST['totmess'];
 
 try {
-  $db_connection = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASS);
 
   $query = $db_connection->prepare('UPDATE patients SET totin=:totin, totout=:totout, tottim=:tottim, totinc=:totinc,
   totlog=:totlog, tottrig=:tottrig, totccom=:totccom, totcses=:totcses, totcself=:totcself, totlogtm=:totlogtm, tothour=:tothour,
