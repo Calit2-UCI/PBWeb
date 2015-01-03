@@ -12,7 +12,6 @@
       <h3>Patient List</h3>
 
       <p><?php $patient->showPatientOverview(); ?></p>
-      <a href="?export_all">Export all data</a>
 
       <br>
       <br>

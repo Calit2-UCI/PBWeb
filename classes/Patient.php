@@ -105,13 +105,13 @@ class Patient
         $patient_id = $row['patient_id'];
         $first_name = $row['first_name'];
         $last_name = $row['last_name'];
-        // $num_alerts = $this->getNumberAlerts($patient_id);
+        $num_alerts = $this->getNumberAlerts($patient_id);
 
         echo "<tr>
                 <td>{$patient_id}</td>
                 <td>{$first_name}</td>
                 <td>{$last_name}</td>
-                <td>0</td>
+                <td>{$num_alerts}</td>
                 <td><a href=\"patient_details.php?patient_id={$patient_id}\" class=\"button secondary tiny\">Info</a></td>
               </tr>";
       }
@@ -136,11 +136,10 @@ class Patient
   public function getNumberAlerts($patient_id)
   {
     $this->databaseConnection();
-    //$query = $this->db_connection->prepare('SELECT user_alerts FROM patients WHERE id=:patient_id');
-    //$query->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
-    //$query->execute();
-
-    return 0;
+    $query = $this->db_connection->prepare('SELECT COUNT(*) FROM HCP_alerts WHERE patient_id=:patient_id AND hcp_acknowledged=0');
+    $query->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
+    $query->execute();
+    return $query->fetch()[0];
   }
 
   public function exportAllPatientData()
