@@ -64,9 +64,9 @@ try {
     foreach ($alerts as $alert) {
         $message = "Alert: Patient " . $alert['first_name'] . " " . $alert['last_name'] . " (ID: " . $alert['patient_id'] . ") who is enrolled in the Pain Buddy study has had " . $alert['message'] . ". Please contact patient as soon as possible to follow up. You can follow this link to review the patient’s symptoms and information: http://buddy.calplug.uci.edu/patient_details.php?patient_id=" . $alert['patient_id'];
 
-        echo $alert['user_email'];
-        echo $message;
-        echo "\n";
+        echo "Email: " . $alert['user_email'] . "\n";
+        echo "Message: " . $message . "\n";
+        echo "----------------------------------------------\n";
 
         if (sendEmail($alert['user_email'], "Painbuddy Alert", $message)){
             $query = $db_connection->prepare("UPDATE HCP_alerts SET email_sent=1 WHERE id=:id");

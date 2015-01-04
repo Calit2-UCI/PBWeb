@@ -70,6 +70,8 @@ $ampm = $_POST['ampm'];
 
 // Do some checking of the alert string
 $alert_array = explode(",", $_POST['alerts']);
+
+// TODO: maybe get these from the alert codes table?
 if ($age_group == "b") {
     $codes = array('p/1', 't/3', 'i/3', 'v/3', 's/5', 'f/5', 'w/5');
 } else {
