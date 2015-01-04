@@ -10,11 +10,9 @@
   <div class="large-14 columns">
     <div class="callout panel">
       <p><?php $patient->doPatientLookup($_GET['patient_id']); ?></p>
-    </div>
-    <div class="callout panel">
-      <h3>Current responses Table</h3>
+      <h4>Alerts</h4>
 
-      <p><?php $patient->getPatientResponses($_GET['patient_id']); ?></p>
+      <p><?php $patient->printAlertsTable($_GET['patient_id'], 0); ?></p>
 
       <div class="row">
         <a href="patient.php" class="button expand">Back To Patient List</a>

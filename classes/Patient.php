@@ -66,12 +66,12 @@ class Patient
       if ($query->rowCount() == 1) {
         $patient_overview = $query->fetch();
         echo "<h3>Information for {$patient_overview['first_name']} {$patient_overview['last_name']}</h3>";
-        echo "<b>Age: </b> {$patient_overview['age']} <br>";
-        echo "<b>Total Logins: </b> {$patient_overview['totin']} <br>";
-        echo "<b>Total Logouts: </b> {$patient_overview['totout']} <br>";
-        echo "<b>Total session timeouts: </b> {$patient_overview['tottim']} <br>";
-        echo "<b>Total number of incomplete diaries: </b> {$patient_overview['totinc']} <br>";
-        echo "<b>Total number of days logged on: </b> {$patient_overview['totlog']} <br>";
+//        echo "<b>Age: </b> {$patient_overview['age']} <br>";
+//        echo "<b>Total Logins: </b> {$patient_overview['totin']} <br>";
+//        echo "<b>Total Logouts: </b> {$patient_overview['totout']} <br>";
+//        echo "<b>Total session timeouts: </b> {$patient_overview['tottim']} <br>";
+//        echo "<b>Total number of incomplete diaries: </b> {$patient_overview['totinc']} <br>";
+//        echo "<b>Total number of days logged on: </b> {$patient_overview['totlog']} <br>";
       } else {
         echo "Invalid Patient";
       }
@@ -178,50 +178,50 @@ class Patient
     }
   }
 
-  public function getPatientResponses($patient_id) {
-    $query3 = $this->db_connection->prepare('SELECT * FROM tg_test_responses1 WHERE patient_id=:patient_id');
-    $query3->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
-    $query3->execute();
+  /**
+   * Displays the HCP alerts table
+   * @param $patient_id id of the patient
+   * @param $status 1 for acknowledged alerts, 0 for unacknowledged
+   */
+  public function printAlertsTable($patient_id, $status)
+  {
+    $this->databaseConnection();
+    $query = $this->db_connection->prepare('SELECT a.DayNum, a.ampm, b.message FROM HCP_alerts a
+              INNER JOIN alert_codes b ON a.age_group=b.age_group AND a.code=b.alert_code
+              WHERE patient_id=:patient_id AND hcp_acknowledged=:hcp_acknowledged');
+    $query->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
+    $query->bindValue(':hcp_acknowledged', $status, PDO::PARAM_INT);
+    $query->execute();
 
-    if ($query3->rowCount() > 0) {
-      $result = $query3->fetchAll();
-      echo "<table>";
+    if ($query->rowCount() > 0) {
+      $result = $query->fetchAll();
+      echo '<table id="myTable" class="tablesorter" style="table-layout: fixed; width: 100%">';
+      echo '<thead>';
       echo "<tr>
-          <th>Completion Time</th>
-          <th>Submit Time</th>
-          <th>Question Number</th>
-          <th>Major</th>
-          <th>Minor 1</th>
-          <th>Minor 2</th>
-          <th>Minor 3</th>
-        </tr>";
-
+              <th>DayNum</th>
+              <th>Time</th>
+              <th>Message</th>
+            </tr>";
+      echo '</thead>';
+      echo '<tbody>';
       foreach ($result as $row) {
-        $completion_time = $row['completion_time'];
-        $submit_time = $row['submit_time'];
-        $question_number = $row['question_number'];
-        $major = $row['major'];
-        $minor1 = $row['minor1'];
-        $minor2 = $row['minor2'];
-        $minor3 = $row['minor3'];
+        $dayNum = $row['dayNum'];
+        $time = $row['ampm'];
+        $message = $row['ampm'];
 
 
         echo "<tr>
-            <td>{$completion_time}</td>
-            <td>{$submit_time}</td>
-            <td>{$question_number}</td>
-            <td>{$major}</td>
-            <td>{$minor1}</td>
-            <td>{$minor2}</td>
-            <td>{$minor3}</td>
-          </tr>";
+                <td>{$dayNum}</td>
+                <td>{$time}</td>
+                <td>{$message}</td>
+              </tr>";
       }
-
+      echo '<tbody>';
       echo "</table>";
     } else {
-      echo "Nothing here";
+      echo "No Alerts";
     }
-
   }
+
 }
 ?>
