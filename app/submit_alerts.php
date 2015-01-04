@@ -89,7 +89,7 @@ foreach ($alert_array as $alert_code) {
             $query->bindValue(':code', $alert_code, PDO::PARAM_STR);
             $query->execute();
             if ($query->rowCount() > 0) {
-                echo "Alert messages written to table. Emails will now be sent";
+                echo "Alert written to database.\n";
             } else {
                 echo "An error occurred while writing codes to database";
             }
