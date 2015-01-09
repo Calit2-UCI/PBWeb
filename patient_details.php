@@ -39,11 +39,17 @@ $patient = new Patient();
 // ... ask if we are logged in here:
 if ($login->isUserLoggedIn() == true) {
   // Just for debugging purposes
-//    if ($patient->isValidId($_GET['patient_id'])) {
-        include("views/HCP/patient_detail.php");
-//    } else {
-//        include("views/patient_access.php");
-//    }
+    if (/*$patient->isValidId($_GET['patient_id'])*/ 1 == 1) {
+        if (isset($_GET['alert_table'])){
+            // AJAX request in Patient Info page to update alert table
+            // $_GET['alert_table'] stores the patient id
+            $patient->printAlertsTable($_GET['alert_table'], 0);
+        } else {
+            include("views/HCP/patient_detail.php");
+        }
+    } else {
+        include("views/patient_access.php");
+    }
 } else {
     // the user is not logged in. you can do whatever you want here.
     // for demonstration purposes, we simply show the "you are not logged in" view.
