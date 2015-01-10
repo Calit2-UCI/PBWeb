@@ -40,15 +40,20 @@ $patient = new Patient();
 if ($login->isUserLoggedIn() == true) {
   // Just for debugging purposes
     if (/*$patient->isValidId($_GET['patient_id'])*/ 1 == 1) {
-        if (isset($_GET['alert_table'])){
+        if (isset($_GET['alert_table']) && ($_GET['type'] == 1 || $_GET['type'] == 0) ){
             // AJAX request in Patient Info page to update alert table
             // $_GET['alert_table'] stores the patient id
-            $patient->printAlertsTable($_GET['alert_table'], 0);
-        } else {
+            // $_GET['type'] is 0 to get active alerts, 1 to get dismissed ones
+            $patient->printAlertsTable($_GET['alert_table'], $_GET['type']);
+        } elseif (isset($_POST['dismiss_alert'])){
+            // AJAX request in Patient Info page to dismiss an alert
+            // $_POST['dismiss_alert'] stores the alert id
+            $patient->dismissAlert($_POST['dismiss_alert']);
+        } else  {
             include("views/HCP/patient_detail.php");
         }
     } else {
-        include("views/patient_access.php");
+        include("views/HCP/patient_access.php");
     }
 } else {
     // the user is not logged in. you can do whatever you want here.

@@ -186,7 +186,7 @@ class Patient
   public function printAlertsTable($patient_id, $status)
   {
     $this->databaseConnection();
-    $query = $this->db_connection->prepare('SELECT a.DayNum, a.ampm, b.message FROM HCP_alerts a
+    $query = $this->db_connection->prepare('SELECT a.id, a.DayNum, a.ampm, b.message FROM HCP_alerts a
               INNER JOIN alert_codes b ON a.age_group=b.age_group AND a.code=b.alert_code
               WHERE a.patient_id=:patient_id AND a.hcp_acknowledged=:hcp_acknowledged');
     $query->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
@@ -197,30 +197,64 @@ class Patient
       $result = $query->fetchAll();
       echo '<table id="myTable" class="tablesorter" style="table-layout: fixed; width: 100%">';
       echo '<thead>';
-      echo "<tr>
+      if ($status == 0) {
+        echo "<tr>
+              <th>DayNum</th>
+              <th>Time</th>
+              <th>Message</th>
+              <th>Dismiss</th>
+            </tr>";
+      } else {
+        echo "<tr>
               <th>DayNum</th>
               <th>Time</th>
               <th>Message</th>
             </tr>";
+      }
       echo '</thead>';
       echo '<tbody>';
 
       foreach ($result as $row) {
+        $alert_id = $row['id'];
         $dayNum = $row['DayNum'];
         $time = $row['ampm'] == 1 ? "am" : "pm";
         $message = $row['message'];
 
-        echo "<tr>
+        if ($status == 0) {
+          echo "<tr>
+                <td>{$dayNum}</td>
+                <td>{$time}</td>
+                <td>{$message}</td>
+                <td><button class=\"tiny\" onclick=\"dismissAlert({$alert_id})\">Dismiss</button></td>
+              </tr>";
+        } else {
+          echo "<tr>
                 <td>{$dayNum}</td>
                 <td>{$time}</td>
                 <td>{$message}</td>
               </tr>";
+        }
       }
       echo '<tbody>';
       echo "</table>";
     } else {
       echo "No Alerts";
     }
+  }
+
+  public function dismissAlert($alert_id)
+  {
+    $this->databaseConnection();
+    $query = $this->db_connection->prepare("UPDATE HCP_alerts SET hcp_acknowledged=1 WHERE id=:id");
+    $query->bindValue(':id', $alert_id, PDO::PARAM_INT);
+    $query->execute();
+
+    if ($query->rowCount() == 1) {
+      echo "Alert Dismissed";
+    } else {
+      echo "Error: not dismissed";
+    }
+
   }
 
 }

@@ -10,9 +10,13 @@
   <div class="large-14 columns">
     <div class="callout panel">
       <p><?php $patient->doPatientLookup($_GET['patient_id']); ?></p>
-      <h4>Alerts</h4>
+      <h4>Active Alerts</h4>
 
-      <p id="alerts"></p>
+      <p id="active_alerts"></p>
+
+      <h4>Dismissed Alerts</h4>
+
+      <p id="dismissed_alerts"></p>
 
       <div class="row">
         <a href="patient.php" class="button expand">Back To Patient List</a>
@@ -25,12 +29,24 @@
 </div>
 
 <script>
-  $(document).ready(function(){
-    // make sure we get updated table
+  $(document).ready(updateAlertsTables());
+
+  function updateAlertsTables() {
+    // make sure we get updated table (not a cached copy)
     var nocache = new Date().getTime();
-    $.get("patient_details.php?alert_table=" + <?php echo $_GET['patient_id']; ?> + "?q=" + nocache,function(data){
-      $("#alerts").html(data);
+    $.get("patient_details.php?alert_table=" + <?php echo $_GET['patient_id']; ?> + "&type=0&q=" + nocache,function(data){
+      $("#active_alerts").html(data);
     });
-  });
+    $.get("patient_details.php?alert_table=" + <?php echo $_GET['patient_id']; ?> + "&type=1&q=" + nocache,function(data){
+      $("#dismissed_alerts").html(data);
+    });
+  }
+
+  function dismissAlert(alertId) {
+    $.post("patient_details.php", {dismiss_alert: alertId}, function(data){
+      alert(data);
+      updateAlertsTables();
+    });
+  }
 </script>
 <?php include(dirname(__FILE__) . '/../_footer.php'); ?>
