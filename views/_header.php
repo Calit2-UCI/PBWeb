@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="css/foundation.css" />
   <script src="js/vendor/modernizr.js"></script>
   <script src="js/vendor/jquery.js"></script>
+  <script src="js/vendor/highcharts.js"></script>
 
   <script type="text/javascript" src="js/jquery.tablesorter.min.js"></script>
 </head>

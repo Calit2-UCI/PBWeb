@@ -13,20 +13,55 @@
       <h4>Active Alerts</h4>
 
       <p id="active_alerts"></p>
+    </div>
+
+    <div id="container" class="callout panel">
+    </div>
+
+    <div class="callout panel">
 
       <h4>Dismissed Alerts</h4>
 
       <p id="dismissed_alerts"></p>
 
-      <div class="row">
-        <a href="patient.php" class="button expand">Back To Patient List</a>
-      </div>
-      <div class="row">
-        <a href="index.php" class="button expand">Menu</a>
-      </div>
+    </div>
+
+    <div class="row">
+      <a href="patient.php" class="button expand">Back To Patient List</a>
+    </div>
+    <div class="row">
+      <a href="index.php" class="button expand">Menu</a>
     </div>
   </div>
 </div>
+
+<script>
+  $(function () {
+    $('#container').highcharts({
+      chart: {
+        type: 'bar'
+      },
+      title: {
+        text: 'Fruit Consumption'
+      },
+      xAxis: {
+        categories: ['Apples', 'Bananas', 'Oranges']
+      },
+      yAxis: {
+        title: {
+          text: 'Fruit eaten'
+        }
+      },
+      series: [{
+        name: 'Jane',
+        data: [1, 0, 4]
+      }, {
+        name: 'John',
+        data: [5, 7, 3]
+      }]
+    });
+  });
+</script>
 
 <script>
   $(document).ready(updateAlertsTables());
