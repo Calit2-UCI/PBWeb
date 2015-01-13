@@ -49,7 +49,9 @@ if ($login->isUserLoggedIn() == true) {
             // AJAX request in Patient Info page to dismiss an alert
             // $_POST['dismiss_alert'] stores the alert id
             $patient->dismissAlert($_POST['dismiss_alert']);
-        } else  {
+        } elseif (isset($_GET['json'])) {
+            echo $patient->MSASToJSON($_GET['json']);
+        } else {
             include("views/HCP/patient_detail.php");
         }
     } else {

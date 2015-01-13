@@ -257,5 +257,14 @@ class Patient
 
   }
 
+  public function MSASToJSON($patient_id)
+  {
+    $this->databaseConnection();
+    $query = $this->db_connection->prepare('select start_time, dayNum, ampm, conoft, consev, conboth from painbuddy.section1_msas_10_18 WHERE patient_id=:patient_id ORDER BY start_time');
+    $query->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
+    $query->execute();
+
+    return json_encode($query->fetchAll(PDO::FETCH_ASSOC));
+  }
 }
 ?>
