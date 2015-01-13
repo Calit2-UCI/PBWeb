@@ -275,7 +275,7 @@ class Login
         // TODO: test this stuff - things may break because of this, idk what
         // Behaviour may be weird if user tries to go into an admin page but logs in with HCP account
         // TODO: fixeh
-        if (isset($_GET['location']) && parse_url($_GET['location'])['query'] != "logout") {
+        if (isset($_GET['location']) && isset(parse_url($_GET['location'])['query']) && parse_url($_GET['location'])['query'] != "logout") {
           header("Location: " . $_GET['location']);
           die();
         }
