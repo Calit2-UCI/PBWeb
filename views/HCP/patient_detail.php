@@ -13,6 +13,10 @@
       <h4>Active Alerts</h4>
 
       <p id="active_alerts"></p>
+
+      <div align="right">
+          <button class="secondary tiny" onclick="updateAlertsTables()">Refresh</button>
+      </div>
     </div>
 
     <div id="container" class="callout panel">
@@ -64,7 +68,9 @@
 </script>
 
 <script>
-  $(document).ready(updateAlertsTables());
+  $(document).ready(function() {
+    updateAlertsTables()
+  });
 
   function updateAlertsTables() {
     // make sure we get updated table (not a cached copy)

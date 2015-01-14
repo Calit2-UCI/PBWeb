@@ -188,7 +188,8 @@ class Patient
     $this->databaseConnection();
     $query = $this->db_connection->prepare('SELECT a.id, a.DayNum, a.ampm, b.message FROM HCP_alerts a
               INNER JOIN alert_codes b ON a.age_group=b.age_group AND a.code=b.alert_code
-              WHERE a.patient_id=:patient_id AND a.hcp_acknowledged=:hcp_acknowledged');
+              WHERE a.patient_id=:patient_id AND a.hcp_acknowledged=:hcp_acknowledged
+              ORDER BY a.DayNum, a.ampm');
     $query->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
     $query->bindValue(':hcp_acknowledged', $status, PDO::PARAM_INT);
     $query->execute();
