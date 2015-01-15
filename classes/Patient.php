@@ -155,6 +155,26 @@ class Patient
 
   }
 
+  public function showSymptoms()
+  {
+    echo "<label>Symptom<select id=\"symptom_selector\">";
+    if ($this->age >= 10) {
+        echo '
+        <option value="conc">Concentration</option>
+        <option value="pain">Pain</option>
+        <option value="ener">Energy</option>
+        <option value="coug">Cough</option>
+        <option value="nerv">Nervous</option>
+        ';
+    } else {
+        echo '
+        <option value="pain7">Pain</option>
+        <option value="tired7">Tired</option>
+        ';
+    }
+    echo "</select></label>";
+  }
+
   public function MSASToJSON($symptom)
   {
 

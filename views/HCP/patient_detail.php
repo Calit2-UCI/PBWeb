@@ -12,8 +12,6 @@
       <p></p>
       <h4>Active Alerts</h4>
 
-
-
       <p id="active_alerts"></p>
 
       <div align="right">
@@ -21,7 +19,11 @@
       </div>
     </div>
 
-    <div id="container" class="callout panel">
+    <div class="callout panel">
+      <?php $patient->showSymptoms(); ?>
+      <div id="container">
+
+      </div>
     </div>
 
     <div class="callout panel">
