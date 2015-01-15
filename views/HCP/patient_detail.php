@@ -2,15 +2,17 @@
 
 <div class="row">
   <div class="large-14 columns">
-    <h1>Patient Information</h1>
+    <h1><?php echo $patient->getFullName(); ?> - Patient Information</h1>
   </div>
 </div>
 
 <div class="row">
   <div class="large-14 columns">
     <div class="callout panel">
-      <p><?php $patient->doPatientLookup($_GET['patient_id']); ?></p>
+      <p></p>
       <h4>Active Alerts</h4>
+
+
 
       <p id="active_alerts"></p>
 
@@ -75,17 +77,18 @@
   function updateAlertsTables() {
     // make sure we get updated table (not a cached copy)
     var nocache = new Date().getTime();
-    $.get("patient_details.php?alert_table=" + <?php echo $_GET['patient_id']; ?> + "&type=0&q=" + nocache,function(data){
+    $.get("patient_details.php?patient_id=" + <?php echo $_GET['patient_id']; ?> + "&alert_table=0&q=" + nocache,function(data){
       $("#active_alerts").html(data);
     });
-    $.get("patient_details.php?alert_table=" + <?php echo $_GET['patient_id']; ?> + "&type=1&q=" + nocache,function(data){
+    $.get("patient_details.php?patient_id=" + <?php echo $_GET['patient_id']; ?> + "&alert_table=1&q=" + nocache,function(data){
       $("#dismissed_alerts").html(data);
     });
   }
 
   function dismissAlert(alertId) {
-    $.post("patient_details.php", {dismiss_alert: alertId}, function(data){
-      alert(data);
+    $.post("patient_details.php?patient_id=" + <?php echo $_GET['patient_id']; ?>, {dismiss_alert: alertId}, function(data){
+      alert((data == 1) ? "Alert Dismissed" : "Error: not dismissed");
+
       updateAlertsTables();
     });
   }

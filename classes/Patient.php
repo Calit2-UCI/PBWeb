@@ -5,23 +5,39 @@ class Patient
 
   private $db_connection = null;
 
-  private $patient_info = array();
+  private $id;
 
-  private $patient_overview = array();
+  private $first_name;
+
+  private $last_name;
 
   public $errors = array();
 
   public $messages = array();
 
-  public function __construct()
+  public function __construct($patient_id)
   {
     if (!isset($_SESSION)) {
       session_start();
     }
 
-    if (isset($_GET['export_all'])) {
-      $this->exportAllPatientData();
+    $patient_id = trim($patient_id);
+
+    $this->databaseConnection();
+    $query = $this->db_connection->prepare('SELECT * FROM patients WHERE patient_id=:patient_id');
+    $query->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
+    $query->execute();
+
+    if ($query->rowCount() == 1) {
+      $patient_overview = $query->fetch();
+
+      $this->id = $patient_id;
+      $this->first_name = $patient_overview['first_name'];
+      $this->last_name = $patient_overview['last_name'];
+    } else {
+      echo "Invalid Patient";
     }
+
   }
 
   /**
@@ -51,146 +67,23 @@ class Patient
     }
   }
 
-  public function doPatientLookup($patient_id)
+  public function getFullName()
   {
-    $patient_id = trim($patient_id);
-
-    if (!$this->isValidPatientId($patient_id)) {
-      $this->errors[] = "MESSAGE_PATIENT_ID_INVALID";
-    } else {
-      $this->databaseConnection();
-      $query = $this->db_connection->prepare('SELECT * FROM patients WHERE patient_id=:patient_id');
-      $query->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
-      $query->execute();
-
-      if ($query->rowCount() == 1) {
-        $patient_overview = $query->fetch();
-        echo "<h3>Information for {$patient_overview['first_name']} {$patient_overview['last_name']}</h3>";
-//        echo "<b>Age: </b> {$patient_overview['age']} <br>";
-//        echo "<b>Total Logins: </b> {$patient_overview['totin']} <br>";
-//        echo "<b>Total Logouts: </b> {$patient_overview['totout']} <br>";
-//        echo "<b>Total session timeouts: </b> {$patient_overview['tottim']} <br>";
-//        echo "<b>Total number of incomplete diaries: </b> {$patient_overview['totinc']} <br>";
-//        echo "<b>Total number of days logged on: </b> {$patient_overview['totlog']} <br>";
-      } else {
-        echo "Invalid Patient";
-      }
-    }
-  }
-
-  /**
-   * Prints a table of all the patients that the doctor has access to
-   */
-  public function showPatientOverview()
-  {
-    $this->databaseConnection();
-    $query_get_all_patients = $this->db_connection->prepare('SELECT * FROM patients WHERE doctor_id=:doctor_id');
-    $query_get_all_patients->bindValue(':doctor_id', $_SESSION['user_id'], PDO::PARAM_INT);
-    $query_get_all_patients->execute();
-
-    if ($query_get_all_patients->rowCount() > 0) {
-      $result = $query_get_all_patients->fetchAll();
-      echo '<table id="myTable" class="tablesorter" style="table-layout: fixed; width: 100%">';
-      echo '<thead>';
-      echo "<tr>
-              <th>Patient Id</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Alerts</th>
-              <th>Patient Info</th>
-            </tr>";
-      echo '</thead>';
-      echo '<tbody>';
-      foreach ($result as $row) {
-        $patient_id = $row['patient_id'];
-        $first_name = $row['first_name'];
-        $last_name = $row['last_name'];
-        $num_alerts = $this->getNumberAlerts($patient_id);
-
-        echo "<tr>
-                <td>{$patient_id}</td>
-                <td>{$first_name}</td>
-                <td>{$last_name}</td>
-                <td>{$num_alerts}</td>
-                <td><a href=\"patient_details.php?patient_id={$patient_id}\" class=\"button secondary tiny\">Info</a></td>
-              </tr>";
-      }
-      echo '<tbody>';
-      echo "</table>";
-    } else {
-      echo "No patients";
-    }
-  }
-
-  // checks if the id given is valid (patient exists and doctor is authorised to access info)
-  public function isValidPatientId($patient_id)
-  {
-    if (is_numeric($patient_id)) {
-      return true; // TODO: implement!!!
-    }
-  }
-
-  /**
-   * Return the number of alerts for a patient
-   */
-  public function getNumberAlerts($patient_id)
-  {
-    $this->databaseConnection();
-    $query = $this->db_connection->prepare('SELECT COUNT(*) FROM HCP_alerts WHERE patient_id=:patient_id AND hcp_acknowledged=0');
-    $query->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
-    $query->execute();
-    return $query->fetch()[0];
-  }
-
-  public function exportAllPatientData()
-  {
-    if ($this->databaseConnection()) {
-      $output = "";
-      $query = $this->db_connection->prepare('SELECT *FROM patients WHERE doctor_id=:doctor_id');
-      $query->bindValue(':doctor_id', $_SESSION['user_id'], PDO::PARAM_INT);
-
-      $query->execute();
-      $columns_total = $query->columnCount();
-
-      $column_query = $this->db_connection->prepare("DESCRIBE patients");
-      $column_query->execute();
-
-      $table_fields = $column_query->fetchAll(PDO::FETCH_COLUMN);
-
-      foreach ($table_fields as $heading) {
-        $output .= '"' . $heading . '",';
-      }
-      $output .= "\n";
-
-      while ($row = $query->fetch()) {
-        for ($i = 0; $i < $columns_total; $i++) {
-          $output .= '"' . $row["$i"] . '",';
-        }
-        $output .= "\n";
-      }
-
-      $filename = "AllPatientData.csv";
-      header('Content-type: application/csv');
-      header('Content-Disposition: attachment; filename=' . $filename);
-
-      echo $output;
-      exit;
-    }
+    return $this->first_name . " " . $this->last_name;
   }
 
   /**
    * Displays the HCP alerts table
-   * @param $patient_id id of the patient
    * @param $status 1 for acknowledged alerts, 0 for unacknowledged
    */
-  public function printAlertsTable($patient_id, $status)
+  public function printAlertsTable($status)
   {
     $this->databaseConnection();
     $query = $this->db_connection->prepare('SELECT a.id, a.DayNum, a.ampm, b.message FROM HCP_alerts a
               INNER JOIN alert_codes b ON a.age_group=b.age_group AND a.code=b.alert_code
               WHERE a.patient_id=:patient_id AND a.hcp_acknowledged=:hcp_acknowledged
               ORDER BY a.DayNum, a.ampm');
-    $query->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
+    $query->bindValue(':patient_id', $this->id, PDO::PARAM_INT);
     $query->bindValue(':hcp_acknowledged', $status, PDO::PARAM_INT);
     $query->execute();
 
@@ -246,14 +139,15 @@ class Patient
   public function dismissAlert($alert_id)
   {
     $this->databaseConnection();
-    $query = $this->db_connection->prepare("UPDATE HCP_alerts SET hcp_acknowledged=1 WHERE id=:id");
+    $query = $this->db_connection->prepare("UPDATE HCP_alerts SET hcp_acknowledged=1 WHERE id=:id AND patient_id=:patient_id");
     $query->bindValue(':id', $alert_id, PDO::PARAM_INT);
+    $query->bindValue(':patient_id', $this->id, PDO::PARAM_INT);
     $query->execute();
 
     if ($query->rowCount() == 1) {
-      echo "Alert Dismissed";
+      echo 1;
     } else {
-      echo "Error: not dismissed";
+      echo 0;
     }
 
   }
