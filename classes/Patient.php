@@ -11,6 +11,8 @@ class Patient
 
   private $last_name;
 
+  private $age;
+
   public $errors = array();
 
   public $messages = array();
@@ -34,6 +36,7 @@ class Patient
       $this->id = $patient_id;
       $this->first_name = $patient_overview['first_name'];
       $this->last_name = $patient_overview['last_name'];
+      $this->age = $patient_overview['age'];
     } else {
       echo "Invalid Patient";
     }
@@ -152,14 +155,172 @@ class Patient
 
   }
 
-  public function MSASToJSON($patient_id)
+  public function MSASToJSON($symptom)
   {
+
+    if ($this->age >= 10) {
+      $allCodes = array('conc' => array(
+        'conoft',
+        'consev',
+        'conboth'
+      ), 'pain' => array(
+        'painoft',
+        'painsev',
+        'painboth'
+      ), 'ener' => array(
+        'eneroft',
+        'enersev',
+        'enerboth'
+      ), 'coug' => array(
+        'cougoft',
+        'cougsev',
+        'cougboth'
+      ), 'nerv' => array(
+        'nervoft',
+        'nervsev',
+        'nervboth'
+      ), 'mout' => array(
+        'moutoft',
+        'moutsev',
+        'moutboth'
+      ), 'naus' => array(
+        'nausoft',
+        'naussev',
+        'nausboth'
+      ), 'drow' => array(
+        'drowoft',
+        'drowsev',
+        'drowboth'
+      ), 'numb' => array(
+        'numboft',
+        'numbsev',
+        'numbboth'
+      ), 'slep' => array(
+        'slepoft',
+        'slepsev',
+        'slepboth'
+      ), 'urin' => array(
+        'urinoft',
+        'urinsev',
+        'urinboth'
+      ), 'vomi' => array(
+        'vomioft',
+        'vomisev',
+        'vomiboth'
+      ), 'brea' => array(
+        'breaoft',
+        'breasev',
+        'breaboth'
+      ), 'diar' => array(
+        'diaroft',
+        'diarsev',
+        'diarboth'
+      ), 'sad' => array(
+        'sadoft',
+        'sadsev',
+        'sadboth'
+      ), 'swea' => array(
+        'sweaoft',
+        'sweasev',
+        'sweaboth'
+      ), 'worr' => array(
+        'worroft',
+        'worrsev',
+        'worrboth'
+      ), 'itch' => array(
+        'itchoft',
+        'itchsev',
+        'itchboth'
+      ), 'app' => array(
+        'appoft',
+        'appsev',
+        'appboth'
+      ), 'dizz' => array(
+        'dizzoft',
+        'dizzsev',
+        'dizzboth'
+      ), 'swal' => array(
+        'swaloft',
+        'swalsev',
+        'swalboth'
+      ), 'irri' => array(
+        'irrioft',
+        'irrisev',
+        'irriboth'
+      ), 'head' => array(
+        'headoft',
+        'headsev',
+        'headboth'
+      ), 'msor' => array(
+        'msorsev',
+        'msorboth'
+      ), 'food' => array(
+        'foodsev',
+        'foodboth'
+      ), 'weit' => array(
+        'weitsev',
+        'weitboth'
+      ), 'hair' => array(
+        'hairsev',
+        'hairboth'
+      ), 'cons' => array(
+        'conssev',
+        'consboth'
+      ), 'swel' => array(
+        'swelsev',
+        'swelboth'
+      ), 'look' => array(
+        'looksev',
+        'lookboth'
+      ), 'skin' => array(
+        'skinsev',
+        'skinboth'
+      ));
+    } else {
+      $allCodes = array('pain7' => array(
+        'paint7',
+        'painf7',
+        'painb7'
+      ), 'tired7' => array(
+        'tiredt7',
+        'tiredf7',
+        'tiredb7'
+      ), 'sad7' => array(
+        'sadt7',
+        'sadf7',
+        'sadb7'
+      ), 'itchy7' => array(
+        'itchyt7',
+        'itchyf7',
+        'itchyb7'
+      ), 'worry7' => array(
+        'worryt7',
+        'worryf7',
+        'worryb7'
+      ), 'eat7' => array(
+        'eatt7',
+        'eatb7'
+      ), 'vomit7' => array(
+        'vomitt7',
+        'vomitb7'
+      ), 'sleep7' => array(
+        'sleepb7'
+      ));
+    }
+
     $this->databaseConnection();
-    $query = $this->db_connection->prepare('select start_time, dayNum, ampm, conoft, consev, conboth from painbuddy.section1_msas_10_18 WHERE patient_id=:patient_id ORDER BY start_time');
-    $query->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
+    $str = "select start_time, ";
+    $codes = $allCodes[$symptom];
+    foreach ($codes as $code) {
+      $str .= $code . ", ";
+    }
+    $str .= "dayNum, ampm from painbuddy.section1_msas_" . ($this->age >= 10 ? "10_18" : "8_9") . " WHERE patient_id=:patient_id ORDER BY start_time";
+    $query = $this->db_connection->prepare($str);
+    $query->bindValue(':patient_id', $this->id, PDO::PARAM_INT);
     $query->execute();
 
     return json_encode($query->fetchAll(PDO::FETCH_ASSOC));
   }
 }
+
 ?>
