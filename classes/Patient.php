@@ -5,23 +5,42 @@ class Patient
 
   private $db_connection = null;
 
-  private $patient_info = array();
+  private $id;
 
-  private $patient_overview = array();
+  private $first_name;
+
+  private $last_name;
+
+  private $age;
 
   public $errors = array();
 
   public $messages = array();
 
-  public function __construct()
+  public function __construct($patient_id)
   {
     if (!isset($_SESSION)) {
       session_start();
     }
 
-    if (isset($_GET['export_all'])) {
-      $this->exportAllPatientData();
+    $patient_id = trim($patient_id);
+
+    $this->databaseConnection();
+    $query = $this->db_connection->prepare('SELECT * FROM patients WHERE patient_id=:patient_id');
+    $query->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
+    $query->execute();
+
+    if ($query->rowCount() == 1) {
+      $patient_overview = $query->fetch();
+
+      $this->id = $patient_id;
+      $this->first_name = $patient_overview['first_name'];
+      $this->last_name = $patient_overview['last_name'];
+      $this->age = $patient_overview['age'];
+    } else {
+      echo "Invalid Patient";
     }
+
   }
 
   /**
@@ -51,145 +70,23 @@ class Patient
     }
   }
 
-  public function doPatientLookup($patient_id)
+  public function getFullName()
   {
-    $patient_id = trim($patient_id);
-
-    if (!$this->isValidPatientId($patient_id)) {
-      $this->errors[] = "MESSAGE_PATIENT_ID_INVALID";
-    } else {
-      $this->databaseConnection();
-      $query = $this->db_connection->prepare('SELECT * FROM patients WHERE patient_id=:patient_id');
-      $query->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
-      $query->execute();
-
-      if ($query->rowCount() == 1) {
-        $patient_overview = $query->fetch();
-        echo "<h3>Information for {$patient_overview['first_name']} {$patient_overview['last_name']}</h3>";
-//        echo "<b>Age: </b> {$patient_overview['age']} <br>";
-//        echo "<b>Total Logins: </b> {$patient_overview['totin']} <br>";
-//        echo "<b>Total Logouts: </b> {$patient_overview['totout']} <br>";
-//        echo "<b>Total session timeouts: </b> {$patient_overview['tottim']} <br>";
-//        echo "<b>Total number of incomplete diaries: </b> {$patient_overview['totinc']} <br>";
-//        echo "<b>Total number of days logged on: </b> {$patient_overview['totlog']} <br>";
-      } else {
-        echo "Invalid Patient";
-      }
-    }
-  }
-
-  /**
-   * Prints a table of all the patients that the doctor has access to
-   */
-  public function showPatientOverview()
-  {
-    $this->databaseConnection();
-    $query_get_all_patients = $this->db_connection->prepare('SELECT * FROM patients WHERE doctor_id=:doctor_id');
-    $query_get_all_patients->bindValue(':doctor_id', $_SESSION['user_id'], PDO::PARAM_INT);
-    $query_get_all_patients->execute();
-
-    if ($query_get_all_patients->rowCount() > 0) {
-      $result = $query_get_all_patients->fetchAll();
-      echo '<table id="myTable" class="tablesorter" style="table-layout: fixed; width: 100%">';
-      echo '<thead>';
-      echo "<tr>
-              <th>Patient Id</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Alerts</th>
-              <th>Patient Info</th>
-            </tr>";
-      echo '</thead>';
-      echo '<tbody>';
-      foreach ($result as $row) {
-        $patient_id = $row['patient_id'];
-        $first_name = $row['first_name'];
-        $last_name = $row['last_name'];
-        $num_alerts = $this->getNumberAlerts($patient_id);
-
-        echo "<tr>
-                <td>{$patient_id}</td>
-                <td>{$first_name}</td>
-                <td>{$last_name}</td>
-                <td>{$num_alerts}</td>
-                <td><a href=\"patient_details.php?patient_id={$patient_id}\" class=\"button secondary tiny\">Info</a></td>
-              </tr>";
-      }
-      echo '<tbody>';
-      echo "</table>";
-    } else {
-      echo "No patients";
-    }
-  }
-
-  // checks if the id given is valid (patient exists and doctor is authorised to access info)
-  public function isValidPatientId($patient_id)
-  {
-    if (is_numeric($patient_id)) {
-      return true; // TODO: implement!!!
-    }
-  }
-
-  /**
-   * Return the number of alerts for a patient
-   */
-  public function getNumberAlerts($patient_id)
-  {
-    $this->databaseConnection();
-    $query = $this->db_connection->prepare('SELECT COUNT(*) FROM HCP_alerts WHERE patient_id=:patient_id AND hcp_acknowledged=0');
-    $query->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
-    $query->execute();
-    return $query->fetch()[0];
-  }
-
-  public function exportAllPatientData()
-  {
-    if ($this->databaseConnection()) {
-      $output = "";
-      $query = $this->db_connection->prepare('SELECT *FROM patients WHERE doctor_id=:doctor_id');
-      $query->bindValue(':doctor_id', $_SESSION['user_id'], PDO::PARAM_INT);
-
-      $query->execute();
-      $columns_total = $query->columnCount();
-
-      $column_query = $this->db_connection->prepare("DESCRIBE patients");
-      $column_query->execute();
-
-      $table_fields = $column_query->fetchAll(PDO::FETCH_COLUMN);
-
-      foreach ($table_fields as $heading) {
-        $output .= '"' . $heading . '",';
-      }
-      $output .= "\n";
-
-      while ($row = $query->fetch()) {
-        for ($i = 0; $i < $columns_total; $i++) {
-          $output .= '"' . $row["$i"] . '",';
-        }
-        $output .= "\n";
-      }
-
-      $filename = "AllPatientData.csv";
-      header('Content-type: application/csv');
-      header('Content-Disposition: attachment; filename=' . $filename);
-
-      echo $output;
-      exit;
-    }
+    return $this->first_name . " " . $this->last_name;
   }
 
   /**
    * Displays the HCP alerts table
-   * @param $patient_id id of the patient
    * @param $status 1 for acknowledged alerts, 0 for unacknowledged
    */
-  public function printAlertsTable($patient_id, $status)
+  public function printAlertsTable($status)
   {
     $this->databaseConnection();
-    $query = $this->db_connection->prepare('SELECT a.id, a.DayNum, a.ampm, b.message FROM HCP_alerts a
+    $query = $this->db_connection->prepare('SELECT a.id, a.DayNum, a.ampm, b.message, b.type FROM HCP_alerts a
               INNER JOIN alert_codes b ON a.age_group=b.age_group AND a.code=b.alert_code
-              WHERE a.patient_id=:patient_id AND a.hcp_acknowledged=:hcp_acknowledged');
-    $query->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
+              WHERE a.patient_id=:patient_id AND a.hcp_acknowledged=:hcp_acknowledged
+              ORDER BY a.DayNum, a.ampm');
+    $query->bindValue(':patient_id', $this->id, PDO::PARAM_INT);
     $query->bindValue(':hcp_acknowledged', $status, PDO::PARAM_INT);
     $query->execute();
 
@@ -203,6 +100,7 @@ class Patient
               <th>Time</th>
               <th>Message</th>
               <th>Dismiss</th>
+              <th>More Info</th>
             </tr>";
       } else {
         echo "<tr>
@@ -219,6 +117,7 @@ class Patient
         $dayNum = $row['DayNum'];
         $time = $row['ampm'] == 1 ? "am" : "pm";
         $message = $row['message'];
+        $type = $row['type'];
 
         if ($status == 0) {
           echo "<tr>
@@ -226,6 +125,7 @@ class Patient
                 <td>{$time}</td>
                 <td>{$message}</td>
                 <td><button class=\"tiny\" onclick=\"dismissAlert({$alert_id})\">Dismiss</button></td>
+                <td><button class=\"tiny\" onclick=\"doStuff({$type})\">Info</button></td>
               </tr>";
         } else {
           echo "<tr>
@@ -245,17 +145,237 @@ class Patient
   public function dismissAlert($alert_id)
   {
     $this->databaseConnection();
-    $query = $this->db_connection->prepare("UPDATE HCP_alerts SET hcp_acknowledged=1 WHERE id=:id");
+    $query = $this->db_connection->prepare("UPDATE HCP_alerts SET hcp_acknowledged=1 WHERE id=:id AND patient_id=:patient_id");
     $query->bindValue(':id', $alert_id, PDO::PARAM_INT);
+    $query->bindValue(':patient_id', $this->id, PDO::PARAM_INT);
     $query->execute();
 
     if ($query->rowCount() == 1) {
-      echo "Alert Dismissed";
+      echo 1;
     } else {
-      echo "Error: not dismissed";
+      echo 0;
     }
 
   }
 
+  public function showSymptoms()
+  {
+    echo "<label>Symptom<select id=\"symptom_selector\">";
+    if ($this->age >= 10) {
+      echo '
+      <option value="conc">Difficulty concentration of paying attention</option>
+      <option value="pain">pain</option>
+      <option value="ener">Lack of energy</option>
+      <option value="coug">cough</option>
+      <option value="nerv">Feeling of being nervous</option>
+      <option value="mout">Dry mouth</option>
+      <option value="naus">Nausea or feeling like you could vomit</option>
+      <option value="drow">Feeling of being drowsy</option>
+      <option value="numb">Numbness/tingling or pins and needles feeling in hands or feet</option>
+      <option value="slep">Difficulty sleeping</option>
+      <option value="urin">Problems with urination or peeing</option>
+      <option value="vomi">Vomiting or throwing up</option>
+      <option value="brea">Shortness of breath</option>
+      <option value="diar">Diarrhea or loose bowel movement</option>
+      <option value="sad">Feelings of sadness</option>
+      <option value="swea">sweats</option>
+      <option value="worr">worrying</option>
+      <option value="itch">itching</option>
+      <option value="app">Lack of appetite or not wanting to eat</option>
+      <option value="dizz">dizziness</option>
+      <option value="swal">Difficulty swallowing</option>
+      <option value="irri">Feelings of being irritable</option>
+      <option value="head">headache</option>
+      <option value="msor">Mouth sores</option>
+      <option value="food">Change in the way food tastes</option>
+      <option value="weit">Weight loss</option>
+      <option value="hair">Less hair than usual</option>
+      <option value="cons">Constipation or uncomfortable because less bowel movements</option>
+      <option value="swel">Swelling of arms or legs</option>
+      <option value="look">I don\'t look like myself</option>
+      <option value="skin">Changes in skin</option>
+        ';
+    } else {
+      echo '
+      <option value="pain7">Did you have any pain yesterday or today?</option>
+      <option value="tired7">Did you feel more tired yesterday or today that you usually do?</option>
+      <option value="sad7">Did you feel sad yesterday or today:</option>
+      <option value="itchy7">Were you itchy yesterday or today?</option>
+      <option value="worry7">Did you feel worried yesterday or today?</option>
+      <option value="eat7">Did you feel like eating yesterday or today as you normally do?</option>
+      <option value="vomit7">Did you feel like you werer going to vomit (or going to throw up) yesterday or today?</option>
+      <option value="sleep7">Did you have trouble going to sleep the last 2 nights?</option>
+        ';
+    }
+    echo "</select></label>";
+  }
+
+  public function MSASToJSON($symptom)
+  {
+
+    if ($this->age >= 10) {
+      $allCodes = array('conc' => array(
+        'conoft',
+        'consev',
+        'conboth'
+      ), 'pain' => array(
+        'painoft',
+        'painsev',
+        'painboth'
+      ), 'ener' => array(
+        'eneroft',
+        'enersev',
+        'enerboth'
+      ), 'coug' => array(
+        'cougoft',
+        'cougsev',
+        'cougboth'
+      ), 'nerv' => array(
+        'nervoft',
+        'nervsev',
+        'nervboth'
+      ), 'mout' => array(
+        'moutoft',
+        'moutsev',
+        'moutboth'
+      ), 'naus' => array(
+        'nausoft',
+        'naussev',
+        'nausboth'
+      ), 'drow' => array(
+        'drowoft',
+        'drowsev',
+        'drowboth'
+      ), 'numb' => array(
+        'numboft',
+        'numbsev',
+        'numbboth'
+      ), 'slep' => array(
+        'slepoft',
+        'slepsev',
+        'slepboth'
+      ), 'urin' => array(
+        'urinoft',
+        'urinsev',
+        'urinboth'
+      ), 'vomi' => array(
+        'vomioft',
+        'vomisev',
+        'vomiboth'
+      ), 'brea' => array(
+        'breaoft',
+        'breasev',
+        'breaboth'
+      ), 'diar' => array(
+        'diaroft',
+        'diarsev',
+        'diarboth'
+      ), 'sad' => array(
+        'sadoft',
+        'sadsev',
+        'sadboth'
+      ), 'swea' => array(
+        'sweaoft',
+        'sweasev',
+        'sweaboth'
+      ), 'worr' => array(
+        'worroft',
+        'worrsev',
+        'worrboth'
+      ), 'itch' => array(
+        'itchoft',
+        'itchsev',
+        'itchboth'
+      ), 'app' => array(
+        'appoft',
+        'appsev',
+        'appboth'
+      ), 'dizz' => array(
+        'dizzoft',
+        'dizzsev',
+        'dizzboth'
+      ), 'swal' => array(
+        'swaloft',
+        'swalsev',
+        'swalboth'
+      ), 'irri' => array(
+        'irrioft',
+        'irrisev',
+        'irriboth'
+      ), 'head' => array(
+        'headoft',
+        'headsev',
+        'headboth'
+      ), 'msor' => array(
+        'msorsev',
+        'msorboth'
+      ), 'food' => array(
+        'foodsev',
+        'foodboth'
+      ), 'weit' => array(
+        'weitsev',
+        'weitboth'
+      ), 'hair' => array(
+        'hairsev',
+        'hairboth'
+      ), 'cons' => array(
+        'conssev',
+        'consboth'
+      ), 'swel' => array(
+        'swelsev',
+        'swelboth'
+      ), 'look' => array(
+        'looksev',
+        'lookboth'
+      ), 'skin' => array(
+        'skinsev',
+        'skinboth'
+      ));
+    } else {
+      $allCodes = array('pain7' => array(
+        'paint7',
+        'painf7',
+        'painb7'
+      ), 'tired7' => array(
+        'tiredt7',
+        'tiredf7',
+        'tiredb7'
+      ), 'sad7' => array(
+        'sadt7',
+        'sadf7',
+        'sadb7'
+      ), 'itchy7' => array(
+        'itchyt7',
+        'itchyf7',
+        'itchyb7'
+      ), 'worry7' => array(
+        'worryt7',
+        'worryf7',
+        'worryb7'
+      ), 'eat7' => array(
+        'eatt7',
+        'eatb7'
+      ), 'vomit7' => array(
+        'vomitt7',
+        'vomitb7'
+      ), 'sleep7' => array(
+        'sleepb7'
+      ));
+    }
+
+    $this->databaseConnection();
+    $str = "select start_time, ";
+    $codes = $allCodes[$symptom];
+    foreach ($codes as $code) {
+      $str .= $code . ", ";
+    }
+    $str .= "dayNum, ampm from painbuddy.section1_msas_" . ($this->age >= 10 ? "10_18" : "8_9") . " WHERE patient_id=:patient_id ORDER BY start_time";
+    $query = $this->db_connection->prepare($str);
+    $query->bindValue(':patient_id', $this->id, PDO::PARAM_INT);
+    $query->execute();
+
+    return json_encode($query->fetchAll(PDO::FETCH_ASSOC));
+  }
 }
+
 ?>

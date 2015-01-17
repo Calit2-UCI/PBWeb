@@ -29,15 +29,15 @@ require_once('libraries/PHPMailer.php');
 
 // load the login class
 require_once('classes/Login.php');
-require_once('classes/Patient.php');
+require_once('classes/HCP.php');
 
 // create a login object. when this object is created, it will do all login/logout stuff automatically
 // so this single line handles the entire login process.
 $login = new Login();
-$patient = new Patient();
 
 // ... ask if we are logged in here:
 if ($login->isUserLoggedIn() == true) {
+    $hcp = new HCP($_SESSION['user_id']);
     include("views/HCP/patient_access.php");
 } else {
     // the user is not logged in. you can do whatever you want here.

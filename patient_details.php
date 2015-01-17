@@ -34,22 +34,21 @@ require_once('classes/Patient.php');
 // create a login object. when this object is created, it will do all login/logout stuff automatically
 // so this single line handles the entire login process.
 $login = new Login();
-$patient = new Patient();
 
 // ... ask if we are logged in here:
 if ($login->isUserLoggedIn() == true) {
-  // Just for debugging purposes
-    if (/*$patient->isValidId($_GET['patient_id'])*/ 1 == 1) {
-        if (isset($_GET['alert_table']) && ($_GET['type'] == 1 || $_GET['type'] == 0) ){
+    if ($patient = new Patient($_GET['patient_id'])) {
+        if (isset($_GET['alert_table'])){
             // AJAX request in Patient Info page to update alert table
-            // $_GET['alert_table'] stores the patient id
-            // $_GET['type'] is 0 to get active alerts, 1 to get dismissed ones
-            $patient->printAlertsTable($_GET['alert_table'], $_GET['type']);
+            // $_GET['alert_table'] is 0 to get active alerts, 1 to get dismissed ones
+            $patient->printAlertsTable($_GET['alert_table']);
         } elseif (isset($_POST['dismiss_alert'])){
             // AJAX request in Patient Info page to dismiss an alert
             // $_POST['dismiss_alert'] stores the alert id
             $patient->dismissAlert($_POST['dismiss_alert']);
-        } else  {
+        } elseif (isset($_GET['json'])) {
+            echo $patient->MSASToJSON($_GET['json']);
+        } else {
             include("views/HCP/patient_detail.php");
         }
     } else {
