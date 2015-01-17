@@ -125,7 +125,7 @@ class Patient
                 <td>{$time}</td>
                 <td>{$message}</td>
                 <td><button class=\"tiny\" onclick=\"dismissAlert({$alert_id})\">Dismiss</button></td>
-                <td><button class=\"tiny\" onclick=\"doStuff({$type})\">Info</button></td>
+                <td><button class=\"tiny\" onclick=\"doStuff('{$type}')\">Info</button></td>
               </tr>";
         } else {
           echo "<tr>

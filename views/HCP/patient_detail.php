@@ -94,5 +94,9 @@
       updateAlertsTables();
     });
   }
+
+  function doStuff(type) {
+    $("#symptom_selector").val(type);
+  }
 </script>
 <?php include(dirname(__FILE__) . '/../_footer.php'); ?>
