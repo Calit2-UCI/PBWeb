@@ -23,35 +23,35 @@
  * PRIMARY KEY (`id`)
  * ) AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='patient alerts'
  *
- * CREATE TABLE alert_codes (id INT(11) AUTO_INCREMENT PRIMARY KEY, age_group VARCHAR(1) CHARACTER SET utf8,alert_code VARCHAR(10) CHARACTER SET utf8,message VARCHAR(255) CHARACTER SET utf8);
- * INSERT INTO alert_codes (age_group, alert_code, message) VALUES ('a','p/1','Pain');
- * INSERT INTO alert_codes (age_group, alert_code, message) VALUES ('a','d/1','Drowsiness');
- * INSERT INTO alert_codes (age_group, alert_code, message) VALUES ('a','pu/1','Problems with urination');
- * INSERT INTO alert_codes (age_group, alert_code, message) VALUES ('a','s/1','Shortness of breath');
- * INSERT INTO alert_codes (age_group, alert_code, message) VALUES ('a','ds/1','Difficulty Swallowing');
- * INSERT INTO alert_codes (age_group, alert_code, message) VALUES ('a','c/3','3 consecutive entries of Cough');
- * INSERT INTO alert_codes (age_group, alert_code, message) VALUES ('a','n/3','3 consecutive entries of Numbness/Tingling');
- * INSERT INTO alert_codes (age_group, alert_code, message) VALUES ('a','v/3','3 consecutive entries of Vomiting');
- * INSERT INTO alert_codes (age_group, alert_code, message) VALUES ('a','na/3','3 consecutive entries of Nausea');
- * INSERT INTO alert_codes (age_group, alert_code, message) VALUES ('a','d/3','3 consecutive entries of Diarrhea');
- * INSERT INTO alert_codes (age_group, alert_code, message) VALUES ('a','dz/3','3 consecutive entries of Dizziness');
- * INSERT INTO alert_codes (age_group, alert_code, message) VALUES ('a','i/3','3 consecutive entries of Itching ');
- * INSERT INTO alert_codes (age_group, alert_code, message) VALUES ('a','cs/3','3 consecutive entries of Constipation');
- * INSERT INTO alert_codes (age_group, alert_code, message) VALUES ('a','h/3','3 consecutive entries of Headache');
- * INSERT INTO alert_codes (age_group, alert_code, message) VALUES ('a','m/3','3 consecutive entries of Mouth sores');
- * INSERT INTO alert_codes (age_group, alert_code, message) VALUES ('a','l/5','5 consecutive entries of Lack of Energy');
- * INSERT INTO alert_codes (age_group, alert_code, message) VALUES ('a','n/5','5 consecutive entries of Nervousness');
- * INSERT INTO alert_codes (age_group, alert_code, message) VALUES ('a','f/5','5 consecutive entries of Feeling of sadness');
- * INSERT INTO alert_codes (age_group, alert_code, message) VALUES ('a','s/5','5 consecutive entries of Sweats');
- * INSERT INTO alert_codes (age_group, alert_code, message) VALUES ('a','sal/5','5 consecutive entries of Swelling in arms or legs');
- * INSERT INTO alert_codes (age_group, alert_code, message) VALUES ('a','c/5','5 consecutive entries of Changes in skin');
- * INSERT INTO alert_codes (age_group, alert_code, message) VALUES ('b','p/1','Pain');
- * INSERT INTO alert_codes (age_group, alert_code, message) VALUES ('b','t/3','3 consecutive entries of Tired');
- * INSERT INTO alert_codes (age_group, alert_code, message) VALUES ('b','i/3','3 consecutive entries of Itching ');
- * INSERT INTO alert_codes (age_group, alert_code, message) VALUES ('b','v/3','3 consecutive entries of Vomiting');
- * INSERT INTO alert_codes (age_group, alert_code, message) VALUES ('b','s/5','5 consecutive entries of Sleep');
- * INSERT INTO alert_codes (age_group, alert_code, message) VALUES ('b','f/5','5 consecutive entries of Feeling of sad');
- * INSERT INTO alert_codes (age_group, alert_code, message) VALUES ('b','w/5','5 consecutive entries of Worried');
+ * CREATE TABLE alert_codes (id INT(11) AUTO_INCREMENT PRIMARY KEY, age_group VARCHAR(1) CHARACTER SET utf8,alert_code VARCHAR(10) CHARACTER SET utf8,message VARCHAR(255) CHARACTER SET utf8,type VARCHAR(255) CHARACTER SET utf8);
+ * INSERT INTO alert_codes (age_group, alert_code, message, type) VALUES ('a','p/1','Pain','pain');
+ * INSERT INTO alert_codes (age_group, alert_code, message, type) VALUES ('a','d/1','Drowsiness','drow');
+ * INSERT INTO alert_codes (age_group, alert_code, message, type) VALUES ('a','pu/1','Problems with urination','urin');
+ * INSERT INTO alert_codes (age_group, alert_code, message, type) VALUES ('a','s/1','Shortness of breath','brea');
+ * INSERT INTO alert_codes (age_group, alert_code, message, type) VALUES ('a','ds/1','Difficulty Swallowing','swal');
+ * INSERT INTO alert_codes (age_group, alert_code, message, type) VALUES ('a','c/3','3 consecutive entries of Cough','coug');
+ * INSERT INTO alert_codes (age_group, alert_code, message, type) VALUES ('a','n/3','3 consecutive entries of Numbness/Tingling','numb');
+ * INSERT INTO alert_codes (age_group, alert_code, message, type) VALUES ('a','v/3','3 consecutive entries of Vomiting','vomi');
+ * INSERT INTO alert_codes (age_group, alert_code, message, type) VALUES ('a','na/3','3 consecutive entries of Nausea','naus');
+ * INSERT INTO alert_codes (age_group, alert_code, message, type) VALUES ('a','d/3','3 consecutive entries of Diarrhea','diar');
+ * INSERT INTO alert_codes (age_group, alert_code, message, type) VALUES ('a','dz/3','3 consecutive entries of Dizziness','dizz');
+ * INSERT INTO alert_codes (age_group, alert_code, message, type) VALUES ('a','i/3','3 consecutive entries of Itching', 'itch');
+ * INSERT INTO alert_codes (age_group, alert_code, message, type) VALUES ('a','cs/3','3 consecutive entries of Constipation','cons');
+ * INSERT INTO alert_codes (age_group, alert_code, message, type) VALUES ('a','h/3','3 consecutive entries of Headache','head');
+ * INSERT INTO alert_codes (age_group, alert_code, message, type) VALUES ('a','m/3','3 consecutive entries of Mouth sores','msor');
+ * INSERT INTO alert_codes (age_group, alert_code, message, type) VALUES ('a','l/5','5 consecutive entries of Lack of Energy','ener');
+ * INSERT INTO alert_codes (age_group, alert_code, message, type) VALUES ('a','n/5','5 consecutive entries of Nervousness','nerv');
+ * INSERT INTO alert_codes (age_group, alert_code, message, type) VALUES ('a','f/5','5 consecutive entries of Feeling of sadness','sad');
+ * INSERT INTO alert_codes (age_group, alert_code, message, type) VALUES ('a','s/5','5 consecutive entries of Sweats','swea');
+ * INSERT INTO alert_codes (age_group, alert_code, message, type) VALUES ('a','sal/5','5 consecutive entries of Swelling in arms or legs','swel');
+ * INSERT INTO alert_codes (age_group, alert_code, message, type) VALUES ('a','c/5','5 consecutive entries of Changes in skin','skin');
+ * INSERT INTO alert_codes (age_group, alert_code, message, type) VALUES ('b','p/1','Pain','pain7');
+ * INSERT INTO alert_codes (age_group, alert_code, message, type) VALUES ('b','t/3','3 consecutive entries of Tired','tired7');
+ * INSERT INTO alert_codes (age_group, alert_code, message, type) VALUES ('b','i/3','3 consecutive entries of Itching','itchy7');
+ * INSERT INTO alert_codes (age_group, alert_code, message, type) VALUES ('b','v/3','3 consecutive entries of Vomiting','vomit7');
+ * INSERT INTO alert_codes (age_group, alert_code, message, type) VALUES ('b','s/5','5 consecutive entries of Sleep','sleep7');
+ * INSERT INTO alert_codes (age_group, alert_code, message, type) VALUES ('b','f/5','5 consecutive entries of Feeling of sad','sad7');
+ * INSERT INTO alert_codes (age_group, alert_code, message, type) VALUES ('b','w/5','5 consecutive entries of Worried','worry7');
  */
 
 
