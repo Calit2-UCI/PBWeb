@@ -5,7 +5,7 @@
     <br>
 
     <div style="text-align:center">
-      <h2>Account Login</h2>
+      <h2><?php WORDING_LOGIN; ?></h2>
     </div>
     <br>
 
