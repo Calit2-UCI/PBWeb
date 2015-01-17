@@ -82,7 +82,7 @@ class Patient
   public function printAlertsTable($status)
   {
     $this->databaseConnection();
-    $query = $this->db_connection->prepare('SELECT a.id, a.DayNum, a.ampm, b.message FROM HCP_alerts a
+    $query = $this->db_connection->prepare('SELECT a.id, a.DayNum, a.ampm, b.message, b.type FROM HCP_alerts a
               INNER JOIN alert_codes b ON a.age_group=b.age_group AND a.code=b.alert_code
               WHERE a.patient_id=:patient_id AND a.hcp_acknowledged=:hcp_acknowledged
               ORDER BY a.DayNum, a.ampm');
@@ -100,6 +100,7 @@ class Patient
               <th>Time</th>
               <th>Message</th>
               <th>Dismiss</th>
+              <th>More Info</th>
             </tr>";
       } else {
         echo "<tr>
@@ -116,6 +117,7 @@ class Patient
         $dayNum = $row['DayNum'];
         $time = $row['ampm'] == 1 ? "am" : "pm";
         $message = $row['message'];
+        $type = $row['type'];
 
         if ($status == 0) {
           echo "<tr>
@@ -123,6 +125,7 @@ class Patient
                 <td>{$time}</td>
                 <td>{$message}</td>
                 <td><button class=\"tiny\" onclick=\"dismissAlert({$alert_id})\">Dismiss</button></td>
+                <td><button class=\"tiny\" onclick=\"doStuff({$type})\">Info</button></td>
               </tr>";
         } else {
           echo "<tr>
@@ -159,17 +162,49 @@ class Patient
   {
     echo "<label>Symptom<select id=\"symptom_selector\">";
     if ($this->age >= 10) {
-        echo '
-        <option value="conc">Concentration</option>
-        <option value="pain">Pain</option>
-        <option value="ener">Energy</option>
-        <option value="coug">Cough</option>
-        <option value="nerv">Nervous</option>
+      echo '
+      <option value="conc">Difficulty concentration of paying attention</option>
+      <option value="pain">pain</option>
+      <option value="ener">Lack of energy</option>
+      <option value="coug">cough</option>
+      <option value="nerv">Feeling of being nervous</option>
+      <option value="mout">Dry mouth</option>
+      <option value="naus">Nausea or feeling like you could vomit</option>
+      <option value="drow">Feeling of being drowsy</option>
+      <option value="numb">Numbness/tingling or pins and needles feeling in hands or feet</option>
+      <option value="slep">Difficulty sleeping</option>
+      <option value="urin">Problems with urination or peeing</option>
+      <option value="vomi">Vomiting or throwing up</option>
+      <option value="brea">Shortness of breath</option>
+      <option value="diar">Diarrhea or loose bowel movement</option>
+      <option value="sad">Feelings of sadness</option>
+      <option value="swea">sweats</option>
+      <option value="worr">worrying</option>
+      <option value="itch">itching</option>
+      <option value="app">Lack of appetite or not wanting to eat</option>
+      <option value="dizz">dizziness</option>
+      <option value="swal">Difficulty swallowing</option>
+      <option value="irri">Feelings of being irritable</option>
+      <option value="head">headache</option>
+      <option value="msor">Mouth sores</option>
+      <option value="food">Change in the way food tastes</option>
+      <option value="weit">Weight loss</option>
+      <option value="hair">Less hair than usual</option>
+      <option value="cons">Constipation or uncomfortable because less bowel movements</option>
+      <option value="swel">Swelling of arms or legs</option>
+      <option value="look">I don\'t look like myself</option>
+      <option value="skin">Changes in skin</option>
         ';
     } else {
-        echo '
-        <option value="pain7">Pain</option>
-        <option value="tired7">Tired</option>
+      echo '
+      <option value="pain7">Did you have any pain yesterday or today?</option>
+      <option value="tired7">Did you feel more tired yesterday or today that you usually do?</option>
+      <option value="sad7">Did you feel sad yesterday or today:</option>
+      <option value="itchy7">Were you itchy yesterday or today?</option>
+      <option value="worry7">Did you feel worried yesterday or today?</option>
+      <option value="eat7">Did you feel like eating yesterday or today as you normally do?</option>
+      <option value="vomit7">Did you feel like you werer going to vomit (or going to throw up) yesterday or today?</option>
+      <option value="sleep7">Did you have trouble going to sleep the last 2 nights?</option>
         ';
     }
     echo "</select></label>";
