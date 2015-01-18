@@ -45,13 +45,13 @@
     </div>
   </div>
 
-  <div class="small-10 large-8 small-centered columns">
-    <div class="row">
-      <a href="index.php" class="button expand">Menu</a>
-    </div>
-    <div class="row">
-      <a href="index.php?logout" class="button alert expand"><?php echo WORDING_LOGOUT; ?></a>
-    </div>
+</div>
+<div class="small-10 large-8 small-centered columns">
+  <div class="row">
+    <a href="index.php" class="button expand">Menu</a>
+  </div>
+  <div class="row">
+    <a href="index.php?logout" class="button alert expand"><?php echo WORDING_LOGOUT; ?></a>
   </div>
 </div>
 <script>

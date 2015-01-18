@@ -516,17 +516,13 @@ class Admin
         $doctor = isset($doctors[$doctor_id]) ? $doctors[$doctor_id] : "Unassigned";
 
         echo "<tr>
-        <td>{$patient_id}</td>
-        <td>{$first_name}</td>
-        <td>{$last_name}</td>
-        <td>{$doctor}</td>
-        <td><a href=\"?edit_patient={$patient_id}\" class=\"button secondary tiny\">Edit</a></td>
-        <td><a href=\"?delete_patient={$patient_id}\" class=\"button secondary tiny\">Delete</a></td>
-
-
-        </form>
-      </td>
-    </tr>";
+                <td>{$patient_id}</td>
+                <td>{$first_name}</td>
+                <td>{$last_name}</td>
+                <td>{$doctor}</td>
+                <td><a href=\"?edit_patient={$patient_id}\" class=\"button secondary tiny\">Edit</a></td>
+                <td><a href=\"?delete_patient={$patient_id}\" class=\"button secondary tiny\">Delete</a></td>
+            </tr>";
   }
   echo "</table>";
   echo '</tbody>';
