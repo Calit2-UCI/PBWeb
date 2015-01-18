@@ -78,20 +78,25 @@
         var json;
         var series = Array();
 
-        $.getJSON("patient_details.php?patient_id=<?php echo $_GET['patient_id']; ?>&json=" + symptom, function (data) {
-            json = data;
+        $.ajax({
+            url: "patient_details.php?patient_id=<?php echo $_GET['patient_id']; ?>&json=" + symptom,
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                json = data;
 
-            // Get the column names of the questions
-            $.each(Object.keys(json[0]), function (i, obj) {
-                if (obj != "start_time" && obj != "dayNum" && obj != "ampm") {
-                    series.push({name: obj, data: []});
-                    $.each(json, function (j) {
-                        var date = new Date(json[j].start_time.replace(' ', 'T')).getTime();
-                        var value = parseInt(json[j][obj]);
-                        series[series.length - 1].data.push([date, value]);
-                    });
-                }
-            });
+                // Get the column names of the questions
+                $.each(Object.keys(json[0]), function (i, obj) {
+                    if (obj != "start_time" && obj != "dayNum" && obj != "ampm") {
+                        series.push({name: obj, data: []});
+                        $.each(json, function (j) {
+                            var date = new Date(json[j].start_time.replace(' ', 'T')).getTime();
+                            var value = parseInt(json[j][obj]);
+                            series[series.length - 1].data.push([date, value]);
+                        });
+                    }
+                });
+            }
         });
 
         var options = {
@@ -99,7 +104,7 @@
                 type: 'spline'
             },
             title: {
-                text: 'symptomText'
+                text: symptomText
             },
             subtitle: {
                 text: '<?php echo $patient->getFullName(); ?>'
@@ -134,7 +139,7 @@
             series: series
         };
 
-//        options.series = [{"name":"paint7","data":[[1417428000000,2],[1417438800000,3],[1417514400000,-1]]},{"name":"painf7","data":[[1417428000000,3],[1417438800000,2],[1417514400000,-1]]},{"name":"painb7","data":[[1417428000000,4],[1417438800000,1],[1417514400000,-1]]}];
+        //        options.series = [{"name":"paint7","data":[[1417428000000,2],[1417438800000,3],[1417514400000,-1]]},{"name":"painf7","data":[[1417428000000,3],[1417438800000,2],[1417514400000,-1]]},{"name":"painb7","data":[[1417428000000,4],[1417438800000,1],[1417514400000,-1]]}];
         console.log(JSON.stringify(options.series));
         $('#container').highcharts(options);
 
