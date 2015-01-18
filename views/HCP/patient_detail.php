@@ -139,8 +139,6 @@
             series: series
         };
 
-        //        options.series = [{"name":"paint7","data":[[1417428000000,2],[1417438800000,3],[1417514400000,-1]]},{"name":"painf7","data":[[1417428000000,3],[1417438800000,2],[1417514400000,-1]]},{"name":"painb7","data":[[1417428000000,4],[1417438800000,1],[1417514400000,-1]]}];
-        console.log(JSON.stringify(options.series));
         $('#container').highcharts(options);
 
     }
