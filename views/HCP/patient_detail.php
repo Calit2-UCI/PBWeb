@@ -70,6 +70,7 @@
 
     function doStuff(type) {
         $("#symptom_selector").val(type);
+        updateHighchart();
     }
 
     function updateHighchart() {
@@ -91,7 +92,7 @@
                         series.push({name: obj, data: []});
                         $.each(json, function (j) {
                             var date = new Date(json[j].start_time.replace(' ', 'T')).getTime();
-                            var value = parseInt(json[j][obj]);
+                            var value = parseFloat(json[j][obj]);
                             series[series.length - 1].data.push([date, value]);
                         });
                     }
@@ -111,9 +112,10 @@
             },
             xAxis: {
                 type: 'datetime',
-                dateTimeLabelFormats: { // don't display the dummy year
-                    month: '%e. %b',
-                    year: '%b'
+                labels: {
+                    format: '{value:%Y-%m-%d %H:%M}',
+                    rotation: 45,
+                    align: 'left'
                 },
                 title: {
                     text: 'Date'
@@ -121,13 +123,13 @@
             },
             yAxis: {
                 title: {
-                    text: 'Snow depth (m)'
+                    text: 'Pain Levels'
                 },
                 min: 0
             },
             tooltip: {
                 headerFormat: '<b>{series.name}</b><br>',
-                pointFormat: '{point.x:%e. %b}: {point.y:.2f} m'
+                pointFormat: 'Time: {point.x:%H:%M} - Level: {point.y:.1f}'
             },
             plotOptions: {
                 spline: {

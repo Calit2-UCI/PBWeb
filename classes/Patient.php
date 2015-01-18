@@ -160,7 +160,7 @@ class Patient
 
   public function showSymptoms()
   {
-    echo "<label>Symptom<select id=\"symptom_selector\">";
+    echo "<label>Symptom<select id='symptom_selector' onchange='updateHighchart()'>";
     if ($this->age >= 10) {
       echo '
       <option value="conc">Difficulty concentration of paying attention</option>
@@ -374,7 +374,56 @@ class Patient
     $query->bindValue(':patient_id', $this->id, PDO::PARAM_INT);
     $query->execute();
 
-    return json_encode($query->fetchAll(PDO::FETCH_ASSOC));
+    $results = $query->fetchAll(PDO::FETCH_ASSOC);
+    foreach ($results as $key => &$result) {
+      foreach ($codes as $code) {
+        $value = $result[$code];
+
+        if ($this->age < 10) {
+          switch ($value) {
+            case -2:
+              unset($results[$key]);
+              break 2;
+            case -1:
+            case 0:
+              $result[$code] = 0;
+              break;
+            case 1:
+              $result[$code] = 3.3;
+              break;
+            case 2:
+              $result[$code] = 6.6;
+              break;
+            case 3:
+              $result[$code] = 10;
+              break;
+          }
+        } else {
+          switch ($value) {
+            case -2:
+              unset($results[$key]);
+              break 2;
+            case -1:
+            case 0:
+              $result[$code] = 0;
+              break;
+            case 1:
+              $result[$code] = 2.5;
+              break;
+            case 2:
+              $result[$code] = 5;
+              break;
+            case 3:
+              $result[$code] = 7.5;
+              break;
+            case 3:
+              $result[$code] = 10;
+              break;
+          }
+        }
+      }
+    }
+    return json_encode($results);
   }
 }
 
