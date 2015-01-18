@@ -13,7 +13,7 @@
 
       <p><?php $admin->printPendingUsers(); ?></p>
     </div>
-    <div class="callout panel">
+    <div class="panel">
       <h3>Active Users</h3>
 
       <h4>Admins</h4>
@@ -25,7 +25,7 @@
       <p><?php $admin->printActiveUsers(0); ?></p>
 
     </div>
-    <div class="callout panel">
+    <div class="panel">
       <h3>Patients</h3>
 
       <p><?php $admin->printPatients(); ?></p>
@@ -40,24 +40,24 @@
       <a href="?export_section=1">Export Section 1 (10-18)</a>
       <br>
       <a href="?export_section=2">Export Section 2</a>
-      <br>   
-      <a href="?export_section=3">Export Section 3</a>
       <br>
-      <hr>
-      <div class="row">
-        <a href="index.php" class="button expand">Menu</a>
-      </div>
-      <div class="row">
-        <a href="index.php?logout" class="button alert expand"><?php echo WORDING_LOGOUT; ?></a>
-      </div>
+      <a href="?export_section=3">Export Section 3</a>
+    </div>
+  </div>
+
+  <div class="small-10 large-8 small-centered columns">
+    <div class="row">
+      <a href="index.php" class="button expand">Menu</a>
+    </div>
+    <div class="row">
+      <a href="index.php?logout" class="button alert expand"><?php echo WORDING_LOGOUT; ?></a>
     </div>
   </div>
 </div>
 <script>
-  $(document).ready(function()
-  {
-    $("#myTable").tablesorter();
-  }
+  $(document).ready(function () {
+      $("#myTable").tablesorter();
+    }
   );
 </script>
 

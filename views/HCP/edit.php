@@ -61,11 +61,13 @@
                  value="<?php echo WORDING_CHANGE_PASSWORD; ?>"/>
         </div>
       </form>
-      <div class="row">
-        <a href="index.php" class="button expand">Menu</a>
-      </div>
+    </div>
+  </div>
+
+  <div class="small-10 large-8 small-centered columns">
+    <div class="row">
+      <a href="index.php" class="button expand">Menu</a>
     </div>
   </div>
 </div>
-
 <?php include(dirname(__FILE__) . '/../_footer.php'); ?>
