@@ -59,6 +59,8 @@ define("MESSAGE_PATIENT_ID_INVALID", "Patient ID not valid");
 
 
 // views
+define("WORDING_TITLE", "Painbuddy Web");
+
 define("WORDING_ADMIN_ADD_PATIENT", "Add patient");
 define("WORDING_ADMIN_MANAGE_USERS", "Manage Users");
 define("WORDING_BACK_TO_CONFIG", "Return to Config Page");
@@ -81,7 +83,6 @@ define("WORDING_PASSWORD", "Password");
 define("WORDING_PATIENT_ACCESS", "Patient access");
 define("WORDING_PATIENT_ID", "Patient ID");
 define("WORDING_PATIENT_LOOKUP", "Patient Lookup");
-define("WORDING_PROFILE_PICTURE", "Your profile picture (from gravatar):");
 define("WORDING_REGISTER", "Register");
 define("WORDING_REGISTER_NEW_ACCOUNT", "Register for a new account");
 define("WORDING_REGISTRATION_CAPTCHA", "Enter");

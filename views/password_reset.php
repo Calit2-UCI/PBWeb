@@ -5,7 +5,7 @@
     <br>
 
     <div style="text-align:center">
-      <h2>Password Reset</h2>
+      <h2><?php echo WORDING_RESET_PASSWORD; ?></h2>
     </div>
     <br>
 
