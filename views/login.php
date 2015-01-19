@@ -2,12 +2,11 @@
 
 <div class="small-12 large-6 small-centered columns">
   <div class="panel">
-    <br>
-
     <div style="text-align:center">
-      <h2><?php WORDING_LOGIN; ?></h2>
+      <h1><?php echo WORDING_LOGIN; ?></h1>
     </div>
-    <br>
+
+    <hr>
 
     <div class="small-10 large-6 small-centered columns">
       <form method="post" action="index.php?location=<?php echo urlencode($_SERVER['REQUEST_URI']);?>" name="loginform">
