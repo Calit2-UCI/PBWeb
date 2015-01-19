@@ -74,9 +74,9 @@
 
     function updateHighchart() {
         var symptom = $("#symptom_selector").val();
-        var symptomText = $("#symptom_selector option[value='" + symptom + "']").text();
+        var symptomText = $("#symptom_selector").find("option[value='" + symptom + "']").text();
         var json;
-        var series = Array();
+        var series = new Array();
 
         $.ajax({
             url: "patient_details.php?patient_id=<?php echo $_GET['patient_id']; ?>&json=" + symptom,
