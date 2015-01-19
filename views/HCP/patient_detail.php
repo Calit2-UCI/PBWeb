@@ -33,9 +33,8 @@
             <p id="dismissed_alerts"></p>
 
         </div>
-
         <div class="row">
-            <a href="patient.php" class="button expand">Back To Patient List</a>
+            <a href="javascript:history.back()" class="button expand">Back</a>
         </div>
         <div class="row">
             <a href="index.php" class="button expand">Menu</a>

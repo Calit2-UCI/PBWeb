@@ -536,6 +536,7 @@ class Admin
         <th>Last Name</th>
         <th>Doctor</th>
         <th>Edit</th>
+        <th>Overview</th>
         <th>Delete Patient</th>
       </tr>";
       echo '</thead>';
@@ -556,6 +557,7 @@ class Admin
         <td>{$last_name}</td>
         <td>{$doctor}</td>
         <td><a href=\"?edit_patient={$patient_id}\" class=\"button secondary tiny\">Edit</a></td>
+        <td><a href=\"patient_details.php?patient_id={$patient_id}\" class=\"button secondary tiny\">Overview</a></td>
         <td><a href=\"?delete_patient={$patient_id}\" class=\"button secondary tiny\">Delete</a></td>
       </tr>";
     }
