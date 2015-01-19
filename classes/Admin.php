@@ -67,8 +67,11 @@ class Admin
       $this->editPatientAge($_POST['admin_edit_submit_patient_age'], $_POST['patient_age']);
     } elseif (isset($_POST["delete_confirm"])) {
       $this->confirmDelete($_POST['user_password'], $_SESSION['delete_confirm'], $_SESSION["delete_type"]);
-    }
+
+  } elseif (isset($_POST["promote_confirm"])) {
+    $this->promoteHCP($_POST['user_password'], $_SESSION['promote_confirm']);
   }
+}
 
   /**
    * Checks if database connection is opened. If not, then this method tries to open it.
@@ -170,43 +173,75 @@ class Admin
       $query->execute();
 
       if ($query->rowCount() > 0) {
-        $result = $query->fetchAll();
-        echo "<table width=\"100%\">";
-        echo "<tr>
-        <th>Id</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Username</th>
-        <th>Email</th>
-        <th>Edit</th>
-        <th>Delete Account</th>
-      </tr>";
+        if ($type == 0){
+          $result = $query->fetchAll();
+          echo "<table width=\"100%\">";
+          echo "<tr>
+          <th>Id</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Edit</th>
+          <th>Delete Account</th>
+          <th>Make Admin</th>
+        </tr>";
 
-      foreach ($result as $row) {
-        $id = $row['user_id'];
-        $first_name = $row['first_name'];
-        $last_name = $row['last_name'];
-        $user_name = $row['user_name'];
-        $email = $row['user_email'];
+        foreach ($result as $row) {
+          $id = $row['user_id'];
+          $first_name = $row['first_name'];
+          $last_name = $row['last_name'];
+          $user_name = $row['user_name'];
+          $email = $row['user_email'];
 
-        echo "<tr>
-        <td>{$id}</td>
-        <td>{$first_name}</td>
-        <td>{$last_name}</td>
-        <td>{$user_name}</td>
-        <td>{$email}</td>
-        <td><a href=\"?edit_user={$id}\" class=\"button secondary tiny\">Edit</a></td>
-        <td>";
-          if ($type == 0) {
-            echo "<a href=\"?delete_HCP={$id}\" class=\"button secondary tiny\">Delete</a>";
-        }
-        echo "</td>
-      </tr>";
+          echo "<tr>
+          <td>{$id}</td>
+          <td>{$first_name}</td>
+          <td>{$last_name}</td>
+          <td>{$user_name}</td>
+          <td>{$email}</td>
+          <td><a href=\"?edit_user={$id}\" class=\"button secondary tiny\">Edit</a></td>
+          <td><a href=\"?delete_HCP={$id}\" class=\"button secondary tiny\">Delete</a></td>
+          <td><a href=\"?promote_HCP={$id}\" class=\"button secondary tiny\">Make Admin</a></td>
+        </tr>";
+      }
+      echo "</table>";
     }
-    echo "</table>";
-  } else {
-    echo "No active Healthcare Providers";
+    else {
+      $result = $query->fetchAll();
+      echo "<table width=\"100%\">";
+      echo "<tr>
+      <th>Id</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Username</th>
+      <th>Email</th>
+      <th>Edit</th>
+      <th>Delete Account</th>
+    </tr>";
+
+    foreach ($result as $row) {
+      $id = $row['user_id'];
+      $first_name = $row['first_name'];
+      $last_name = $row['last_name'];
+      $user_name = $row['user_name'];
+      $email = $row['user_email'];
+
+      echo "<tr>
+      <td>{$id}</td>
+      <td>{$first_name}</td>
+      <td>{$last_name}</td>
+      <td>{$user_name}</td>
+      <td>{$email}</td>
+      <td><a href=\"?edit_user={$id}\" class=\"button secondary tiny\">Edit</a></td>
+      <td></td>
+    </tr>";
   }
+  echo "</table>";
+}
+} else {
+  echo "No active Healthcare Providers";
+}
 }
 }
 
@@ -516,19 +551,19 @@ class Admin
         $doctor = isset($doctors[$doctor_id]) ? $doctors[$doctor_id] : "Unassigned";
 
         echo "<tr>
-                <td>{$patient_id}</td>
-                <td>{$first_name}</td>
-                <td>{$last_name}</td>
-                <td>{$doctor}</td>
-                <td><a href=\"?edit_patient={$patient_id}\" class=\"button secondary tiny\">Edit</a></td>
-                <td><a href=\"?delete_patient={$patient_id}\" class=\"button secondary tiny\">Delete</a></td>
-            </tr>";
+        <td>{$patient_id}</td>
+        <td>{$first_name}</td>
+        <td>{$last_name}</td>
+        <td>{$doctor}</td>
+        <td><a href=\"?edit_patient={$patient_id}\" class=\"button secondary tiny\">Edit</a></td>
+        <td><a href=\"?delete_patient={$patient_id}\" class=\"button secondary tiny\">Delete</a></td>
+      </tr>";
+    }
+    echo "</table>";
+    echo '</tbody>';
+  } else {
+    echo "No Patients";
   }
-  echo "</table>";
-  echo '</tbody>';
-} else {
-  echo "No Patients";
-}
 }
 }
 
@@ -665,7 +700,7 @@ class Admin
         1 => "section1_MSAS_10_18",
         2 => "section2_APPT",
         3 => "section3_intervention",
-      );
+        );
 
       if (!isset($section_array[$section_id])) {
         return false;
@@ -842,6 +877,41 @@ class Admin
           $this->messages[] = (($type == 2) ? "HCP" : "Patient") . " successfully deleted";
         } else {
           $this->errors[] = (($type == 2) ? "HCP" : "Patient") . " not deleted";
+        }
+      }
+    } else {
+      $this->errors[] = MESSAGE_PASSWORD_WRONG;
+    }
+  }
+
+  private function promoteHCP($user_password, $id){
+    if (empty($user_password)) {
+      $this->errors[] = MESSAGE_PASSWORD_EMPTY;
+      // if POST data (from login form) contains non-empty user_name and non-empty user_password
+    } else {
+      if ($this->databaseConnection()) {
+      // database query, getting all the info of the selected user
+        $query_user = $this->db_connection->prepare('SELECT * FROM users WHERE user_id = :user_id');
+        $query_user->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+        $query_user->execute();
+      // get result row (as an object)
+        $result_row = $query_user->fetchObject();
+      } 
+    }
+
+    if (password_verify($user_password, $result_row->user_password_hash)){
+      if ($this->databaseConnection()) {
+      // try to update user with specified information
+
+        $query = $this->db_connection->prepare('UPDATE users SET is_admin=1 WHERE user_id = :user_id');
+        $query->bindValue(':user_id', intval(trim($id)), PDO::PARAM_INT);
+
+        $query->execute();
+
+        if ($query->rowCount() > 0) {
+          $this->messages[] = "Successfully promoted";
+        } else {
+          $this->errors[] = "Not promoted";
         }
       }
     } else {

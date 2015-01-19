@@ -36,6 +36,8 @@ if ($login->isUserLoggedIn() == true && $login->isUserAdmin() == true) {
     include("views/admin/add_patient.php");
   } elseif (isset($_GET['delete_patient']) || isset($_GET['delete_HCP'])) {
     include("views/admin/delete_confirm.php");
+  } elseif (isset($_GET['promote_HCP'])) {
+    include("views/admin/promote_confirm.php");
   } elseif (isset($_GET['export_all'])) {
     $admin->exportAllPatientData();
   } elseif (isset($_GET['export_session'])) {
