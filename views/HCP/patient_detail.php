@@ -34,7 +34,7 @@
 
         </div>
         <div class="row">
-            <a href="javascript:history.back()" class="button expand">Back</a>
+            <a href="<?php echo $_SESSION['is_admin'] ? "admin.php" : "patient.php"?>" class="button expand">Back</a>
         </div>
         <div class="row">
             <a href="index.php" class="button expand">Menu</a>
