@@ -2,3 +2,4 @@ _notes/
 /.sass-cache/*
 *.DS_Store
 .idea/
+config/config.php
