@@ -21,8 +21,11 @@
 
         <div class="callout panel">
             <?php $patient->showSymptoms(); ?>
-            <div id="container">
-
+            <div id="container0">
+            </div>
+            <div id="container1">
+            </div>
+            <div id="container2">
             </div>
         </div>
 
@@ -137,10 +140,13 @@
                     }
                 }
             },
-            series: series
+            series: []
         };
 
-        $('#container').highcharts(options);
+        for (var i = 0; i < series.length; ++i) {
+            options.series = [series[i]];
+            $('#container' + i).highcharts(options);
+        }
 
     }
 </script>
