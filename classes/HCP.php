@@ -66,6 +66,7 @@ class HCP {
               <th>First Name</th>
               <th>Last Name</th>
               <th>Alerts</th>
+              <th>Alert Info</th>
               <th>Patient Info</th>
             </tr>";
             echo '</thead>';
@@ -76,13 +77,28 @@ class HCP {
                 $last_name = $row['last_name'];
                 $num_alerts = $this->getNumberAlerts($patient_id);
 
-                echo "<tr>
-                <td>{$patient_id}</td>
-                <td>{$first_name}</td>
-                <td>{$last_name}</td>
-                <td>{$num_alerts}</td>
-                <td><a href=\"patient_details.php?patient_id={$patient_id}\" class=\"button secondary tiny\">Info</a></td>
-              </tr>";
+              if ($num_alerts > 0) {
+                echo "<tr style=\"background-color:#c0392b\">";
+
+                $query_alerts = $this->db_connection->prepare("SELECT b.message from HCP_alerts a
+                    INNER JOIN alert_codes b ON a.age_group=b.age_group AND a.code=b.alert_code
+                    WHERE a.patient_id=:patient_id");
+                $query_alerts->bindValue(':patient_id', $row['patient_id'], PDO::PARAM_INT);
+                $query_alerts->execute();
+                $alerts = $query_alerts->fetchAll();
+
+                $alert_details = implode(", ", $alerts);
+              } else {
+                echo "<tr style=\"background-color:#27ae60\">";
+              }
+                echo "
+                  <td>{$patient_id}</td>
+                  <td>{$first_name}</td>
+                  <td>{$last_name}</td>
+                  <td>{$num_alerts}</td>
+                  <td>{$alert_details}</td>
+                  <td><a href=\"patient_details.php?patient_id={$patient_id}\" class=\"button secondary tiny\">Click to see Patient Data</a></td>
+                </tr>";
             }
             echo '<tbody>';
             echo "</table>";
