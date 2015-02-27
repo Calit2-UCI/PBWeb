@@ -82,14 +82,15 @@ class HCP {
 
                 $query_alerts = $this->db_connection->prepare("SELECT b.message from HCP_alerts a
                     INNER JOIN alert_codes b ON a.age_group=b.age_group AND a.code=b.alert_code
-                    WHERE a.patient_id=:patient_id");
+                    WHERE a.patient_id=:patient_id AND a.hcp_acknowledged=0");
                 $query_alerts->bindValue(':patient_id', $row['patient_id'], PDO::PARAM_INT);
                 $query_alerts->execute();
-                $alerts = $query_alerts->fetchAll();
+                $alerts = $query_alerts->fetchAll(PDO::FETCH_COLUMN);
 
-                $alert_details = implode(", ", $alerts);
+                $alert_details = implode(",<br>", $alerts);
               } else {
                 echo "<tr style=\"background-color:#27ae60\">";
+                  $alert_details = "";
               }
                 echo "
                   <td>{$patient_id}</td>
