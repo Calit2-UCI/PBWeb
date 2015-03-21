@@ -6,7 +6,7 @@ $db_connection = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';char
 
 $db_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-$query1a = $db_connection->prepare("CREATE TABLE IF NOT EXISTS `painbuddy`.`section1_MSAS_8_9` (
+$query1a = $db_connection->prepare("CREATE TABLE IF NOT EXISTS `painbuddy`.`S1_MSAS_8_9` (
   `response_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'unique id for each survey',
   `patient_id` INT(11) NOT NULL COMMENT 'ID of the patient',
   `DayNum` INT(11) NOT NULL COMMENT 'day number',
@@ -20,40 +20,61 @@ $query1a = $db_connection->prepare("CREATE TABLE IF NOT EXISTS `painbuddy`.`sect
   `paint7` TINYINT DEFAULT '-2' COMMENT 'How much of the time did you have pain?',
   `painf7` TINYINT DEFAULT '-2' COMMENT 'How much pain did you feel?',
   `painb7` TINYINT DEFAULT '-2' COMMENT 'How much did the pain bother you or trouble you?',
+  `pain7t` TINYINT DEFAULT '-2' COMMENT 'Composite Score for Pain.',
 
   `tired7` TINYINT DEFAULT '-2' COMMENT 'Did you feel more tired yesterday or today that you usually do?',
   `tiredt7` TINYINT DEFAULT '-2' COMMENT 'How long did it last?',
   `tiredf7` TINYINT DEFAULT '-2' COMMENT 'How tired did you feel?',
-  `tiredb7` TINYINT DEFAULT '-2' COMMENT 'How much did being tired bother you or trouble you?'
-  ,
+  `tiredb7` TINYINT DEFAULT '-2' COMMENT 'How much did being tired bother you or trouble you?',
+  `tired7t` TINYINT DEFAULT '-2' COMMENT 'Composite Score for Tired.',
+
   `sad7` TINYINT DEFAULT '-2' COMMENT 'Did you feel sad yesterday or today:',
   `sadt7` TINYINT DEFAULT '-2' COMMENT 'How long did you feel sad?',
   `sadf7` TINYINT DEFAULT '-2' COMMENT 'How sad did you feel?',
   `sadb7` TINYINT DEFAULT '-2' COMMENT 'How much did feeling sad bother you or trouble you?',
+  `sad7t` TINYINT DEFAULT '-2' COMMENT 'Composite score for Sad',
 
   `itchy7` TINYINT DEFAULT '-2' COMMENT 'Were you itchy yesterday or today?',
   `itchyt7` TINYINT DEFAULT '-2' COMMENT 'How much of the time were you itchy?',
   `itchyf7` TINYINT DEFAULT '-2' COMMENT 'How itchy were you?',
   `itchyb7` TINYINT DEFAULT '-2' COMMENT 'How much did being ithcy bother you or trouble you?',
+  `itchy7t` TINYINT DEFAULT '-2' COMMENT 'Composite score for Itch',
 
   `worry7` TINYINT DEFAULT '-2' COMMENT 'Did you feel worried yesterday or today?',
   `worryt7` TINYINT DEFAULT '-2' COMMENT 'How much of the time did you feel worried?',
   `worryf7` TINYINT DEFAULT '-2' COMMENT 'How worried did you feel?',
   `worryb7` TINYINT DEFAULT '-2' COMMENT 'How much did feeling worried bother you or trouble you?',
+  `worry7t` TINYINT DEFAULT '-2' COMMENT 'Composite score for Worry',
 
   `eat7` TINYINT DEFAULT '-2' COMMENT 'Did you feel like eating yesterday or today as you normally do?',
   `eatt7` TINYINT DEFAULT '-2' COMMENT 'How long did this last?',
   `eatb7` TINYINT DEFAULT '-2' COMMENT 'How much did this bother you or trouble you?',
+  `eat7t` TINYINT DEFAULT '-2' COMMENT 'Composite score for Eat',
 
   `vomit7` TINYINT DEFAULT '-2' COMMENT 'Did you feel like you werer going to vomit (or going to throw up) yesterday or today?',
   `vomitt7` TINYINT DEFAULT '-2' COMMENT 'How much of the time did you feel like you could vomit (or could throw up)?',
   `vomitb7` TINYINT DEFAULT '-2' COMMENT 'How much did this feeling bother you or trouble you?',
+  `vomit7t` TINYINT DEFAULT '-2' COMMENT 'Composite score for Vomit',
 
   `sleep7` TINYINT DEFAULT '-2' COMMENT 'Did you have trouble going to sleep the last 2 nights?',
   `sleepb7` TINYINT DEFAULT '-2' COMMENT 'How much did not being able to sleep bother you or trouble you?',
+  `sleep7t` TINYINT DEFAULT '-2' COMMENT 'Composite score for Sleep',
+
+  `ad7symp1` TINYINT DEFAULT '-2' COMMENT 'Did you have anything else that made you feel bad or sick since your last diary entry?',
+  `Ot7symp1` VARCHAR(255) DEFAULT '-2' COMMENT 'Please type in your symptom: (Symptom 1)',
+  `Ot7both1` TINYINT DEFAULT '-2' COMMENT 'How much did this bother you or trouble you?',
+
+  `ad7symp2` TINYINT DEFAULT '-2' COMMENT 'Did you have anything else that made you feel bad or sick since your last diary entry?',
+  `Ot7symp2` VARCHAR(255) DEFAULT '-2' COMMENT 'Please type in your symptom: (Symptom 2)',
+  `Ot7both2` TINYINT DEFAULT '-2' COMMENT 'How much did this bother you or trouble you?',
+
+  `PHYS7` TINYINT DEFAULT '-2' COMMENT 'Physical Subscale Score',
+  `PSYCH7` TINYINT DEFAULT '-2' COMMENT 'Psychological Subscale Score',
+  `GDI7` TINYINT DEFAULT '-2' COMMENT 'Global Distress Index Score',
+  `totMSAS7` TINYINT DEFAULT '-2' COMMENT 'Total Measure Score',
 
   PRIMARY KEY (`response_id`)
-  ) AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='patient responses for section 1'");
+  ) AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='Section 1 MSAS 8-9'");
 $query1a->execute();
 
 $query1b = $db_connection->prepare("CREATE TABLE IF NOT EXISTS `painbuddy`.`section1_MSAS_10_18` (
