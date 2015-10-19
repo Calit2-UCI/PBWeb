@@ -31,10 +31,10 @@
       <p><?php $admin->printPatients(); ?></p>
       <a href="?add_patient">Add New Patient</a>
       <br>
-      <a href="?export_all">Export Patient Info and Summary Variables</a>
-      <br>
-      <a href="?export_session">Export Session Variables</a>
-      <br>
+      <!--<a href="?export_all">Export Patient Info and Summary Variables</a> -->
+     <!--  <br> -->
+      <!-- <a href="?export_session">Export Session Variables</a> -->
+      <!-- <br> -->
       <a href="?export_section=0">Export Section 1 (8-9)</a>
       <br>
       <a href="?export_section=1">Export Section 1 (10-18)</a>
@@ -42,6 +42,16 @@
       <a href="?export_section=2">Export Section 2</a>
       <br>
       <a href="?export_section=3">Export Section 3</a>
+	   <br>
+      <a href="?export_section=4">Export CBT Statistics</a>
+	   <br>
+      <a href="?export_section=5">Export Store Statistics</a>
+	   <br>
+      <a href="?export_section=6">Export Login Statistics</a>
+	   <br>
+      <a href="?export_section=7">Export Diary Usage Statistics</a>
+	   <br>
+      <a href="?export_section=8">Export Message Statistics</a>
     </div>
   </div>
 

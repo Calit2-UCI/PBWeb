@@ -12,9 +12,36 @@
   <link rel="stylesheet" href="css/foundation.css" />
   <script src="js/vendor/modernizr.js"></script>
   <script src="js/vendor/jquery.js"></script>
-  <script src="js/vendor/highcharts.js"></script>
+<script src="http://code.highcharts.com/stock/highstock.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
   <script type="text/javascript" src="js/jquery.tablesorter.min.js"></script>
+  
+  <style>
+/*styles for d3 chart */
+svg {
+  font: 10px sans-serif;
+}
+
+.area {
+  fill: steelblue;
+  clip-path: url(#clip);
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.brush .extent {
+  stroke: #fff;
+  fill-opacity: .125;
+  shape-rendering: crispEdges;
+}
+
+</style>
 </head>
 
 <body>

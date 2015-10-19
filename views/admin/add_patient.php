@@ -15,19 +15,7 @@
           <div style="text-align:center">
             <h5><?php echo WORDING_ADMIN_ADD_PATIENT ?></h5>
           </div>
-
-          <div class="row">
-            <label for="patient_first_name">First Name</label>
-            <input id="patient_first_name" type="text" name="patient_first_name" required placeholder="First Name"/>
-            <small class="error">Invalid First Name</small>
-          </div>
-
-          <div class="row">
-            <label for="patient_last_name">Last Name</label>
-            <input id="patient_last_name" type="text" name="patient_last_name" required placeholder="Last Name"/>
-            <small class="error">Invalid Last Name</small>
-          </div>
-
+		  
           <div class="row">
             <label for="patient_id">Patient ID</label>
             <input id="patient_id" type="text" name="patient_id" required placeholder="Patient ID"/>

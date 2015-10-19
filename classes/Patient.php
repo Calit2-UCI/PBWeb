@@ -74,15 +74,71 @@ class Patient
   {
     return $this->first_name . " " . $this->last_name;
   }
-
+   public function getPatientId(){
+	return $this->id;
+   }
   /**
    * Displays the HCP alerts table
    * @param $status 1 for acknowledged alerts, 0 for unacknowledged
    */
+   
+   /* #### */
+   public function getPA(){
+	  
+	$this->databaseConnection();
+	if($this->age < 10){
+		$query = $this->db_connection->prepare('SELECT * FROM section1_msas_8_9 WHERE patient_id = :pid');
+	}
+	else{
+		$query = $this->db_connection->prepare('SELECT * FROM section1_msas_10_18 WHERE patient_id = :pid');
+	}
+  
+    $query->bindValue(':pid', $this->id, PDO::PARAM_INT);
+    $query->execute();
+
+    if ($query->rowCount() > 0) {
+      $result = $query->fetchAll();
+	  echo "<div class='callout panel'> <h4>Patient Activity</h4>" ;
+      echo '<table id="myATable" class="tablesorter" style="table-layout: fixed; width: 100%">';
+      echo '<thead>';
+     
+        echo "<tr>
+              <th>ID</th>
+			  <th>Day</th>
+              <th>Start Time</th>
+			  <th>Completion Time</th>
+			  <th>Submit Time</th>
+            </tr>";
+      
+      echo '</thead>';
+      echo '<tbody>';
+
+      foreach ($result as $row) {
+       
+          echo "<tr>
+                <td>{$row['patient_id']}</td>
+				<td>{$row['DayNum']}</td>
+                <td>{$row['start_time']}</td>
+                <td>{$row['completion_time']}</td>
+				<td>{$row['submit_time']}</td>
+              </tr>";
+        
+      }
+      echo '<tbody>';
+      echo "</table>";
+	  echo "</div>";
+    } else {
+      echo "No Activity";
+    }
+	   
+   }
+   
+   
+   /* ##### */
   public function printAlertsTable($status)
   {
     $this->databaseConnection();
-    $query = $this->db_connection->prepare('SELECT a.id, a.DayNum, a.ampm, b.message, b.type FROM HCP_alerts a
+    $query = $this->db_connection->prepare('SELECT a.id, a.DayNum, a.submit_time, a.ampm, b.message, b.type FROM HCP_alerts a
               INNER JOIN alert_codes b ON a.age_group=b.age_group AND a.code=b.alert_code
               WHERE a.patient_id=:patient_id AND a.hcp_acknowledged=:hcp_acknowledged
               ORDER BY a.DayNum, a.ampm');
@@ -96,15 +152,14 @@ class Patient
       echo '<thead>';
       if ($status == 0) {
         echo "<tr>
-              <th>DayNum</th>
-              <th>Time</th>
+			  <th>Date | Time</th>
+              <th>Am/Pm</th>
               <th>Message</th>
               <th>Dismiss</th>
               <th>More Info</th>
             </tr>";
       } else {
         echo "<tr>
-              <th>DayNum</th>
               <th>Time</th>
               <th>Message</th>
             </tr>";
@@ -115,13 +170,14 @@ class Patient
       foreach ($result as $row) {
         $alert_id = $row['id'];
         $dayNum = $row['DayNum'];
+		$subtime = $row['submit_time'];
         $time = $row['ampm'] == 1 ? "am" : "pm";
         $message = $row['message'];
         $type = $row['type'];
 
         if ($status == 0) {
           echo "<tr>
-                <td>{$dayNum}</td>
+				<td>{$subtime}</td>
                 <td>{$time}</td>
                 <td>{$message}</td>
                 <td><button class=\"tiny\" onclick=\"dismissAlert({$alert_id})\">Dismiss</button></td>
@@ -164,9 +220,9 @@ class Patient
     if ($this->age >= 10) {
       echo '
       <option value="conc">Difficulty concentration of paying attention</option>
-      <option value="pain">pain</option>
+      <option value="pain">Pain</option>
       <option value="ener">Lack of energy</option>
-      <option value="coug">cough</option>
+      <option value="coug">Cough</option>
       <option value="nerv">Feeling of being nervous</option>
       <option value="mout">Dry mouth</option>
       <option value="naus">Nausea or feeling like you could vomit</option>
@@ -178,14 +234,14 @@ class Patient
       <option value="brea">Shortness of breath</option>
       <option value="diar">Diarrhea or loose bowel movement</option>
       <option value="sad">Feelings of sadness</option>
-      <option value="swea">sweats</option>
-      <option value="worr">worrying</option>
-      <option value="itch">itching</option>
+      <option value="swea">Sweats</option>
+      <option value="worr">Worrying</option>
+      <option value="itch">Itching</option>
       <option value="app">Lack of appetite or not wanting to eat</option>
-      <option value="dizz">dizziness</option>
+      <option value="dizz">Dizziness</option>
       <option value="swal">Difficulty swallowing</option>
       <option value="irri">Feelings of being irritable</option>
-      <option value="head">headache</option>
+      <option value="head">Headache</option>
       <option value="msor">Mouth sores</option>
       <option value="food">Change in the way food tastes</option>
       <option value="weit">Weight loss</option>
@@ -197,14 +253,14 @@ class Patient
         ';
     } else {
       echo '
-      <option value="pain7">Did you have any pain yesterday or today?</option>
-      <option value="tired7">Did you feel more tired yesterday or today that you usually do?</option>
-      <option value="sad7">Did you feel sad yesterday or today:</option>
-      <option value="itchy7">Were you itchy yesterday or today?</option>
-      <option value="worry7">Did you feel worried yesterday or today?</option>
-      <option value="eat7">Did you feel like eating yesterday or today as you normally do?</option>
-      <option value="vomit7">Did you feel like you werer going to vomit (or going to throw up) yesterday or today?</option>
-      <option value="sleep7">Did you have trouble going to sleep the last 2 nights?</option>
+      <option value="pain7">Did you have any pain?</option>
+      <option value="tired7">Did you feel more tired?</option>
+      <option value="sad7">Did you feel sad?</option>
+      <option value="itchy7">Were you itchy?</option>
+      <option value="worry7">Did you feel worried?</option>
+      <option value="eat7">Did you feel like eating?</option>
+      <option value="vomit7">Did you feel like you were going to vomit?</option>
+      <option value="sleep7">Did you have trouble going to sleep?</option>
         ';
     }
     echo "</select></label>";
@@ -215,121 +271,121 @@ class Patient
 
     if ($this->age >= 10) {
       $allCodes = array('conc' => array(
-        'conoft',
-        'consev',
-        'conboth'
+        'conco',
+        'concs',
+        'concb'
       ), 'pain' => array(
-        'painoft',
-        'painsev',
-        'painboth'
+        'paino',
+        'pains',
+        'painb'
       ), 'ener' => array(
-        'eneroft',
-        'enersev',
-        'enerboth'
+        'enero',
+        'eners',
+        'enerb'
       ), 'coug' => array(
-        'cougoft',
-        'cougsev',
-        'cougboth'
+        'cougo',
+        'cougs',
+        'cougb'
       ), 'nerv' => array(
-        'nervoft',
-        'nervsev',
-        'nervboth'
+        'nervo',
+        'nervs',
+        'nervb'
       ), 'mout' => array(
-        'moutoft',
-        'moutsev',
-        'moutboth'
+        'mouto',
+        'mouts',
+        'moutb'
       ), 'naus' => array(
-        'nausoft',
-        'naussev',
-        'nausboth'
+        'nauso',
+        'naus',
+        'nausb'
       ), 'drow' => array(
-        'drowoft',
-        'drowsev',
-        'drowboth'
+        'drowo',
+        'drows',
+        'drowb'
       ), 'numb' => array(
-        'numboft',
-        'numbsev',
-        'numbboth'
+        'numbo',
+        'numbs',
+        'numbb'
       ), 'slep' => array(
-        'slepoft',
-        'slepsev',
-        'slepboth'
+        'slepo',
+        'sleps',
+        'slepb'
       ), 'urin' => array(
-        'urinoft',
-        'urinsev',
-        'urinboth'
+        'urino',
+        'urins',
+        'urinb'
       ), 'vomi' => array(
-        'vomioft',
-        'vomisev',
-        'vomiboth'
+        'vomio',
+        'vomis',
+        'vomib'
       ), 'brea' => array(
-        'breaoft',
-        'breasev',
-        'breaboth'
+        'breao',
+        'breas',
+        'breab'
       ), 'diar' => array(
-        'diaroft',
-        'diarsev',
-        'diarboth'
+        'diaro',
+        'diars',
+        'diarb'
       ), 'sad' => array(
-        'sadoft',
-        'sadsev',
-        'sadboth'
+        'sado',
+        'sads',
+        'sadb'
       ), 'swea' => array(
-        'sweaoft',
-        'sweasev',
-        'sweaboth'
+        'sweao',
+        'sweas',
+        'sweab'
       ), 'worr' => array(
-        'worroft',
-        'worrsev',
-        'worrboth'
+        'worro',
+        'worrs',
+        'worrb'
       ), 'itch' => array(
-        'itchoft',
-        'itchsev',
-        'itchboth'
+        'itcho',
+        'itchs',
+        'itchb'
       ), 'app' => array(
-        'appoft',
-        'appsev',
-        'appboth'
+        'appo',
+        'apps',
+        'appb'
       ), 'dizz' => array(
-        'dizzoft',
-        'dizzsev',
-        'dizzboth'
+        'dizzo',
+        'dizzs',
+        'dizzb'
       ), 'swal' => array(
-        'swaloft',
-        'swalsev',
-        'swalboth'
+        'swalo',
+        'swals',
+        'swalb'
       ), 'irri' => array(
-        'irrioft',
+        'irrio',
         'irrisev',
         'irriboth'
       ), 'head' => array(
-        'headoft',
+        'heado',
         'headsev',
         'headboth'
       ), 'msor' => array(
         'msorsev',
         'msorboth'
       ), 'food' => array(
-        'foodsev',
+        'foods',
         'foodboth'
       ), 'weit' => array(
-        'weitsev',
+        'weits',
         'weitboth'
       ), 'hair' => array(
-        'hairsev',
-        'hairboth'
+        'hairs',
+        'hairb'
       ), 'cons' => array(
-        'conssev',
-        'consboth'
+        'cons',
+        'consb'
       ), 'swel' => array(
-        'swelsev',
-        'swelboth'
+        'swels',
+        'swelb'
       ), 'look' => array(
-        'looksev',
-        'lookboth'
+        'looks',
+        'lookb'
       ), 'skin' => array(
-        'skinsev',
-        'skinboth'
+        'skins',
+        'skinb'
       ));
     } else {
       $allCodes = array('pain7' => array(
@@ -369,7 +425,7 @@ class Patient
     foreach ($codes as $code) {
       $str .= $code . ", ";
     }
-    $str .= "dayNum, ampm from painbuddy.section1_msas_" . ($this->age >= 10 ? "10_18" : "8_9") . " WHERE patient_id=:patient_id ORDER BY start_time";
+    $str .= "dayNum, ampm from painbuddy.section1_msas_" . ($this->age >= 10 ? "10_18" : "8_9") . " WHERE patient_id=:patient_id AND submit_time BETWEEN (NOW() - INTERVAL 14 DAY) AND NOW() ORDER BY start_time";
     $query = $this->db_connection->prepare($str);
     $query->bindValue(':patient_id', $this->id, PDO::PARAM_INT);
     $query->execute();
@@ -379,7 +435,7 @@ class Patient
       foreach ($codes as $code) {
         $value = $result[$code];
 
-        if ($this->age < 10) {
+        if ($this->age >= 10) {
           switch ($value) {
             case -2:
               unset($results[$key]);
@@ -425,6 +481,69 @@ class Patient
     }
     return json_encode($results);
   }
+  
+ public function getPatientActivity($pid){
+	  $this->databaseConnection();
+    $query = $this->db_connection->prepare('SELECT a.id, a.DayNum, a.submit_time, a.ampm, b.message, b.type FROM HCP_alerts a
+              INNER JOIN alert_codes b ON a.age_group=b.age_group AND a.code=b.alert_code
+              WHERE a.patient_id=:patient_id AND a.hcp_acknowledged=:hcp_acknowledged
+              ORDER BY a.DayNum, a.ampm');
+    $query->bindValue(':patient_id', $pid, PDO::PARAM_INT);
+    $query->execute();
+
+    if ($query->rowCount() > 0) {
+      $result = $query->fetchAll();
+      echo '<table id="myActivities" class="tablesorter" style="table-layout: fixed; width: 100%">';
+      echo '<thead>';
+      if ($status == 0) {
+        echo "<tr>
+			  <th>Date | Time</th>
+              <th>Am/Pm</th>
+              <th>Message</th>
+              <th>Dismiss</th>
+              <th>More Info</th>
+            </tr>";
+      } else {
+        echo "<tr>
+              <th>Time</th>
+              <th>Message</th>
+            </tr>";
+      }
+      echo '</thead>';
+      echo '<tbody>';
+
+      foreach ($result as $row) {
+        $alert_id = $row['id'];
+        $dayNum = $row['DayNum'];
+		$subtime = $row['submit_time'];
+        $time = $row['ampm'] == 1 ? "am" : "pm";
+        $message = $row['message'];
+        $type = $row['type'];
+
+        if ($status == 0) {
+          echo "<tr>
+				<td>{$subtime}</td>
+                <td>{$time}</td>
+                <td>{$message}</td>
+                <td><button class=\"tiny\" onclick=\"dismissAlert({$alert_id})\">Dismiss</button></td>
+                <td><button class=\"tiny\" onclick=\"doStuff('{$type}')\">Info</button></td>
+              </tr>";
+        } else {
+          echo "<tr>
+                <td>{$dayNum}</td>
+                <td>{$time}</td>
+                <td>{$message}</td>
+              </tr>";
+        }
+      }
+      echo '<tbody>';
+      echo "</table>";
+    } else {
+      echo "No Alerts";
+    }
+	  
+  }//end getPatientActivity
 }
+
 
 ?>

@@ -262,6 +262,57 @@ class Admin
       } else {
         $this->errors[] = MESSAGE_ADMIN_APPROVAL_NOT_SUCCESSFUL;
       }
+	  
+	  $query_email = $this->db_connection->prepare('SELECT user_email FROM painbuddy.users WHERE user_id = :user_id');
+      $query_email->bindValue(':user_id', intval(trim($user_id)), PDO::PARAM_INT);
+      $query_email->execute();
+	  $user_address = $query_email->fetchColumn();
+	 // echo "<h1>" . $user_email . "</h1>";
+	 
+	  $mail = new PHPMailer;
+
+    // please look into the config/config.php for much more info on how to use this!
+    // use SMTP or use mail()
+    if (EMAIL_USE_SMTP) {
+      // Set mailer to use SMTP
+      $mail->IsSMTP();
+      //useful for debugging, shows full SMTP errors
+      //$mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
+      // Enable SMTP authentication
+      $mail->SMTPAuth = EMAIL_SMTP_AUTH;
+      // Enable encryption, usually SSL/TLS
+      if (defined(EMAIL_SMTP_ENCRYPTION)) {
+        $mail->SMTPSecure = EMAIL_SMTP_ENCRYPTION;
+      }
+      // Specify host server
+      $mail->Host = EMAIL_SMTP_HOST;
+      $mail->Username = EMAIL_SMTP_USERNAME;
+      $mail->Password = EMAIL_SMTP_PASSWORD;
+      $mail->Port = EMAIL_SMTP_PORT;
+    } else {
+      $mail->IsMail();
+    }
+
+    $mail->From = EMAIL_VERIFICATION_FROM;
+    $mail->FromName = EMAIL_VERIFICATION_FROM_NAME;
+    $mail->AddAddress($user_address);
+    $mail->Subject = EMAIL_VERIFICATION_SUBJECT;
+
+    //$link = "csh.calit2.uci.edu/email_verification.php" . '?id=' . urlencode($user_id) . '&verification_code=' . urlencode($user_activation_hash);
+	$link = "Your account has been approved by the administrator. You may now log into csh.calit2.uci.edu";
+    // the link to your register.php, please set this value in config/email_verification.php
+    $mail->Body = $link;
+
+    if (!$mail->Send()) {
+      $this->errors[] = MESSAGE_VERIFICATION_MAIL_NOT_SENT . $mail->ErrorInfo;
+     // return false;
+    } else {
+    //  return true;
+    }
+	
+	 
+	 
+	 
     }
   }
 
@@ -522,6 +573,29 @@ class Admin
   public function printPatients()
   {
     if ($this->databaseConnection()) {
+		//Query to get timestamps for most recent submissions 
+	  $query10_18 = $this->db_connection->prepare('SELECT
+			 patient_id,
+			 MAX(submit_time) AS submit_time
+			FROM painbuddy.section1_msas_10_18
+			GROUP BY patient_id');	
+      $query10_18->execute();
+	  $result10_18 =  $query10_18->fetchAll();
+	  $query8_9 = $this->db_connection->prepare('SELECT
+			 patient_id,
+			 MAX(submit_time) AS submit_time
+			FROM painbuddy.section1_msas_8_9
+			GROUP BY patient_id');	
+      $query8_9->execute();
+	  $result8_9 = $query8_9->fetchAll();
+					
+		
+		
+		
+		///
+		
+		
+		
       // try to update user with specified information
       $query = $this->db_connection->prepare('SELECT * FROM patients');
       $query->execute();
@@ -532,12 +606,76 @@ class Admin
         echo '<thead>';
         echo "<tr>
         <th>Patient Id</th>
-        <th>First Name</th>
-        <th>Last Name</th>
+		<th> TSLS </th>
         <th>Doctor</th>
         <th>Edit</th>
         <th>Overview</th>
         <th>Delete Patient</th>
+      </tr>";
+      echo '</thead>';
+      echo '<tbody>';
+        // Populate the doctors array with their ID and name so we can display the doctors for each patient
+      $doctors = $this->getAllUsers();
+
+      foreach ($result as $row) {
+        $patient_id = $row['patient_id'];
+		$timeSinceLastSubmit = $this->calculateTime($result8_9, $result10_18, $patient_id);
+        $doctor_id = $row['doctor_id'];
+        $doctor = isset($doctors[$doctor_id]) ? $doctors[$doctor_id] : "Unassigned";
+
+        echo "<tr>
+        <td>{$patient_id}</td>
+		<td>{$timeSinceLastSubmit}</td>
+        <td>{$doctor}</td>
+        <td><a href=\"?edit_patient={$patient_id}\" class=\"button secondary tiny\">Edit</a></td>
+        <td><a href=\"patient_details.php?patient_id={$patient_id}\" class=\"button secondary tiny\">Overview</a></td>
+        <td><a href=\"?delete_patient={$patient_id}\" class=\"button secondary tiny\">Delete</a></td>
+      </tr>";
+    }
+    echo "</table>";
+    echo '</tbody>';
+  } else {
+    echo "No Patients";
+  }
+}
+
+}
+////
+public function calculateTime($group1, $group2, $id){
+	
+	foreach($group1 as $el){
+		if($el['patient_id'] == $id){
+			
+			return $el['submit_time'];
+		}
+	}
+	foreach($group2 as $el2){
+		if($el2['patient_id'] == $id){
+			return $el2['submit_time'];
+		}
+	}
+	return "No entries";
+	
+}
+
+////
+public function printPatientActivity($pid)
+  {
+    if ($this->databaseConnection()) {
+      // try to update user with specified information
+      $query = $this->db_connection->prepare('SELECT * FROM patients WHERE patient_id = :pid');
+      $query->bindValue(':pid', $patient_id, PDO::PARAM_INT);
+      $query->execute();
+
+      if ($query->rowCount() > 0) {
+        $result = $query->fetchAll();
+        echo '<table id="myTable" class="tablesorter" style="table-layout: fixed; width: 100%">';
+        echo '<thead>';
+        echo "<tr>
+        <th>Patient Id</th>
+        <th>Completion Time</th>
+        <th>Submit Time</th>
+        <th>Overview</th>
       </tr>";
       echo '</thead>';
       echo '<tbody>';
@@ -567,6 +705,34 @@ class Admin
     echo "No Patients";
   }
 }
+
+}
+///
+ public function printPatientsLoggers()
+  {
+    if ($this->databaseConnection()) {
+      // try to update user with specified information
+      $query = $this->db_connection->prepare('SELECT * FROM patients');
+      $query->execute();
+
+      if ($query->rowCount() > 0) {
+        $result = $query->fetchAll();
+        echo "<label>Patient List<select id='patient_selector' onchange='updateActivityLog()'>";
+      
+        // Populate the doctors array with their ID and name so we can display the doctors for each patient
+      $doctors = $this->getAllUsers();
+
+      foreach ($result as $row) {
+		    echo '
+      <option value='.$row['patient_id'].'>'.$row['first_name'] .' '.$row['last_name'] .'</option>';
+   
+    }
+   echo "</select></label>";
+  } else {
+    echo "No Patients";
+  }
+}
+
 }
 
   /**
@@ -693,6 +859,7 @@ class Admin
    * 1 = section 1, 10-18
    * 2 = section 2
    * 3 = section 3
+   * 4 = cbt skills
    */
   public function exportSection($section_id)
   {
@@ -702,6 +869,11 @@ class Admin
         1 => "section1_MSAS_10_18",
         2 => "section2_APPT",
         3 => "section3_intervention",
+		4 => "cbt_skills_stats",
+		5 => "stores_stats",
+		6 => "login_stats",
+		7 => "diary_stats",
+		8 => "message_stats"
         );
 
       if (!isset($section_array[$section_id])) {
