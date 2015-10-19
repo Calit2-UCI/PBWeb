@@ -67,15 +67,21 @@ $patient_id = $_POST['patient_id'];
 $age_group = $_POST['patient_age'] < 10 ? "b" : "a";
 $day = $_POST['day'];
 $ampm = $_POST['ampm'];
-
+/*
 // Do some checking of the alert string
 $alert_array = explode(",", $_POST['alerts']);
 
+$patient_id = 1002;
+$age_group = 'b';
+$day = 2;
+$ampm = 'pm';
+$alert_array = ['p/1', 't/3','s/5'];
+*/
 // TODO: maybe get these from the alert codes table?
 if ($age_group == "b") {
-    $codes = array('p/1', 't/3', 'i/3', 'v/3', 's/5', 'f/5', 'w/5');
+    $codes = array('p/1', 'op/1', 't/3', 'i/3', 'v/3', 's/5', 'f/5', 'w/5');
 } else {
-    $codes = array('p/1', 'd/1', 'pu/1', 's/1', 'ds/1', 'c/3', 'n/3', 'v/3', 'na/3', 'd/3', 'dz/3', 'i/3', 'cs/3', 'h/3', 'm/3', 'l/5', 'n/5', 'f/5', 's/5', 'sal/5', 'c/5');
+    $codes = array('p/1', 'op/1', 'd/1', 'pu/1', 's/1', 'ds/1', 'c/3', 'n/3', 'v/3', 'na/3', 'd/3', 'dz/3', 'i/3', 'cs/3', 'h/3', 'm/3', 'l/5', 'n/5', 'f/5', 's/5', 'sal/5', 'c/5');
 }
 
 foreach ($alert_array as $alert_code) {
@@ -83,6 +89,7 @@ foreach ($alert_array as $alert_code) {
         die($alert_code . " not a valid code");
     } else {
         try {
+			
             $query = $db_connection->prepare('INSERT INTO HCP_alerts (`patient_id`, `dayNum`, `ampm`, `age_group`, `code`) VALUES (:patient_id, :dayNum, :ampm, :age_group, :code)');
             $query->bindValue(':patient_id', $patient_id, PDO::PARAM_INT);
             $query->bindValue(':dayNum', $day, PDO::PARAM_INT);
